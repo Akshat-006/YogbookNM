@@ -323,7 +323,6 @@ Next Steps:
 9. Payment Integration
 10. Frontend Development
 
-Important:
-Do not generate the entire project at once.
+Important
 Work module-by-module.
 Explain architecture and logic before implementation.
