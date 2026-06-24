@@ -270,3 +270,6 @@ PUT    /classes/{id}
 DELETE /classes/{id}
 
 This module will become the foundation for appointments, enrollments, and payments.
+
+Crud System:
+**Class**
