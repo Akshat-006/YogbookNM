@@ -256,20 +256,3 @@ Progress:
 ✓ Admin Authentication
 ✓ JWT Authorization
 ✓ Protected Routes
-
-Next Module:
-
-Classes CRUD System
-
-Planned Endpoints:
-
-POST   /classes
-GET    /classes
-GET    /classes/{id}
-PUT    /classes/{id}
-DELETE /classes/{id}
-
-This module will become the foundation for appointments, enrollments, and payments.
-
-Crud System:
-**Class**
