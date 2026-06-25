@@ -1,17 +1,16 @@
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-from datetime import datetime
 
 
-class AppointmentCreate(BaseModel):
+class ClassBookingCreate(BaseModel):
+    class_id: str
     name: str
     email: EmailStr
     phone: str
-    appointment_datetime: datetime
     notes: Optional[str] = None
 
 
-class AppointmentUpdate(BaseModel):
+class ClassBookingUpdate(BaseModel):
     payment_status: Optional[str] = None
-    appointment_status: Optional[str] = None
+    booking_status: Optional[str] = None
     notes: Optional[str] = None
