@@ -133,3 +133,97 @@ async def delete_appointment(appointment_id: str):
     await db["appointments"].delete_one({"_id": ObjectId(appointment_id)})
 
     return {"message": "Appointment deleted successfully"}
+
+
+# Calender appointments slots
+async def get_available_slots(selected_date: str):
+    db = get_database()
+
+    try:
+        date_obj = datetime.strptime(selected_date, "%Y-%m-%d")
+    except ValueError:
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid date format. Use YYYY-MM-DD"
+        )
+
+    start_of_day = datetime(
+        date_obj.year,
+        date_obj.month,
+        date_obj.day,
+        9,
+        0
+    )
+
+    end_of_day = datetime(
+        date_obj.year,
+        date_obj.month,
+        date_obj.day,
+        18,
+        0
+    )
+
+    cursor = db["appointments"].find({
+        "appointment_datetime": {
+            "$gte": start_of_day,
+            "$lt": end_of_day
+        },
+        "appointment_status": {
+            "$ne": "cancelled"
+        }
+    })
+
+    booked_slots = []
+
+    async for appointment in cursor:
+        booked_slots.append(
+            appointment["appointment_datetime"].strftime("%H:%M")
+        )
+
+    available_slots = []
+
+    current = start_of_day
+
+    while current < end_of_day:
+
+        slot = current.strftime("%H:%M")
+
+        # skip past slots if selected date is today
+        if date_obj.date() == datetime.utcnow().date():
+
+            if current <= datetime.utcnow():
+                current += timedelta(minutes=30)
+                continue
+
+        if slot not in booked_slots:
+            available_slots.append(slot)
+
+        current += timedelta(minutes=30)
+
+    return {
+        "date": selected_date,
+        "available_slots": available_slots,
+        "booked_slots": booked_slots
+    }
+
+
+async def get_calendar_appointments():
+    db = get_database()
+
+    appointments = []
+
+    cursor = db["appointments"].find().sort(
+        "appointment_datetime",
+        1
+    )
+
+    async for appointment in cursor:
+
+        appointments.append({
+            "id": str(appointment["_id"]),
+            "title": appointment["name"],
+            "datetime": appointment["appointment_datetime"],
+            "status": appointment["appointment_status"]
+        })
+
+    return appointments

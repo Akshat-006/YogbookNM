@@ -3,6 +3,7 @@ from typing import Optional
 from datetime import datetime
 
 
+
 class AppointmentCreate(BaseModel):
     name: str
     email: EmailStr
