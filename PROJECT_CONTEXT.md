@@ -326,3 +326,77 @@ Next Steps:
 Important
 Work module-by-module.
 Explain architecture and logic before implementation.
+
+Phase 7
+
+Admin Dashboard
+
+Yahi actual fun part hai.
+
+Dashboard Cards:
+
+Total Classes
+
+Total Appointments
+
+Today's Appointments
+
+Upcoming Classes
+
+Total Revenue
+
+Pending Payments
+
+Confirmed Bookings
+Phase 8
+
+Payments
+
+Razorpay
+
+Create Order
+
+Verify Payment
+
+Webhook
+
+Update Payment Status
+Phase 9
+
+Emails
+
+Appointment Mail
+
+Class Booking Mail
+
+Reminder Mail
+
+Cancellation Mail
+
+Phase 10
+
+Meeting Integration
+
+Google Meet
+
+Zoom
+
+Jitsi
+
+Phase 11
+
+Production
+
+Logging
+
+Global Exception Handler
+
+Docker
+
+Deployment
+
+Rate Limiting
+
+Caching
+
+Indexes

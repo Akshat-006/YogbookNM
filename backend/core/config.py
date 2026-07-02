@@ -81,5 +81,28 @@ class Settings:
         os.getenv("BACKEND_CORS_ORIGINS")
     )
 
+    # Email
+    SMTP_HOST = os.getenv("SMTP_HOST")
+    SMTP_PORT = int(os.getenv("SMTP_PORT", 587))
+    SMTP_EMAIL = os.getenv("SMTP_EMAIL")
+    SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
+    SMTP_FROM = os.getenv("SMTP_FROM")
+
+    # Razorpay
+    RAZORPAY_KEY_ID = os.getenv("RAZORPAY_KEY_ID")
+    RAZORPAY_KEY_SECRET = os.getenv("RAZORPAY_KEY_SECRET")
+
+    # Google Calendar
+    GOOGLE_SERVICE_ACCOUNT = os.getenv("GOOGLE_SERVICE_ACCOUNT")
+    GOOGLE_CALENDAR_ID = os.getenv("GOOGLE_CALENDAR_ID")
+
+    # Default Appointment Meet Link
+    DEFAULT_APPOINTMENT_MEET_LINK = os.getenv(
+    "DEFAULT_APPOINTMENT_MEET_LINK"
+    )   
+
+
 
 settings = Settings()
+
+

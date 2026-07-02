@@ -8,6 +8,7 @@ class ClassBookingCreate(BaseModel):
     email: EmailStr
     phone: str
     notes: Optional[str] = None
+    
 
 
 class ClassBookingUpdate(BaseModel):

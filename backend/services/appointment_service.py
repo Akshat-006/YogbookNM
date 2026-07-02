@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+from services.google_calendar_service import create_calendar_event
+from services.email_service import email_service
 from bson import ObjectId
 from fastapi import HTTPException
 
@@ -49,10 +51,31 @@ async def create_appointment(appointment_data):
         "notes": appointment_data.notes,
         "payment_status": "pending",
         "appointment_status": "booked",
+        "meet_link": appointment_data.meet_link,
         "created_at": datetime.utcnow()
     }
 
     result = await db["appointments"].insert_one(new_appointment)
+    try:
+        create_calendar_event(
+            summary=f"Yoga Appointment - {appointment_data.name}",
+            description=appointment_data.notes or "Yoga Appointment",
+            start_datetime=appointment_datetime,
+            duration=30
+        )
+    except Exception as e:
+        print(f"Calendar Error: {e}")
+
+    try:
+        await email_service.send_appointment_email(
+            appointment_data.email,
+            appointment_data.name,
+            appointment_datetime,
+            appointment_data.meet_link
+        )
+    except Exception as e:
+        print(f"Email Error: {e}")
+        
     new_appointment["_id"] = str(result.inserted_id)
 
     return new_appointment

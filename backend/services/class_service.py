@@ -18,7 +18,9 @@ async def create_class(class_data):
         "schedule_datetime": class_data.schedule_datetime,
         "is_active": True,
         "created_at": datetime.utcnow(),
-        "updated_at": datetime.utcnow()
+        "updated_at": datetime.utcnow(),
+        "meet_link": class_data.meet_link
+
     }
 
     result = await db["classes"].insert_one(new_class)
@@ -99,3 +101,52 @@ async def delete_class(class_id: str):
     await db["classes"].delete_one({"_id": ObjectId(class_id)})
 
     return {"message": "Class deleted successfully"}
+
+# Get classes for calendar view
+async def get_classes_calendar():
+    db = get_database()
+
+    classes = []
+
+    cursor = db["classes"].find(
+        {
+            "is_active": True
+        }
+    ).sort("schedule_datetime", 1)
+
+    async for item in cursor:
+
+        classes.append({
+            "id": str(item["_id"]),
+            "title": item["title"],
+            "datetime": item["schedule_datetime"],
+            "duration": item["duration"],
+            "capacity": item["capacity"],
+            "price": item["price"],
+            "instructor": item["instructor_name"]
+        })
+
+    return classes
+
+#Classes calender
+async def get_classes_calendar():
+    db = get_database()
+
+    cursor = db["classes"].find(
+        {"is_active": True}
+    ).sort("schedule_datetime", 1)
+
+    classes = []
+
+    async for item in cursor:
+        classes.append({
+            "id": str(item["_id"]),
+            "title": item["title"],
+            "datetime": item["schedule_datetime"],
+            "duration": item["duration"],
+            "capacity": item["capacity"],
+            "price": item["price"],
+            "instructor": item["instructor_name"]
+        })
+
+    return classes

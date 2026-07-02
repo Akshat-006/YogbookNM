@@ -1,1 +1,33 @@
+# Environment
 .env
+
+tests/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+venv/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Pytest
+.pytest_cache/
+
+# Credentials
+backend/credentials/
+credentials/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Personal
+/Note

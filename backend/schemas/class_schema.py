@@ -11,6 +11,7 @@ class ClassCreate(BaseModel):
     capacity: int
     price: float
     schedule_datetime: datetime
+    meet_link: str | None = None
 
 
 class ClassUpdate(BaseModel):
@@ -22,3 +23,4 @@ class ClassUpdate(BaseModel):
     price: Optional[float] = None
     schedule_datetime: Optional[datetime] = None
     is_active: Optional[bool] = None
+    meet_link: str | None = None

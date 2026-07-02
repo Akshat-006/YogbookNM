@@ -3,6 +3,7 @@ from bson import ObjectId
 from fastapi import HTTPException
 
 from core.database import get_database
+from services.email_service import email_service
 
 
 async def create_class_booking(booking_data):
@@ -52,17 +53,45 @@ async def create_class_booking(booking_data):
     # 7. Create booking
     new_booking = {
         "class_id": booking_data.class_id,
+
+        # User Details
         "name": booking_data.name,
         "email": booking_data.email,
         "phone": booking_data.phone,
         "notes": booking_data.notes,
+
+        # Class Snapshot
+        "class_title": class_item["title"],
+        "instructor_name": class_item["instructor_name"],
+        "schedule_datetime": class_item["schedule_datetime"],
+        "duration": class_item["duration"],
+        "amount": class_item["price"],
+
+        # Status
         "payment_status": "pending",
         "booking_status": "booked",
-        "created_at": datetime.utcnow()
-    }
+        "is_paid": False,
+
+        # Meet Link
+        "meet_link": class_item.get("meet_link"),
+
+        # Timestamps
+        "created_at": datetime.utcnow(),
+        "updated_at": datetime.utcnow()
+        }
 
     result = await db["class_bookings"].insert_one(new_booking)
     new_booking["_id"] = str(result.inserted_id)
+    
+    await email_service.send_booking_email(
+    booking_data.email,
+    booking_data.name,
+    class_item["title"],
+    class_item["instructor_name"],
+    class_item["schedule_datetime"],
+    class_item["duration"],
+    class_item.get("meet_link")
+)
 
     return new_booking
 

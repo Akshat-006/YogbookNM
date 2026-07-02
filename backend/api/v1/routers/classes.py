@@ -6,7 +6,8 @@ from services.class_service import (
     get_all_classes,
     get_class_by_id,
     update_class,
-    delete_class
+    delete_class,
+    get_classes_calendar
 )
 from api.v1.deps import get_current_admin
 
@@ -24,6 +25,10 @@ async def create_new_class(
 @router.get("")
 async def fetch_all_classes():
     return await get_all_classes()
+
+@router.get("/calendar")
+async def classes_calendar():
+    return await get_classes_calendar()
 
 
 @router.get("/{class_id}")

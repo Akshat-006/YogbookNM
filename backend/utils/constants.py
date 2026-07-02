@@ -1,0 +1,12 @@
+PAYMENT_PENDING = "pending"
+PAYMENT_PAID = "paid"
+PAYMENT_FAILED = "failed"
+PAYMENT_SUCCESS = "success"
+
+BOOKING_PENDING = "pending"
+BOOKING_CONFIRMED = "confirmed"
+BOOKING_CANCELLED = "cancelled"
+
+APPOINTMENT_BOOKED = "booked"
+APPOINTMENT_CANCELLED = "cancelled"
+APPOINTMENT_COMPLETED = "completed"
