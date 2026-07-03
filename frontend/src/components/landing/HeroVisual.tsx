@@ -3,11 +3,12 @@
 import { motion } from "framer-motion";
 import {
   CalendarDays,
-  CheckCircle2,
   CreditCard,
+  Users,
+  Clock3,
 } from "lucide-react";
 
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 export function HeroVisual() {
   return (
@@ -17,50 +18,109 @@ export function HeroVisual() {
       transition={{ duration: .6 }}
       className="relative"
     >
-      <Card className="rounded-3xl border shadow-xl">
-        <CardContent className="space-y-6 p-8">
+
+      <Card className="rounded-[32px] border bg-background/80 p-8 shadow-2xl backdrop-blur">
+
+        <div className="space-y-8">
 
           <div className="flex items-center justify-between">
+
             <div>
-              <p className="text-muted-foreground">
-                Today's Session
+
+              <p className="text-sm text-muted-foreground">
+                Today's Class
               </p>
 
-              <h3 className="text-xl font-semibold">
+              <h3 className="mt-2 text-2xl font-bold">
                 Morning Flow Yoga
               </h3>
+
             </div>
 
-            <CheckCircle2 className="text-green-500" />
-          </div>
-
-          <div className="rounded-2xl bg-muted p-4">
-            <div className="flex items-center gap-3">
-              <CalendarDays className="size-5" />
-              <span>Tomorrow • 7:00 AM</span>
+            <div className="rounded-2xl bg-primary/10 p-3">
+              <CalendarDays className="size-6 text-primary" />
             </div>
+
           </div>
 
-          <div className="rounded-2xl bg-muted p-4">
-            <div className="flex items-center gap-3">
-              <CreditCard className="size-5" />
-              <span>Payment Successful</span>
+          <div className="rounded-2xl bg-muted p-5">
+
+            <div className="flex items-center justify-between">
+
+              <span>Next Session</span>
+
+              <Clock3 className="size-5" />
+
             </div>
+
+            <p className="mt-2 text-xl font-semibold">
+              Tomorrow • 7:00 AM
+            </p>
+
           </div>
 
-        </CardContent>
+          <div className="grid grid-cols-2 gap-4">
+
+            <div className="rounded-2xl border p-5">
+
+              <Users className="mb-4 size-5 text-primary" />
+
+              <h4 className="text-2xl font-bold">
+                248
+              </h4>
+
+              <p className="text-sm text-muted-foreground">
+                Active Members
+              </p>
+
+            </div>
+
+            <div className="rounded-2xl border p-5">
+
+              <CreditCard className="mb-4 size-5 text-primary" />
+
+              <h4 className="text-2xl font-bold">
+                ₹42K
+              </h4>
+
+              <p className="text-sm text-muted-foreground">
+                Monthly Revenue
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
       </Card>
 
       <motion.div
-        animate={{ y: [-8, 8, -8] }}
+        animate={{
+          y: [-10, 10, -10],
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 4,
+        }}
+        className="absolute -left-8 top-10 rounded-2xl border bg-background px-5 py-4 shadow-xl"
+      >
+        🎉 Booking Confirmed
+      </motion.div>
+
+      <motion.div
+        animate={{
+          y: [10, -10, 10],
+        }}
         transition={{
           repeat: Infinity,
           duration: 5,
         }}
-        className="absolute -right-6 top-8 rounded-2xl border bg-background p-4 shadow-xl"
+        className="absolute -right-8 bottom-10 rounded-2xl border bg-background px-5 py-4 shadow-xl"
       >
-        ✅ Booking Confirmed
+        💳 Payment Successful
       </motion.div>
+
     </motion.div>
   );
 }

@@ -1,12 +1,13 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/landing/Hero";
-import { Features } from "@/components/landing/Features";
-import { PopularClasses } from "@/components/landing/PopularClasses";
-import { WhyYogbook } from "@/components/landing/WhyYogbook";
+import { Footer } from "@/components/landing/Footer";
+import { AIAssistant } from "@/components/landing/AIAssistant";
+import { YogaPrograms } from "@/components/landing/YogaPrograms";
+import { Benefits } from "@/components/landing/Benefits";
+import { Instructors } from "@/components/landing/Instructors";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { CTA } from "@/components/landing/CTA";
-import { FAQ } from "@/components/landing/FAQ";
-import { Footer } from "@/components/landing/Footer";
+
 
 export default function HomePage() {
   return (
@@ -15,11 +16,11 @@ export default function HomePage() {
 
       <main>
         <Hero />
-        <Features />
-        <PopularClasses />
-        <WhyYogbook />
+        <AIAssistant />
+        <YogaPrograms />
+        <Benefits />
+        <Instructors />
         <Testimonials />
-        <FAQ />
         <CTA />
       </main>
 

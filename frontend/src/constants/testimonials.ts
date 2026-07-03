@@ -1,20 +1,29 @@
-export const TESTIMONIALS = [
+export const testimonials = [
   {
-    name: "Riya Sharma",
+    id: 1,
+    name: "Priya Sharma",
     role: "Yoga Enthusiast",
     review:
-      "Yogbook has completely transformed the way I book my yoga sessions. Everything feels effortless.",
+      "Yogbook helped me stay consistent with my yoga routine. The AI recommendations felt surprisingly personal and the booking experience was effortless.",
+    rating: 5,
+    image: "/images/testimonials/user-1.webp",
   },
   {
-    name: "Aman Verma",
-    role: "Fitness Coach",
-    review:
-      "The booking experience is smooth, payments are quick, and calendar reminders never let me miss a class.",
-  },
-  {
-    name: "Sneha Patel",
+    id: 2,
+    name: "Rahul Verma",
     role: "Working Professional",
     review:
-      "A beautiful platform with an amazing user experience. Managing appointments has never been easier.",
+      "I finally found a platform that combines expert instructors with a simple and peaceful user experience. Highly recommended!",
+    rating: 5,
+    image: "/images/testimonials/user-2.webp",
   },
-] as const;
+  {
+    id: 3,
+    name: "Neha Patel",
+    role: "Fitness Coach",
+    review:
+      "Beautiful interface, amazing yoga sessions and personalized guidance. Yogbook feels like a premium wellness platform.",
+    rating: 5,
+    image: "/images/testimonials/user-3.webp",
+  },
+];

@@ -1,86 +1,106 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 
 export function HeroContent() {
   return (
     <div className="space-y-8">
+
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className="rounded-full border bg-muted px-4 py-2 text-sm font-medium">
-          🧘 Trusted by Modern Yoga Studios
-        </span>
+        <div className="inline-flex items-center gap-2 rounded-full border bg-background/80 px-4 py-2 backdrop-blur">
+
+          <Sparkles className="size-4 text-primary" />
+
+          <span className="text-sm font-medium">
+            Personalized Yoga Experience
+          </span>
+
+        </div>
       </motion.div>
 
       <motion.h1
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: .1 }}
-        className="text-5xl font-extrabold leading-tight lg:text-7xl"
+        className="max-w-xl text-5xl font-extrabold tracking-tight leading-[1] lg:text-7xl"
       >
-        Your Yoga
+        Transform Your
         <br />
-        Journey,
+
+        Mind, Body &
         <br />
-        Simplified.
+
+        Inner Peace.
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: .2 }}
-        className="max-w-xl text-lg text-muted-foreground"
+        className="max-w-lg text-lg leading-8 text-muted-foreground"
       >
-        Book yoga classes, schedule appointments, manage payments
-        and stay consistent—all from one beautifully designed
-        platform.
+        Discover personalized yoga programs, connect with experienced
+        instructors, and build healthier habits with the help of AI-powered
+        wellness guidance.
       </motion.p>
 
       <motion.div
-        className="flex flex-wrap gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: .3 }}
+        className="flex flex-wrap gap-4"
       >
-        <Button size="lg" className="rounded-full">
-          Book Class
-          <ArrowRight className="ml-2 h-4 w-4" />
+        <Button
+          size="lg"
+          className="rounded-full px-8 h-12"
+        >
+          Start Your Journey
+
+          <ArrowRight className="ml-2 size-4" />
         </Button>
 
         <Button
-          size="lg"
           variant="outline"
-          className="rounded-full"
+          size="lg"
+          className="rounded-full px-8 h-12"
         >
-          Explore Classes
+          Explore Programs
         </Button>
       </motion.div>
 
       <motion.div
-        className="flex gap-10 pt-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: .4 }}
+        className="grid gap-3 pt-2"
       >
-        <div>
-          <h2 className="text-3xl font-bold">500+</h2>
-          <p className="text-muted-foreground">Classes</p>
+
+        <div className="flex items-center gap-3">
+          <CheckCircle2 className="size-5 text-primary" />
+
+          <span>Personalized AI Yoga Guidance</span>
         </div>
 
-        <div>
-          <h2 className="text-3xl font-bold">100+</h2>
-          <p className="text-muted-foreground">Instructors</p>
+        <div className="flex items-center gap-3">
+          <CheckCircle2 className="size-5 text-primary" />
+
+          <span>Certified Yoga Instructors</span>
         </div>
 
-        <div>
-          <h2 className="text-3xl font-bold">10K+</h2>
-          <p className="text-muted-foreground">Bookings</p>
+        <div className="flex items-center gap-3">
+          <CheckCircle2 className="size-5 text-primary" />
+
+          <span>Classes, Appointments & Wellness Tracking</span>
         </div>
+
       </motion.div>
+
     </div>
   );
 }

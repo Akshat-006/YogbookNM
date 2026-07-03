@@ -7,37 +7,25 @@ export function CTA() {
   return (
     <section className="py-24">
       <Container>
-        <div className="rounded-3xl border bg-primary px-8 py-16 text-center text-primary-foreground lg:px-16">
-          <h2 className="text-4xl font-bold lg:text-5xl">
-            Ready to Begin Your
-            <br />
-            Yoga Journey?
+        <div className="rounded-[40px] border bg-primary px-8 py-16 text-center text-primary-foreground lg:px-16">
+          <h2 className="text-4xl font-bold tracking-tight lg:text-6xl">
+            Begin Your Yoga Journey Today
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-primary-foreground/80">
-            Join thousands of practitioners using Yogbook to book
-            classes, schedule appointments and stay consistent with
-            their wellness goals.
+          <p className="mx-auto mt-6 max-w-2xl text-lg opacity-90">
+            Discover personalized yoga programs, connect with expert instructors
+            and take the first step toward a healthier lifestyle.
           </p>
 
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Button
-              size="lg"
-              variant="secondary"
-              className="rounded-full"
-            >
-              Book Your First Class
-              <ArrowRight className="ml-2 size-4" />
-            </Button>
+          <Button
+            size="lg"
+            variant="secondary"
+            className="mt-10 rounded-full px-8"
+          >
+            Get Started
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-full border-primary-foreground/20 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"
-            >
-              Learn More
-            </Button>
-          </div>
+            <ArrowRight className="ml-2 size-4" />
+          </Button>
         </div>
       </Container>
     </section>
