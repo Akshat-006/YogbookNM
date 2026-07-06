@@ -5,7 +5,7 @@ import { useClasses } from "../hooks/useClasses";
 import { ClassCard } from "./ClassCard";
 
 export function ClassGrid() {
-  const { data, isLoading, isError } = useClasses();
+  const { data, error, isLoading, isError } = useClasses();
 
   if (isLoading) {
     return (
@@ -18,7 +18,10 @@ export function ClassGrid() {
   if (isError) {
     return (
       <Container>
-        <p>Unable to load classes.</p>
+        <p>
+          Unable to load classes.
+          {error ? ` ${String(error)}` : ""}
+        </p>
       </Container>
     );
   }

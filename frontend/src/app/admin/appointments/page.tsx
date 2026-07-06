@@ -89,7 +89,6 @@ export default function AdminAppointmentsPage() {
             modifiersClassNames={{
               hasAppointment: "!bg-primary/10 !text-primary font-semibold",
             }}
-            disabled={{ before: new Date(new Date().setHours(0, 0, 0, 0)) }}
           />
         </div>
 

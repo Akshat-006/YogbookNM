@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export function FeaturedClasses() {
-  const { data, isLoading, isError } = useClasses();
+  const { data, error, isLoading, isError } = useClasses();
 
   if (isLoading) {
     return (
@@ -23,7 +23,10 @@ export function FeaturedClasses() {
     return (
       <section className="py-24">
         <Container>
-          <p>Unable to load classes.</p>
+          <p>
+            Unable to load classes.
+            {error ? ` ${String(error)}` : ""}
+          </p>
         </Container>
       </section>
     );
