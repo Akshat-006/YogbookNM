@@ -35,7 +35,7 @@ export interface Payment {
 export interface DashboardResponse {
   profile: UserProfile;
   statistics: DashboardStatistics;
-  bookings: ClassBooking[];
-  appointments: Appointment[];
-  payments: Payment[];
+  upcoming_classes: ClassBooking[];
+  upcoming_appointments: Appointment[];
+  recent_payments: Payment[];
 }

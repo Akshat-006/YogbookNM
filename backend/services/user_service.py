@@ -45,32 +45,24 @@ async def get_user_dashboard(email: str):
         payments.append(payment)
 
     return {
-
         "profile": {
-
             "email": email
-
         },
 
         "statistics": {
-
             "total_bookings": len(bookings),
-
             "total_appointments": len(appointments),
-
             "completed_payments": len(
                 [
                     p for p in payments
                     if p["status"] == "success"
                 ]
             )
-
         },
 
-        "bookings": bookings,
+        "upcoming_classes": bookings[:5],
 
-        "appointments": appointments,
+        "upcoming_appointments": appointments[:5],
 
-        "payments": payments
-
+        "recent_payments": payments[:10]
     }

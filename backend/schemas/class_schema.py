@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
+from typing import Literal
 
 
 class ClassCreate(BaseModel):
@@ -12,6 +13,14 @@ class ClassCreate(BaseModel):
     price: float
     schedule_datetime: datetime
     meet_link: str | None = None
+    recurring: bool = False
+    recurring_type: Literal[
+        "none",
+        "daily",
+        "weekly"
+    ] = "none"
+    recurring_until: datetime | None = None
+    series_id: str | None = None
 
 
 class ClassUpdate(BaseModel):
@@ -24,3 +33,10 @@ class ClassUpdate(BaseModel):
     schedule_datetime: Optional[datetime] = None
     is_active: Optional[bool] = None
     meet_link: str | None = None
+    recurring: bool = False
+    recurring_type: Literal[
+        "none",
+        "daily",
+        "weekly"
+    ] = "none"
+    recurring_until: datetime | None = None

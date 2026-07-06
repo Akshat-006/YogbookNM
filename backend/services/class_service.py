@@ -1,14 +1,17 @@
 from datetime import datetime
 from bson import ObjectId
 from fastapi import HTTPException
-
+from datetime import timedelta
+from uuid import uuid4
 from core.database import get_database
 
-
+#Create Class
 async def create_class(class_data):
     db = get_database()
 
+    series_id = str(uuid4()) if class_data.recurring else None
     new_class = {
+        "series_id": series_id,
         "title": class_data.title,
         "description": class_data.description,
         "instructor_name": class_data.instructor_name,
@@ -25,15 +28,38 @@ async def create_class(class_data):
 
     result = await db["classes"].insert_one(new_class)
 
+    if (
+        class_data.recurring
+        and
+        class_data.recurring_type != "none"
+        and
+        class_data.recurring_until
+    ):
+        await generate_recurring_classes(
+        class_data,
+        series_id
+    )
     new_class["_id"] = str(result.inserted_id)
+        
     return new_class
 
-
+# All Class
 async def get_all_classes():
     db = get_database()
 
     classes = []
-    cursor = db["classes"].find().sort("schedule_datetime", 1)
+    cursor = db["classes"].find(
+        {
+            "schedule_datetime": {
+                "$gte": datetime.utcnow()
+            },
+            "is_active": True
+        }
+    ).sort(
+        "schedule_datetime",
+        1
+    )
+
 
     async for class_item in cursor:
         class_item["_id"] = str(class_item["_id"])
@@ -41,7 +67,7 @@ async def get_all_classes():
 
     return classes
 
-
+# Class by id
 async def get_class_by_id(class_id: str):
     db = get_database()
 
@@ -56,7 +82,7 @@ async def get_class_by_id(class_id: str):
     class_item["_id"] = str(class_item["_id"])
     return class_item
 
-
+# Update Class 
 async def update_class(class_id: str, class_data):
     db = get_database()
 
@@ -67,10 +93,8 @@ async def update_class(class_id: str, class_data):
     if not existing_class:
         raise HTTPException(status_code=404, detail="Class not found")
 
-    update_data = {
-        key: value
-        for key, value in class_data.dict(exclude_unset=True).items()
-    }
+    update_data = class_data.model_dump(
+        exclude_unset=True)
 
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields provided for update")
@@ -87,7 +111,7 @@ async def update_class(class_id: str, class_data):
 
     return updated_class
 
-
+#Delete Class
 async def delete_class(class_id: str):
     db = get_database()
 
@@ -128,25 +152,54 @@ async def get_classes_calendar():
 
     return classes
 
-#Classes calender
-async def get_classes_calendar():
+# Recurring Classes
+async def generate_recurring_classes(
+    class_data, series_id
+):
+
     db = get_database()
 
-    cursor = db["classes"].find(
-        {"is_active": True}
-    ).sort("schedule_datetime", 1)
+    current_date = class_data.schedule_datetime
 
-    classes = []
+    interval = timedelta(days=1)
 
-    async for item in cursor:
-        classes.append({
-            "id": str(item["_id"]),
-            "title": item["title"],
-            "datetime": item["schedule_datetime"],
-            "duration": item["duration"],
-            "capacity": item["capacity"],
-            "price": item["price"],
-            "instructor": item["instructor_name"]
-        })
+    if class_data.recurring_type == "weekly":
 
-    return classes
+        interval = timedelta(days=7)
+
+    while current_date < class_data.recurring_until:
+
+        current_date += interval
+
+        new_class = {
+
+            **class_data.model_dump(),
+
+            "series_id": series_id,
+
+            "schedule_datetime": current_date,
+
+            "created_at": datetime.utcnow(),
+
+            "updated_at": datetime.utcnow()
+
+        }
+
+        await db["classes"].insert_one(
+            new_class
+        )
+
+async def delete_recurring_classes(
+    series_id: str
+):
+    db = get_database()
+
+    await db["classes"].delete_many(
+        {
+            "series_id": series_id
+        }
+    )
+
+    return {
+        "message": "Future recurring classes deleted successfully"
+    }
