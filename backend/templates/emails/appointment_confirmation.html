@@ -2,82 +2,91 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
-    padding:30px;
-}
-.container{
-    max-width:600px;
-    margin:auto;
-    background:white;
-    border-radius:12px;
-    padding:30px;
-}
-.header{
-    font-size:28px;
-    color:#2E7D32;
-    font-weight:bold;
-}
-.info{
-    margin-top:25px;
-    line-height:28px;
-}
-.button{
-    display:inline-block;
-    margin-top:30px;
-    background:#feffaf;
-    color:rgb(0, 0, 0);
-    text-decoration:none;
-    padding:12px 22px;
-    border-radius:8px;
-}
-.footer{
-    margin-top:40px;
-    font-size:13px;
-    color:#777;
-}
+  body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: #f3f5f9;
+    color: #111827;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(17, 24, 39, 0.08);
+  }
+  .hero {
+    background: linear-gradient(135deg, #6366f1, #14b8a6);
+    color: white;
+    padding: 32px 28px;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: 28px;
+  }
+  .content {
+    padding: 28px;
+    line-height: 1.7;
+  }
+  .details {
+    margin-top: 24px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 24px;
+  }
+  .details dt {
+    font-weight: 700;
+    margin-top: 16px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    padding: 14px 24px;
+    border-radius: 14px;
+    background: #14b8a6;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .footer {
+    margin-top: 32px;
+    padding: 22px 28px;
+    background: #f8fafc;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.6;
+  }
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<div class="header">
-📅 Appointment Confirmed
-</div>
-
-<p>Hello <b>{{name}}</b>,</p>
-
-<p>
-Your yoga appointment has been confirmed.
-</p>
-
-<div class="info">
-
-<b>Date & Time</b><br>
-{{appointment_date}}
-
-<br><br>
-
-<b>Join Meeting</b><br>
-
-<a href="{{meet_link}}" class="button">
-Join Appointment
-</a>
-
-</div>
-
-<div class="footer">
-
-Thank you for choosing
-<b>Yogbook</b> ❤️
-
-</div>
-
-</div>
-
+  <div class="wrapper">
+    <div class="card">
+      <div class="hero">
+        <h1>Appointment Confirmed</h1>
+        <p>Your session is booked and the calendar invite is ready.</p>
+      </div>
+      <div class="content">
+        <p>Hello <strong>{{name}}</strong>,</p>
+        <p>Your yoga appointment has been confirmed. We look forward to seeing you.</p>
+        <div class="details">
+          <dl>
+            <dt>Date & Time</dt>
+            <dd>{{appointment_date}}</dd>
+          </dl>
+        </div>
+        <a href="{{meet_link}}" class="button">Join Appointment</a>
+      </div>
+    </div>
+    <div class="footer">
+      Thank you for choosing <strong>Yogbook</strong>. We’re here to help you stay balanced.
+    </div>
+  </div>
 </body>
 </html>

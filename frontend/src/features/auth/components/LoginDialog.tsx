@@ -87,6 +87,11 @@ export function LoginDialog({
             response.role
         );
 
+        localStorage.setItem(
+            "email",
+            form.getValues("email")
+        );
+
         onOpenChange(false);
 
         if (response.role === "admin") {

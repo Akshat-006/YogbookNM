@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 import { useDashboard } from "../hooks/useDashboard";
 
 import { Container } from "@/components/layout/Container";
@@ -68,6 +70,18 @@ export function Dashboard() {
                     value={data?.statistics.completed_payments ?? 0}
                 />
 
+            </div>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/dashboard/bookings" className="rounded-full border px-4 py-2 text-sm font-medium hover:bg-muted">
+                    View all bookings
+                </Link>
+                <Link href="/dashboard/appointments" className="rounded-full border px-4 py-2 text-sm font-medium hover:bg-muted">
+                    View all appointments
+                </Link>
+                <Link href="/dashboard/payments" className="rounded-full border px-4 py-2 text-sm font-medium hover:bg-muted">
+                    View payment history
+                </Link>
             </div>
 
             <div className="mt-12 grid gap-8 lg:grid-cols-2">

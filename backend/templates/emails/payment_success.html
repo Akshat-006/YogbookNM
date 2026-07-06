@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<style>
+  body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: #f8fafc;
+    color: #111827;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+  }
+  .hero {
+    background: linear-gradient(135deg, #ec4899, #f59e0b);
+    color: #ffffff;
+    padding: 32px 28px;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: 28px;
+  }
+  .content {
+    padding: 28px;
+    line-height: 1.75;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+    padding: 14px 24px;
+    border-radius: 14px;
+    background: #6366f1;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .footer {
+    margin-top: 32px;
+    padding: 22px 28px;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="hero">
+        <h1>Payment Received</h1>
+        <p>Thank you! Your Yogbook payment is complete.</p>
+      </div>
+      <div class="content">
+        <p>Your payment of <strong>{{amount}}</strong> was successfully processed.</p>
+        <p>We’ll make sure your booking is confirmed and the session is prepared.</p>
+        <a href="https://your-yogbook-portal.example.com" class="button">View your dashboard</a>
+      </div>
+    </div>
+    <div class="footer">
+      Need help? Reply to this email and our support team will assist you.
+    </div>
+  </div>
+</body>
+</html>

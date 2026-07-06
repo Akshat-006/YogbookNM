@@ -2,97 +2,111 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f5f5f5;
-    padding:30px;
-}
-.container{
-    max-width:600px;
-    margin:auto;
-    background:white;
-    border-radius:12px;
-    padding:30px;
-}
-.header{
-    font-size:28px;
-    color:#2E7D32;
-    font-weight:bold;
-}
-.info{
-    margin-top:25px;
-    line-height:28px;
-}
-.button{
-    display:inline-block;
-    margin-top:30px;
-    background:#2E7D32;
-    color:white;
-    text-decoration:none;
-    padding:12px 22px;
-    border-radius:8px;
-}
-.footer{
-    margin-top:40px;
-    font-size:13px;
-    color:#777;
-}
+  body {
+    margin: 0;
+    font-family: Inter, Arial, sans-serif;
+    background: #f3f5f9;
+    color: #1f2937;
+  }
+  .wrapper {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+  .card {
+    background: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(31, 41, 55, 0.08);
+  }
+  .hero {
+    background: linear-gradient(135deg, #3b82f6, #10b981);
+    color: white;
+    padding: 32px 28px;
+  }
+  .hero h1 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: -0.02em;
+  }
+  .content {
+    padding: 28px;
+    line-height: 1.7;
+  }
+  .content p {
+    margin: 16px 0;
+  }
+  .badge {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  .details {
+    margin-top: 24px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 24px;
+  }
+  .details dt {
+    font-weight: 700;
+    margin-top: 16px;
+  }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    padding: 14px 24px;
+    border-radius: 14px;
+    background: #10b981;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .footer {
+    margin-top: 32px;
+    padding: 22px 28px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+  }
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<div class="header">
-🧘 Booking Confirmed
-</div>
-
-<p>Hello <b>{{name}}</b>,</p>
-
-<p>
-Your yoga class has been booked successfully.
-</p>
-
-<div class="info">
-
-<b>Class</b><br>
-{{class_name}}
-
-<br><br>
-
-<b>Instructor</b><br>
-{{instructor}}
-
-<br><br>
-
-<b>Date</b><br>
-{{date}}
-
-<br><br>
-
-<b>Duration</b><br>
-{{duration}} Minutes
-
-</div>
-
-<a href="{{ meet_link }}" class="button">
-    Join Yoga Class
-</a>
-
-<a class="button">
-See You Soon
-</a>
-
-<div class="footer">
-
-Thank you for choosing
-<b>Yogbook</b> ❤️
-
-</div>
-
-</div>
-
+  <div class="wrapper">
+    <div class="card">
+      <div class="hero">
+        <h1>Booking Confirmed</h1>
+        <p>Your class has been reserved and we’re excited to see you on the mat.</p>
+      </div>
+      <div class="content">
+        <p>Hello <strong>{{name}}</strong>,</p>
+        <p>Your yoga class booking is confirmed. Everything is ready for your session.</p>
+        <div class="details">
+          <dl>
+            <dt>Class</dt>
+            <dd>{{class_name}}</dd>
+            <dt>Instructor</dt>
+            <dd>{{instructor}}</dd>
+            <dt>Date</dt>
+            <dd>{{date}}</dd>
+            <dt>Duration</dt>
+            <dd>{{duration}} minutes</dd>
+          </dl>
+        </div>
+        <a href="{{meet_link}}" class="button">Join Yoga Class</a>
+      </div>
+    </div>
+    <div class="footer">
+      Thank you for choosing <strong>Yogbook</strong>. We’ll see you soon on the mat.
+    </div>
+  </div>
 </body>
 </html>

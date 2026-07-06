@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 
 from api.v1.deps import (
     get_current_admin,
@@ -8,6 +8,7 @@ from api.v1.deps import (
 from services.payment_service import (
     create_payment,
     verify_payment,
+    handle_webhook,
     get_payment_status,
     get_all_payments,
     get_user_payments,
@@ -28,18 +29,24 @@ router = APIRouter(
 #Payment creation endpoint temporary
 @router.post("/create")
 async def create(
-    payment: CreatePayment
-    # current_admin: str = Depends(get_current_admin)
+    payment: CreatePayment,
+    current_user: str = Depends(get_current_user)
 ):
-    return await create_payment(payment.booking_id)
+    return await create_payment(payment.booking_id, current_user)
 
 # Payment verification endpoint
 @router.post("/verify")
 async def verify(
     payment: VerifyPayment,
-    # current_admin: str = Depends(get_current_admin)
+    current_user: str = Depends(get_current_user)
 ):
-    return await verify_payment(payment)
+    return await verify_payment(payment, current_user)
+
+@router.post("/webhook")
+async def webhook(request: Request):
+    payload = await request.json()
+    signature = request.headers.get("X-Razorpay-Signature", "")
+    return await handle_webhook(payload, signature)
 
 @router.get("/")
 async def all_payments(

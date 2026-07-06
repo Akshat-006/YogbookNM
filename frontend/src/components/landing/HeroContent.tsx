@@ -4,8 +4,17 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
 
 export function HeroContent() {
+  const { data: heroContent } = useCMSContentByKey("hero");
+  const title = heroContent?.title ?? "Transform Your\nMind, Body &\nInner Peace.";
+  const subtitle =
+    heroContent?.subtitle ??
+    "Join expert-led yoga classes designed to improve flexibility, strength, mindfulness, and overall wellness.";
+  const buttonText = heroContent?.button_text ?? "Start Your Journey";
+  const buttonLink = heroContent?.button_link ?? "/classes";
+
   return (
     <div className="space-y-8">
 
@@ -28,15 +37,9 @@ export function HeroContent() {
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: .1 }}
-        className="max-w-xl text-5xl font-extrabold tracking-tight leading-[1] lg:text-7xl"
+        className="max-w-xl whitespace-pre-line text-5xl font-extrabold leading-[1] tracking-tight lg:text-7xl"
       >
-        Transform Your
-        <br />
-
-        Mind, Body &
-        <br />
-
-        Inner Peace.
+        {title}
       </motion.h1>
 
       <motion.p
@@ -45,8 +48,7 @@ export function HeroContent() {
         transition={{ delay: .2 }}
         className="max-w-lg text-lg leading-8 text-muted-foreground"
       >
-        Join expert-led yoga classes designed to improve flexibility,
-        strength, mindfulness, and overall wellness.
+        {subtitle}
       </motion.p>
 
       <motion.div
@@ -55,13 +57,11 @@ export function HeroContent() {
         transition={{ delay: .3 }}
         className="flex flex-wrap gap-4"
       >
-        <Button
-          size="lg"
-          className="rounded-full px-8 h-12"
-        >
-          Start Your Journey
-
-          <ArrowRight className="ml-2 size-4" />
+        <Button asChild size="lg" className="rounded-full px-8 h-12">
+          <a href={buttonLink}>
+            {buttonText}
+            <ArrowRight className="ml-2 size-4" />
+          </a>
         </Button>
 
         <Button

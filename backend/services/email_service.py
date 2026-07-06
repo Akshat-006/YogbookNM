@@ -42,10 +42,21 @@ class EmailService:
         email,
         amount
     ):
+        html = load_email_template(
+            "payment_success.html"
+        )
+
+        html = render_template(
+            html,
+            {
+                "amount": f"₹{amount}",
+            }
+        )
+
         await send_email(
             email,
-            "Payment Successful",
-            f"Your payment of ₹{amount} was successful."
+            "Payment Successful | Yogbook",
+            html
         )
 
     async def send_appointment_email(

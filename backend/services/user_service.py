@@ -9,6 +9,30 @@ def is_payment_completed(status: str | None) -> bool:
     return status in {PAYMENT_PAID, "success"}
 
 
+def build_user_dashboard_payload(email: str, bookings: list[dict], appointments: list[dict], payments: list[dict]) -> dict:
+    return {
+        "profile": {
+            "email": email
+        },
+        "statistics": {
+            "total_bookings": len(bookings),
+            "total_appointments": len(appointments),
+            "completed_payments": len(
+                [
+                    p for p in payments
+                    if is_payment_completed(p.get("status"))
+                ]
+            )
+        },
+        "bookings": bookings,
+        "appointments": appointments,
+        "payments": payments,
+        "upcoming_classes": bookings[:5],
+        "upcoming_appointments": appointments[:5],
+        "recent_payments": payments[:10]
+    }
+
+
 async def get_user_dashboard(email: str):
 
     db = get_database()
@@ -49,25 +73,4 @@ async def get_user_dashboard(email: str):
 
         payments.append(payment)
 
-    return {
-        "profile": {
-            "email": email
-        },
-
-        "statistics": {
-            "total_bookings": len(bookings),
-            "total_appointments": len(appointments),
-            "completed_payments": len(
-                [
-                    p for p in payments
-                    if is_payment_completed(p.get("status"))
-                ]
-            )
-        },
-
-        "upcoming_classes": bookings[:5],
-
-        "upcoming_appointments": appointments[:5],
-
-        "recent_payments": payments[:10]
-    }
+    return build_user_dashboard_payload(email, bookings, appointments, payments)

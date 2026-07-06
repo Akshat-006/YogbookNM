@@ -83,16 +83,18 @@ async def create_class_booking(booking_data):
     result = await db["class_bookings"].insert_one(new_booking)
     new_booking["_id"] = str(result.inserted_id)
 
-    # Payment hone ke baad email bhejenge
-    # await email_service.send_booking_email(
-    #     booking_data.email,
-    #     booking_data.name,
-    #     class_item["title"],
-    #     class_item["instructor_name"],
-    #     class_item["schedule_datetime"],
-    #     class_item["duration"],
-    #     class_item.get("meet_link")
-    # )
+    try:
+        await email_service.send_booking_email(
+            booking_data.email,
+            booking_data.name,
+            class_item["title"],
+            class_item["instructor_name"],
+            class_item["schedule_datetime"],
+            class_item["duration"],
+            class_item.get("meet_link")
+        )
+    except Exception as e:
+        print(f"Booking email error: {e}")
 
     return {
         "success": True,
