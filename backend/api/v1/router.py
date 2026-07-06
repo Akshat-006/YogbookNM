@@ -9,6 +9,7 @@ from api.v1.routers.payments import router as payment_router
 from api.v1.routers import user
 from api.v1.routers import auth
 from api.v1.routers.cms import router as cms_router
+from api.v1.routers.upload import router as upload_router
 
 
 api_router = APIRouter()
@@ -23,3 +24,4 @@ api_router.include_router(payment_router)
 api_router.include_router(user.router)
 api_router.include_router(auth.router)
 api_router.include_router(cms_router)
+api_router.include_router(upload_router)

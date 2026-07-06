@@ -93,7 +93,7 @@ async def verify_payment(payment_data):
             },
             {
                 "$set": {
-                    "status": PAYMENT_SUCCESS,
+                    "status": PAYMENT_PAID,
                     "razorpay_payment_id": payment_data.razorpay_payment_id,
                     "updated_at": utc_now()
                 }
@@ -164,4 +164,129 @@ async def get_payment_status(payment_id: str):
         "success": True,
         "status": payment["status"]
     }
+
+async def get_all_payments():
+
+    db = get_database()
+
+    payments = []
+
+    cursor = db["payments"].find().sort(
+        "created_at",
+        -1
+    )
+
+    async for payment in cursor:
+
+        payment["_id"] = str(payment["_id"])
+
+        payments.append(payment)
+
+    return payments
+
+async def get_user_payments(
+    email: str
+):
+
+    db = get_database()
+
+    payments = []
+
+    cursor = db["payments"].find({
+
+        "user_email": email
+
+    }).sort(
+
+        "created_at",
+
+        -1
+
+    )
+
+    async for payment in cursor:
+
+        payment["_id"] = str(payment["_id"])
+
+        payments.append(payment)
+
+    return payments
+
+async def get_payment_details(
+    payment_id: str
+):
+
+    db = get_database()
+
+    payment = await db["payments"].find_one({
+
+        "_id": ObjectId(payment_id)
+
+    })
+
+    if not payment:
+
+        return None
+
+    payment["_id"] = str(payment["_id"])
+
+    return payment
+
+
+async def get_payment_analytics():
+
+    db = get_database()
+
+    total = await db["payments"].count_documents({})
+
+    paid = await db["payments"].count_documents({
+
+        "status": PAYMENT_PAID
+
+    })
+
+    pending = await db["payments"].count_documents({
+
+        "status": PAYMENT_PENDING
+
+    })
+
+    failed = await db["payments"].count_documents({
+
+        "status": PAYMENT_FAILED
+
+    })
+
+    revenue = 0
+
+    cursor = db["payments"].find({
+
+        "status": PAYMENT_PAID
+
+    })
+
+    async for payment in cursor:
+
+        revenue += payment.get(
+
+            "amount",
+
+            0
+
+        )
+
+    return {
+
+        "total_payments": total,
+
+        "paid": paid,
+
+        "pending": pending,
+
+        "failed": failed,
+
+        "revenue": revenue
+
+    }
+
 

@@ -21,6 +21,7 @@ export function ClassCard({ yogaClass }: Props) {
         <div className="relative h-56 overflow-hidden">
           <Image
             src="/images/classes/default-class.webp"
+            // src={yogaClass.thumbnail ?? "/images/classes/default-class.webp"}
             alt={yogaClass.title}
             fill
             className="object-cover transition duration-500 group-hover:scale-105"
@@ -38,8 +39,17 @@ export function ClassCard({ yogaClass }: Props) {
 
           <div className="space-y-3 text-sm">
             <div className="flex items-center gap-3">
-              <UserRound className="size-4" />
-              {yogaClass.instructor_name}
+              <Calendar className="size-4" />
+              {date.toLocaleDateString("en-IN", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
+              •
+              {date.toLocaleTimeString("en-IN", {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </div>
 
             <div className="flex items-center gap-3">
@@ -48,12 +58,7 @@ export function ClassCard({ yogaClass }: Props) {
             </div>
 
             <div className="flex items-center gap-3">
-              <Calendar className="size-4" />
-              {date.toLocaleDateString("en-IN", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              👥 {yogaClass.capacity} Seats
             </div>
           </div>
         </CardContent>

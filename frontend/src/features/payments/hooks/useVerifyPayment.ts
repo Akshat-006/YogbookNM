@@ -1,8 +1,6 @@
+"use client";
 import { useMutation } from "@tanstack/react-query";
-import {
-  verifyPayment,
-} from "../services/verify-payment.service";
-
+import { verifyPayment } from "../services/payment.service";
 export function useVerifyPayment() {
   return useMutation({
     mutationFn: verifyPayment,

@@ -28,11 +28,17 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export function LoginDialog() {
+interface LoginDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export function LoginDialog({
+  open,
+  onOpenChange,
+}: LoginDialogProps) {
 
     const router = useRouter();
-
-    const [open, setOpen] = useState(false);
 
     const [step, setStep] = useState<1 | 2>(1);
 
@@ -81,7 +87,7 @@ export function LoginDialog() {
             response.role
         );
 
-        setOpen(false);
+        onOpenChange(false);
 
         if (response.role === "admin") {
 
@@ -102,30 +108,20 @@ export function LoginDialog() {
             open={open}
             onOpenChange={(value) => {
 
-                setOpen(value);
+                onOpenChange(value);
 
                 if (!value) {
 
-                    setStep(1);
+                setStep(1);
 
-                    setOtp("");
+                setOtp("");
 
-                    form.reset();
+                form.reset();
 
                 }
 
             }}
-        >
-
-            <DialogTrigger asChild>
-
-                <Button>
-
-                    Login
-
-                </Button>
-
-            </DialogTrigger>
+            >
 
             <DialogContent className="sm:max-w-md">
 

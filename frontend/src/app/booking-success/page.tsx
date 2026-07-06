@@ -4,6 +4,8 @@ import { CheckCircle2, CalendarDays, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/Container";
 
+import { Suspense } from "react";
+
 export default function BookingSuccessPage() {
   return (
     <Container className="py-24">

@@ -203,36 +203,35 @@ async def get_available_slots(selected_date: str):
             appointment["appointment_datetime"].strftime("%H:%M")
         )
 
-
-    from datetime import datetime
-
-    display_date = date_obj.strftime("%d-%m-%Y")
-
     slots = []
 
     current = start_of_day
 
+    now = datetime.utcnow()
+
     while current < end_of_day:
+
+        if (
+            date_obj.date() == now.date()
+            and current <= now
+        ):
+            current += timedelta(minutes=30)
+            continue
 
         slot = current.strftime("%H:%M")
 
-            # Skip past slots for today
-        if date_obj.date() == datetime.utcnow().date():
-            if current <= datetime.utcnow():
-                current += timedelta(minutes=30)
-                continue
+        slots.append({
+            "time": slot,
+            "available": slot not in booked_slots
+        })
 
-            slots.append({
-                "time": slot,
-                "available": slot not in booked_slots})
+        current += timedelta(minutes=30)
 
-            current += timedelta(minutes=30)
-            
-            return {
-            "date": display_date,
-            "slots": slots
-        }
-
+    return {
+        "date": selected_date,
+        "display_date": date_obj.strftime("%d-%m-%Y"),
+        "slots": slots
+    }
 
 async def get_calendar_appointments():
     db = get_database()

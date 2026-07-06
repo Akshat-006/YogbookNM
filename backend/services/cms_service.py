@@ -1,12 +1,25 @@
+from datetime import datetime
 from bson import ObjectId
 from fastapi import HTTPException
-from datetime import datetime
 
 from core.database import get_database
+
 
 async def create_cms(data):
 
     db = get_database()
+
+    existing = await db["cms"].find_one(
+        {
+            "key": data.key
+        }
+    )
+
+    if existing:
+        raise HTTPException(
+            status_code=400,
+            detail="CMS key already exists"
+        )
 
     document = {
 
@@ -18,20 +31,27 @@ async def create_cms(data):
 
     }
 
-    result = await db["cms"].insert_one(document)
+    result = await db["cms"].insert_one(
+        document
+    )
 
-    document["_id"] = str(result.inserted_id)
+    document["_id"] = str(
+        result.inserted_id
+    )
 
     return document
 
-# Get all cms
+
 async def get_all_cms():
 
     db = get_database()
 
     cms = []
 
-    cursor = db["cms"].find()
+    cursor = db["cms"].find().sort(
+        "created_at",
+        -1
+    )
 
     async for item in cursor:
 
@@ -41,95 +61,125 @@ async def get_all_cms():
 
     return cms
 
-# Get by key
-async def get_cms_by_key(key: str):
+
+async def get_cms_by_key(
+    key: str
+):
 
     db = get_database()
 
-    item = await db["cms"].find_one({
-
-        "key": key,
-
-        "is_active": True
-
-    })
+    item = await db["cms"].find_one(
+        {
+            "key": key,
+            "is_active": True
+        }
+    )
 
     if not item:
 
         raise HTTPException(
-
             status_code=404,
-
             detail="Content not found"
-
         )
 
     item["_id"] = str(item["_id"])
 
     return item
 
-#Update Cms
+
 async def update_cms(
-
     cms_id: str,
-
     data
-
 ):
 
     db = get_database()
 
-    update = data.model_dump(
+    if not ObjectId.is_valid(
+        cms_id
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid CMS ID"
+        )
 
-        exclude_unset=True
-
+    existing = await db["cms"].find_one(
+        {
+            "_id": ObjectId(cms_id)
+        }
     )
+
+    if not existing:
+        raise HTTPException(
+            status_code=404,
+            detail="CMS not found"
+        )
+
+    update = data.model_dump(
+        exclude_unset=True
+    )
+
+    if not update:
+        raise HTTPException(
+            status_code=400,
+            detail="Nothing to update"
+        )
 
     update["updated_at"] = datetime.utcnow()
 
     await db["cms"].update_one(
-
         {
-
             "_id": ObjectId(cms_id)
-
         },
-
         {
-
             "$set": update
-
         }
-
     )
 
-    item = await db["cms"].find_one({
+    updated = await db["cms"].find_one(
+        {
+            "_id": ObjectId(cms_id)
+        }
+    )
 
-        "_id": ObjectId(cms_id)
+    updated["_id"] = str(
+        updated["_id"]
+    )
 
-    })
+    return updated
 
-    item["_id"] = str(item["_id"])
 
-    return item
-
-# Delete Cms
 async def delete_cms(
-
     cms_id: str
-
 ):
 
     db = get_database()
 
-    await db["cms"].delete_one({
+    if not ObjectId.is_valid(
+        cms_id
+    ):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid CMS ID"
+        )
 
-        "_id": ObjectId(cms_id)
+    existing = await db["cms"].find_one(
+        {
+            "_id": ObjectId(cms_id)
+        }
+    )
 
-    })
+    if not existing:
+        raise HTTPException(
+            status_code=404,
+            detail="CMS not found"
+        )
+
+    await db["cms"].delete_one(
+        {
+            "_id": ObjectId(cms_id)
+        }
+    )
 
     return {
-
-        "message": "CMS deleted."
-
+        "message": "CMS deleted successfully"
     }

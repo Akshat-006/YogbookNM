@@ -142,6 +142,13 @@ async def update_class_booking(booking_id: str, booking_data):
         raise HTTPException(status_code=404, detail="Booking not found")
 
     update_data = booking_data.model_dump(exclude_unset=True)
+    if not update_data:
+        raise HTTPException(
+            status_code=400,
+            detail="No fields provided for update"
+        )
+
+    update_data["updated_at"] = datetime.utcnow()
 
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields provided for update")

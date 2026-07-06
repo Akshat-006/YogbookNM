@@ -1,7 +1,6 @@
 PAYMENT_PENDING = "pending"
 PAYMENT_PAID = "paid"
 PAYMENT_FAILED = "failed"
-PAYMENT_SUCCESS = "success"
 
 BOOKING_PENDING = "pending"
 BOOKING_CONFIRMED = "confirmed"

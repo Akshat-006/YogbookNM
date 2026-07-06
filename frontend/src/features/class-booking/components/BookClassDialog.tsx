@@ -20,7 +20,7 @@ import {
   BookingFormData,
 } from "../schemas/booking.schema";
 
-import { useCreateBooking } from "../hooks/useCreatebooking";
+import { useCreateBooking } from "../hooks/useCreateBooking";
 
 interface Props {
   classId: string;
@@ -46,8 +46,9 @@ export function BookClassDialog({ classId }: Props) {
 
     reset();
 
-    alert("Booking Created Successfully!");
-  }
+    window.location.href =
+    `/payments?booking=${response.booking_id}`;
+}
 
   return (
     <Dialog>

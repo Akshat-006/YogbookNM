@@ -1,16 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { getDashboard } from "../services/dashboard.service";
 
 export function useDashboard() {
-
-    return useQuery({
-
-        queryKey: ["dashboard"],
-
-        queryFn: getDashboard,
-
-        staleTime: 1000 * 60 * 5,
-
-    });
-
+  return useQuery({
+    queryKey: ["dashboard"],
+    queryFn: getDashboard,
+  });
 }

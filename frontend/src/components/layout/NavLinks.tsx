@@ -1,19 +1,25 @@
+"use client";
+
 import Link from "next/link";
-import { NAV_LINKS } from "@/constants/navigation";
-import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { navigation } from "@/constants/navigation";
+import clsx from "clsx";
 
-type NavLinksProps = {
-  className?: string;
-};
+export function NavLinks() {
+  const pathname = usePathname();
 
-export function NavLinks({ className }: NavLinksProps) {
   return (
-    <nav className={cn("flex items-center gap-8", className)}>
-      {NAV_LINKS.map((item) => (
+    <nav className="hidden items-center gap-8 lg:flex">
+      {navigation.map((item) => (
         <Link
-          key={item.label}
+          key={item.href}
           href={item.href}
-          className="text-sm font-medium text-muted-foreground transition-colors duration-200 hover:text-foreground"
+          className={clsx(
+            "transition-colors hover:text-primary",
+            pathname === item.href
+              ? "font-semibold text-primary"
+              : "text-muted-foreground"
+          )}
         >
           {item.label}
         </Link>
