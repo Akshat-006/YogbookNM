@@ -1,126 +1,141 @@
 "use client";
 
+import Image from "next/image";
+import { BrainCircuit, Star, Users, CalendarDays } from "lucide-react";
 import { motion } from "framer-motion";
-import {
-  CalendarDays,
-  CreditCard,
-  Users,
-  Clock3,
-} from "lucide-react";
-
-import { Card } from "@/components/ui/card";
 
 export function HeroVisual() {
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 40 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: .6 }}
-      className="relative"
-    >
+    <div className="relative mx-auto flex w-full max-w-[520px] items-center justify-center">
 
-      <Card className="rounded-[32px] border bg-background/80 p-8 shadow-2xl backdrop-blur">
+      {/* Background Glow */}
 
-        <div className="space-y-8">
+      <div className="absolute inset-0 -z-10 rounded-full bg-primary/5 blur-3xl" />
 
-          <div className="flex items-center justify-between">
+      {/* Main Image */}
 
-            <div>
+      <motion.div
+        initial={{ opacity: 0, y: 25 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative overflow-hidden rounded-[32px] border bg-background shadow-2xl"
+      >
+        <Image
+          src="/images/hero/hero-yoga.webp"
+          alt="Yoga Practice"
+          width={500}
+          height={650}
+          priority
+          className="h-auto w-full object-cover"
+        />
+      </motion.div>
 
-              <p className="text-sm text-muted-foreground">
-                Today's Class
-              </p>
+      {/* AI Card */}
 
-              <h3 className="mt-2 text-2xl font-bold">
-                Morning Flow Yoga
-              </h3>
-
-            </div>
-
-            <div className="rounded-2xl bg-primary/10 p-3">
-              <CalendarDays className="size-6 text-primary" />
-            </div>
-
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2 }}
+        className="absolute left-[-30px] top-10 rounded-2xl border bg-background/90 px-4 py-3 shadow-xl backdrop-blur"
+      >
+        <div className="flex items-center gap-3">
+          <div className="rounded-xl bg-primary/10 p-2">
+            <BrainCircuit className="size-5 text-primary" />
           </div>
 
-          <div className="rounded-2xl bg-muted p-5">
+          <div>
+            <p className="text-sm font-semibold">
+              AI Personalized
+            </p>
 
-            <div className="flex items-center justify-between">
+            <p className="text-xs text-muted-foreground">
+              Daily Wellness Plan
+            </p>
+          </div>
+        </div>
+      </motion.div>
 
-              <span>Next Session</span>
+      {/* Rating */}
 
-              <Clock3 className="size-5" />
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4 }}
+        className="absolute right-[-20px] top-1/3 rounded-2xl border bg-background/90 px-4 py-3 shadow-xl backdrop-blur"
+      >
+        <div className="flex items-center gap-2">
 
-            </div>
+          <Star className="size-5 fill-yellow-400 text-yellow-400" />
 
-            <p className="mt-2 text-xl font-semibold">
-              Tomorrow • 7:00 AM
+          <div>
+
+            <p className="font-semibold">
+              4.9 Rating
+            </p>
+
+            <p className="text-xs text-muted-foreground">
+              Trusted Community
             </p>
 
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+        </div>
+      </motion.div>
 
-            <div className="rounded-2xl border p-5">
+      {/* Members */}
 
-              <Users className="mb-4 size-5 text-primary" />
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="absolute bottom-12 left-[-20px] rounded-2xl border bg-background/90 px-4 py-3 shadow-xl backdrop-blur"
+      >
+        <div className="flex items-center gap-3">
 
-              <h4 className="text-2xl font-bold">
-                248
-              </h4>
+          <Users className="size-5 text-primary" />
 
-              <p className="text-sm text-muted-foreground">
-                Active Members
-              </p>
+          <div>
 
-            </div>
+            <p className="font-semibold">
+              10K+ Yogis
+            </p>
 
-            <div className="rounded-2xl border p-5">
-
-              <CreditCard className="mb-4 size-5 text-primary" />
-
-              <h4 className="text-2xl font-bold">
-                ₹42K
-              </h4>
-
-              <p className="text-sm text-muted-foreground">
-                Monthly Revenue
-              </p>
-
-            </div>
+            <p className="text-xs text-muted-foreground">
+              Active Members
+            </p>
 
           </div>
 
         </div>
-
-      </Card>
-
-      <motion.div
-        animate={{
-          y: [-10, 10, -10],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 4,
-        }}
-        className="absolute -left-8 top-10 rounded-2xl border bg-background px-5 py-4 shadow-xl"
-      >
-        🎉 Booking Confirmed
       </motion.div>
 
+      {/* Sessions */}
+
       <motion.div
-        animate={{
-          y: [10, -10, 10],
-        }}
-        transition={{
-          repeat: Infinity,
-          duration: 5,
-        }}
-        className="absolute -right-8 bottom-10 rounded-2xl border bg-background px-5 py-4 shadow-xl"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8 }}
+        className="absolute bottom-5 right-[-25px] rounded-2xl border bg-background/90 px-4 py-3 shadow-xl backdrop-blur"
       >
-        💳 Payment Successful
+        <div className="flex items-center gap-3">
+
+          <CalendarDays className="size-5 text-primary" />
+
+          <div>
+
+            <p className="font-semibold">
+              500+
+            </p>
+
+            <p className="text-xs text-muted-foreground">
+              Live Sessions
+            </p>
+
+          </div>
+
+        </div>
       </motion.div>
 
-    </motion.div>
+    </div>
   );
 }

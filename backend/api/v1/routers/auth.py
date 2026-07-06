@@ -34,7 +34,9 @@ async def login(data: AdminLogin):
         )
 
     access_token = create_access_token(
-        {"sub": admin["email"]}
+        {"sub": admin["email"],
+         "role": "admin"
+         }
     )
 
     return {

@@ -14,11 +14,11 @@ router = APIRouter(
     tags=["Payments"]
 )
 
-#Payment creation endpoint
+#Payment creation endpoint temporary
 @router.post("/create")
 async def create(
-    payment: CreatePayment,
-    current_admin: str = Depends(get_current_admin)
+    payment: CreatePayment
+    # current_admin: str = Depends(get_current_admin)
 ):
     return await create_payment(payment.booking_id)
 
@@ -34,6 +34,6 @@ async def payment_status(
 @router.post("/verify")
 async def verify(
     payment: VerifyPayment,
-    current_admin: str = Depends(get_current_admin)
+    # current_admin: str = Depends(get_current_admin)
 ):
     return await verify_payment(payment)

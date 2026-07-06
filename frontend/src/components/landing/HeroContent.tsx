@@ -18,7 +18,7 @@ export function HeroContent() {
           <Sparkles className="size-4 text-primary" />
 
           <span className="text-sm font-medium">
-            Personalized Yoga Experience
+            Yogbook - A holistic approach to wellness
           </span>
 
         </div>
@@ -45,9 +45,8 @@ export function HeroContent() {
         transition={{ delay: .2 }}
         className="max-w-lg text-lg leading-8 text-muted-foreground"
       >
-        Discover personalized yoga programs, connect with experienced
-        instructors, and build healthier habits with the help of AI-powered
-        wellness guidance.
+        Join expert-led yoga classes designed to improve flexibility,
+        strength, mindfulness, and overall wellness.
       </motion.p>
 
       <motion.div

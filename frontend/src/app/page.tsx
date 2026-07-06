@@ -2,7 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/landing/Hero";
 import { Footer } from "@/components/landing/Footer";
 import { AIAssistant } from "@/components/landing/AIAssistant";
-import { YogaPrograms } from "@/components/landing/YogaPrograms";
+import { FeaturedClasses } from "@/features/classes/components/FeaturedClasses";
 import { Benefits } from "@/components/landing/Benefits";
 import { Instructors } from "@/components/landing/Instructors";
 import { Testimonials } from "@/components/landing/Testimonials";
@@ -17,7 +17,7 @@ export default function HomePage() {
       <main>
         <Hero />
         <AIAssistant />
-        <YogaPrograms />
+        <FeaturedClasses />
         <Benefits />
         <Instructors />
         <Testimonials />

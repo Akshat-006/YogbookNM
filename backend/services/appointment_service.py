@@ -203,7 +203,12 @@ async def get_available_slots(selected_date: str):
             appointment["appointment_datetime"].strftime("%H:%M")
         )
 
-    available_slots = []
+
+    from datetime import datetime
+
+    display_date = date_obj.strftime("%d-%m-%Y")
+
+    slots = []
 
     current = start_of_day
 
@@ -211,23 +216,22 @@ async def get_available_slots(selected_date: str):
 
         slot = current.strftime("%H:%M")
 
-        # skip past slots if selected date is today
+            # Skip past slots for today
         if date_obj.date() == datetime.utcnow().date():
-
             if current <= datetime.utcnow():
                 current += timedelta(minutes=30)
                 continue
 
-        if slot not in booked_slots:
-            available_slots.append(slot)
+            slots.append({
+                "time": slot,
+                "available": slot not in booked_slots})
 
-        current += timedelta(minutes=30)
-
-    return {
-        "date": selected_date,
-        "available_slots": available_slots,
-        "booked_slots": booked_slots
-    }
+            current += timedelta(minutes=30)
+            
+            return {
+            "date": display_date,
+            "slots": slots
+        }
 
 
 async def get_calendar_appointments():

@@ -76,5 +76,28 @@ class EmailService:
             html
         )
 
+    async def send_otp_email(
+        self,
+        email,
+        otp
+    ):
+
+        html = load_email_template(
+            "otp_verification.html"
+        )
+
+        html = render_template(
+            html,
+            {
+                "otp": otp,
+                "expiry": "5 Minutes"
+            }
+        )
+
+        await send_email(
+            email,
+            "Your Yogbook Verification Code",
+            html
+        )
 
 email_service = EmailService()

@@ -4,7 +4,8 @@ import { HeroVisual } from "./HeroVisual";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-28 lg:pt-36">
+    <section className="relative overflow-hidden py-24 lg:py-32">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/5 via-background to-background" />
       {/* Background */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute left-[-120px] top-24 h-96 w-96 rounded-full bg-primary/10 blur-[130px]" />
