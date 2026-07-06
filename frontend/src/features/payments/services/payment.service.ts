@@ -1,14 +1,16 @@
 import api from "@/services/api";
 
-export async function createPayment(
-  bookingId: string
-) {
+interface CreatePaymentPayload {
+  booking_id: string;
+}
+
+export async function createPayment(payload: string | CreatePaymentPayload) {
+  const body =
+    typeof payload === "string" ? { booking_id: payload } : payload;
 
   const { data } = await api.post(
     "/payments/create",
-    {
-      booking_id: bookingId,
-    }
+    body
   );
 
   return data;

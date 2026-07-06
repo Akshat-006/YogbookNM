@@ -28,6 +28,12 @@ interface Props {
   classId: string;
 }
 
+interface RazorpayResponse {
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
 export function BookClassDialog({ classId }: Props) {
   const [open, setOpen] = useState(false);
 
@@ -80,7 +86,7 @@ export function BookClassDialog({ classId }: Props) {
 
         timeout: 300,
 
-        handler: async function (response: any) {
+        handler: async function (response: RazorpayResponse) {
           try {
             await verify.mutateAsync({
               razorpay_order_id: response.razorpay_order_id,

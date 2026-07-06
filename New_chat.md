@@ -6,6 +6,7 @@ Read the following project documents carefully.
 2. BACKEND_STATUS.md
 3. FRONTEND_STATUS.md
 4. NEXT_TASK.md
+5. GPT ko yaad dilao.md
 
 IMPORTANT
 
@@ -15,5 +16,4 @@ IMPORTANT
 - Only extend existing implementation.
 - Always patch existing files.
 - If a file already exists, ask for it before modifying.
-- Continue exactly from NEXT_TASK.md.
 - Think like a senior software engineer building a production SaaS product.

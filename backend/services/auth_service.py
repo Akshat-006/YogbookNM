@@ -3,9 +3,14 @@ from fastapi import HTTPException
 
 from core.database import get_database
 from services.email_service import email_service
-from utils.otp import generate_otp
+from services.otp_service import generate_otp
 from utils.security import create_access_token
 from utils.constants import OTP_EXPIRY_MINUTES
+
+
+async def get_admin_by_email(email: str):
+    db = get_database()
+    return await db["admins"].find_one({"email": email})
 
 
 async def send_otp(email: str):

@@ -1,6 +1,9 @@
 from core.database import get_database
 from datetime import datetime
 
+from utils.constants import PAYMENT_PAID, PAYMENT_PENDING
+
+
 async def get_dashboard_stats():
 
     db = get_database()
@@ -12,17 +15,17 @@ async def get_dashboard_stats():
     total_payments = await db["payments"].count_documents({})
 
     completed_payments = await db["payments"].count_documents({
-        "status": "success"
+        "status": {"$in": [PAYMENT_PAID, "success"]}
     })
 
     pending_payments = await db["payments"].count_documents({
-        "status": "pending"
+        "status": PAYMENT_PENDING
     })
 
     revenue = 0
 
     payment_cursor = db["payments"].find({
-        "status": "success"
+        "status": {"$in": [PAYMENT_PAID, "success"]}
     })
 
     async for payment in payment_cursor:
@@ -31,7 +34,7 @@ async def get_dashboard_stats():
     monthly_revenue = {}
 
     payment_cursor = db["payments"].find({
-        "status": "success"
+        "status": {"$in": [PAYMENT_PAID, "success"]}
     })
 
     async for payment in payment_cursor:

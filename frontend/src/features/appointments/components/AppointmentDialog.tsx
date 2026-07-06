@@ -20,8 +20,6 @@ import { useSendOTP } from "@/features/otp/hooks/useSendOTP";
 import { useVerifyOTP } from "@/features/otp/hooks/useVerifyOTP";
 import { useCreateAppointment } from "../hooks/useCreateAppointment";
 
-import { format } from "date-fns";
-
 import {
   appointmentSchema,
   AppointmentFormData,
@@ -44,6 +42,7 @@ export function AppointmentDialog({
   selectedTime,
 }: Props) {
   const [step, setStep] = useState(1);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   const sendOTP = useSendOTP();
   const verifyOTP = useVerifyOTP();
@@ -71,19 +70,28 @@ export function AppointmentDialog({
             <Input placeholder="Email Address" {...form.register("email")} />
 
             <Button
-              className="w-full" type="button"
+              className="w-full"
+              type="button"
+              disabled={sendOTP.isPending}
               onClick={async () => {
-                
                 const valid = await form.trigger(["name", "email"]);
 
                 if (!valid) return;
 
-                await sendOTP.mutateAsync(form.getValues("email"));
-
-                setStep(2);
-                
+                try {
+                  setStatusMessage(null);
+                  await sendOTP.mutateAsync(form.getValues("email"));
+                  setStep(2);
+                } catch {
+                  setStatusMessage("Unable to send OTP right now. Please try again.");
+                }
               }}
-            > Send OTP </Button>
+            >
+              {sendOTP.isPending ? "Sending..." : "Send OTP"}
+            </Button>
+            {statusMessage && (
+              <p className="text-sm text-destructive">{statusMessage}</p>
+            )}
           </div>
         )}
 
@@ -97,19 +105,28 @@ export function AppointmentDialog({
             />
 
             <Button
-              className="w-full" type="button"
+              className="w-full"
+              type="button"
+              disabled={verifyOTP.isPending}
               onClick={async () => {
                 try {
+                  setStatusMessage(null);
                   await verifyOTP.mutateAsync({
                     email: form.getValues("email"),
                     otp,
                   });
 
-                   setStep(3);
-              }
-              catch{}
-            }}
-            > Verify OTP </Button>
+                  setStep(3);
+                } catch {
+                  setStatusMessage("OTP verification failed. Please try again.");
+                }
+              }}
+            >
+              {verifyOTP.isPending ? "Verifying..." : "Verify OTP"}
+            </Button>
+            {statusMessage && (
+              <p className="text-sm text-destructive">{statusMessage}</p>
+            )}
           </div>
         )}
 
@@ -123,26 +140,38 @@ export function AppointmentDialog({
             />
 
             <Button
-              className="w-full" type="button"
+              className="w-full"
+              type="button"
+              disabled={appointment.isPending}
               onClick={async () => {
-                await appointment.mutateAsync({
-                  name: form.getValues("name"),
+                const valid = await form.trigger(["phone"]);
 
-                  email: form.getValues("email"),
+                if (!valid) return;
 
-                  phone: form.getValues("phone"),
+                try {
+                  setStatusMessage(null);
+                  await appointment.mutateAsync({
+                    name: form.getValues("name"),
+                    email: form.getValues("email"),
+                    phone: form.getValues("phone"),
+                    notes: form.getValues("notes"),
+                    appointment_datetime: `${selectedDate}T${selectedTime}:00`,
+                  });
 
-                  notes: form.getValues("notes"),
-
-                  appointment_datetime:`${selectedDate}T${selectedTime}:00`,
-                })
-                form.reset();
-                setOtp("");
-                setStep(1);
-                onOpenChange(false);
-                
+                  form.reset();
+                  setOtp("");
+                  setStep(1);
+                  onOpenChange(false);
+                } catch {
+                  setStatusMessage("Unable to book the appointment right now. Please try again.");
+                }
               }}
-            > Book Appointment </Button>
+            >
+              {appointment.isPending ? "Booking..." : "Book Appointment"}
+            </Button>
+            {statusMessage && (
+              <p className="text-sm text-destructive">{statusMessage}</p>
+            )}
           </div>
         )}
       </DialogContent>

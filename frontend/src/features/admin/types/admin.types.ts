@@ -5,6 +5,7 @@ export interface DashboardStats {
   total_appointments: number;
   total_payments: number;
   total_revenue: number;
+  monthly_revenue?: Record<string, number>;
 
   recent_bookings: RecentBooking[];
   recent_appointments: RecentAppointment[];

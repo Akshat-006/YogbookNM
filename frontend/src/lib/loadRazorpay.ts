@@ -1,21 +1,28 @@
-export async function loadRazorpay() {
+let razorpayLoader: Promise<boolean> | null = null;
 
-  return new Promise<boolean>((resolve) => {
+export function loadRazorpay() {
+  if (typeof window === "undefined") {
+    return Promise.resolve(false);
+  }
 
-    if (document.getElementById("razorpay-sdk")) {
-      resolve(true);
-      return;
-    }
+  if (document.getElementById("razorpay-sdk")) {
+    return Promise.resolve(true);
+  }
 
-    const script = document.createElement("script");
+  if (!razorpayLoader) {
+    razorpayLoader = new Promise<boolean>((resolve) => {
+      const script = document.createElement("script");
 
-    script.id = "razorpay-sdk";
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.id = "razorpay-sdk";
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.async = true;
 
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
 
-    document.body.appendChild(script);
-  });
+      document.body.appendChild(script);
+    });
+  }
 
+  return razorpayLoader;
 }

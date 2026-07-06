@@ -2,6 +2,11 @@ from bson import ObjectId
 from fastapi import HTTPException
 
 from core.database import get_database
+from utils.constants import PAYMENT_PAID, PAYMENT_PENDING
+
+
+def is_payment_completed(status: str | None) -> bool:
+    return status in {PAYMENT_PAID, "success"}
 
 
 async def get_user_dashboard(email: str):
@@ -55,7 +60,7 @@ async def get_user_dashboard(email: str):
             "completed_payments": len(
                 [
                     p for p in payments
-                    if p["status"] == "success"
+                    if is_payment_completed(p.get("status"))
                 ]
             )
         },

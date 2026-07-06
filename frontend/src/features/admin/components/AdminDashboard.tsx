@@ -2,7 +2,7 @@
 
 import { StatsCards } from "./StatsCards";
 import { RecentBookings } from "./RecentBookings";
-import { RecentAppointments } from "./RecentAppointments";
+import { RecentAppointments } from "./RecentAppoinntments";
 import { RevenueChart } from "./RevenueChart";
 
 import { useAdminDashboard } from "../hooks/useAdminDashboard";
@@ -50,6 +50,7 @@ export function AdminDashboard() {
 
       <RevenueChart
         revenue={data.total_revenue}
+        monthlyRevenue={data.monthly_revenue}
       />
 
     </div>
