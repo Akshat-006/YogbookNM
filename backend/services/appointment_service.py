@@ -10,6 +10,10 @@ from core.database import get_database
 APPOINTMENT_SLOT_MINUTES = 30
 
 
+def _build_meet_link(appointment_id: str) -> str:
+    return f"https://meet.google.com/lookup/{appointment_id}"
+
+
 async def create_appointment(appointment_data):
     db = get_database()
 
@@ -56,6 +60,15 @@ async def create_appointment(appointment_data):
     }
 
     result = await db["appointments"].insert_one(new_appointment)
+    appointment_id = str(result.inserted_id)
+    meet_link = appointment_data.meet_link or _build_meet_link(appointment_id)
+    appointment_datetime_label = appointment_datetime.strftime("%a, %d %b %Y at %I:%M %p")
+
+    await db["appointments"].update_one(
+        {"_id": result.inserted_id},
+        {"$set": {"meet_link": meet_link}}
+    )
+
     try:
         create_calendar_event(
             summary=f"Yoga Appointment - {appointment_data.name}",
@@ -70,13 +83,14 @@ async def create_appointment(appointment_data):
         await email_service.send_appointment_email(
             appointment_data.email,
             appointment_data.name,
-            appointment_datetime,
-            appointment_data.meet_link
+            appointment_datetime_label,
+            meet_link
         )
     except Exception as e:
         print(f"Email Error: {e}")
-        
-    new_appointment["_id"] = str(result.inserted_id)
+
+    new_appointment["_id"] = appointment_id
+    new_appointment["meet_link"] = meet_link
 
     return new_appointment
 
