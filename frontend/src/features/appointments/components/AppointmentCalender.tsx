@@ -46,7 +46,7 @@ export function AppointmentCalendar() {
                 <Sparkles className="h-4 w-4" />
                 Free 30-minute consultation
               </div>
-              <h1 className="text-4xl font-bold tracking-tight">Book your yoga consultation</h1>
+              <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-5xl">Book your yoga consultation</h1>
               <p className="text-lg text-muted-foreground">
                 Pick a day, choose a half-hour slot, and share your details. We’ll send a confirmation email with the appointment time and join link.
               </p>
@@ -146,6 +146,7 @@ export function AppointmentCalendar() {
               <p className="text-sm text-muted-foreground">Each session lasts 30 minutes and includes a confirmation email.</p>
               <Button
                 type="button"
+                className="rounded-full bg-primary px-7 font-semibold text-primary-foreground shadow-md transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg"
                 onClick={() => {
                   if (!selectedSlot) return;
                   setDialogOpen(true);

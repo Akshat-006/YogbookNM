@@ -32,6 +32,13 @@ interface Props {
   ) => void;
 }
 
+function statusPill(status: string) {
+  if (status === "completed") return "pill-success";
+  if (status === "booked") return "pill-info";
+  if (status === "cancelled") return "pill-danger";
+  return "pill-neutral";
+}
+
 export function AppointmentTable({
   appointments,
   onStatusChange,
@@ -41,22 +48,36 @@ export function AppointmentTable({
     {
       accessorKey: "name",
       header: "Name",
+      cell: ({ row }) => (
+        <span className="font-medium">{row.original.name}</span>
+      ),
     },
     {
       accessorKey: "email",
       header: "Email",
+      cell: ({ row }) => (
+        <span className="text-muted-foreground">{row.original.email}</span>
+      ),
     },
     {
       accessorKey: "appointment_datetime",
       header: "Date",
-      cell: ({ row }) =>
-        new Date(
-          row.original.appointment_datetime
-        ).toLocaleString(),
+      cell: ({ row }) => (
+        <span className="text-muted-foreground">
+          {new Date(
+            row.original.appointment_datetime
+          ).toLocaleString()}
+        </span>
+      ),
     },
     {
       accessorKey: "appointment_status",
       header: "Status",
+      cell: ({ row }) => (
+        <span className={statusPill(row.original.appointment_status)}>
+          {row.original.appointment_status}
+        </span>
+      ),
     },
     {
       id: "actions",
@@ -68,6 +89,8 @@ export function AppointmentTable({
 
           <Button
             size="sm"
+            variant="ghost"
+            className="h-8 rounded-lg bg-primary/8 text-xs font-semibold text-primary hover:bg-primary hover:text-primary-foreground"
             onClick={() =>
               onStatusChange(
                 row.original
@@ -78,8 +101,9 @@ export function AppointmentTable({
           </Button>
 
           <Button
-            variant="destructive"
             size="sm"
+            variant="ghost"
+            className="h-8 rounded-lg bg-destructive/8 text-xs font-semibold text-destructive hover:bg-destructive hover:text-white"
             onClick={() =>
               onDelete(
                 row.original
@@ -103,23 +127,24 @@ export function AppointmentTable({
   });
 
   return (
-    <div className="rounded-xl border">
+    <div className="overflow-hidden rounded-2xl border border-border shadow-sm">
 
       <Table>
 
-        <TableHeader>
+        <TableHeader className="bg-muted/40">
 
           {table
             .getHeaderGroups()
             .map((group) => (
 
-              <TableRow key={group.id}>
+              <TableRow key={group.id} className="border-border hover:bg-transparent">
 
                 {group.headers.map(
                   (header) => (
 
                     <TableHead
                       key={header.id}
+                      className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground"
                     >
 
                       {flexRender(
@@ -145,7 +170,7 @@ export function AppointmentTable({
             .getRowModel()
             .rows.map((row) => (
 
-              <TableRow key={row.id}>
+              <TableRow key={row.id} className="border-border transition-colors hover:bg-muted/30">
 
                 {row
                   .getVisibleCells()

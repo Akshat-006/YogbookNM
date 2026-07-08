@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 import { Container } from "@/components/layout/Container";
 import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
@@ -17,44 +18,84 @@ export function AboutSection() {
     "Yogbook blends yoga classes, appointments, and wellness support into one beautifully simple experience for modern yogis.";
   const buttonText = data?.button_text ?? "View Classes";
   const buttonLink = data?.button_link ?? "/classes";
-  const imageSrc = data?.image ?? "/images/hero/hero-yoga.webp";
+  const imageSrc = data?.image ?? "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=85&auto=format&fit=crop";
 
   return (
-    <section id="about" className="py-24">
+    <section id="about" className="py-28 section-alt">
       <Container>
-        <div className="grid items-center gap-16 lg:grid-cols-2">
-          <div className="space-y-6">
-            <span className="inline-flex rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+        <div className="grid items-center gap-16 lg:grid-cols-2 xl:gap-24">
+          {/* Text */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="space-y-7"
+          >
+            <span className="inline-flex rounded-full border border-primary/20 bg-primary/8 px-5 py-2 text-sm font-semibold text-primary">
               Why Yogbook?
             </span>
 
-            <h2 className="text-4xl font-bold tracking-tight lg:text-5xl">
+            <h2 className="font-heading max-w-lg text-4xl font-bold tracking-tight sm:text-5xl lg:text-[52px]">
               {title}
             </h2>
 
-            <p className="max-w-2xl text-lg leading-8 text-muted-foreground">
+            <p className="max-w-lg text-xl leading-relaxed text-muted-foreground">
               {subtitle}
             </p>
 
-            <p className="max-w-2xl text-base leading-8 text-muted-foreground">
+            <p className="max-w-lg text-base leading-[1.85] text-muted-foreground">
               {description}
             </p>
 
-            <Link href={buttonLink} className="inline-flex items-center gap-2 text-lg font-semibold text-primary transition hover:text-primary/80">
+            {/* Stats row */}
+            <div className="flex flex-wrap gap-8 border-t border-border pt-6">
+              {[
+                { value: "10K+", label: "Active Members" },
+                { value: "500+", label: "Live Sessions" },
+                { value: "50+", label: "Expert Instructors" },
+              ].map((stat) => (
+                <div key={stat.label}>
+                  <p className="font-heading text-3xl font-bold text-primary">{stat.value}</p>
+                  <p className="mt-0.5 text-sm text-muted-foreground">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <Link
+              href={buttonLink}
+              className="inline-flex items-center gap-2 text-base font-semibold text-primary transition-all hover:gap-3 hover:text-primary/80"
+            >
               {buttonText}
               <ArrowRight className="size-4" />
             </Link>
-          </div>
+          </motion.div>
 
-          <div className="relative overflow-hidden rounded-[32px] border border-border bg-background shadow-xl">
-            <Image
-              src={imageSrc}
-              alt="About Yogbook"
-              width={720}
-              height={560}
-              className="h-full w-full object-cover"
-            />
-          </div>
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 }}
+            className="relative"
+          >
+            {/* Decorative frame offset */}
+            <div className="absolute -inset-3 -z-10 rounded-[40px] bg-primary/8" />
+            <div className="overflow-hidden rounded-[32px] shadow-premium">
+              <Image
+                src={imageSrc}
+                alt="About Yogbook"
+                width={720}
+                height={560}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            {/* Floating accent */}
+            <div className="glass absolute -bottom-5 -right-5 rounded-2xl px-5 py-4 shadow-premium">
+              <p className="text-sm font-bold">🏆 Top Rated Platform</p>
+              <p className="text-xs text-muted-foreground">Wellness India 2025</p>
+            </div>
+          </motion.div>
         </div>
       </Container>
     </section>

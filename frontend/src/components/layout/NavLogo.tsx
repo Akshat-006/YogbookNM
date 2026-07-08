@@ -5,13 +5,13 @@ export function NavLogo() {
   return (
     <Link
       href="/"
-      className="flex items-center gap-2 transition-opacity hover:opacity-80"
+      className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
     >
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-        <Flower2 className="h-5 w-5 text-primary" />
+      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm">
+        <Flower2 className="h-4.5 w-4.5" />
       </div>
 
-      <span className="text-xl font-bold tracking-tight text-foreground">
+      <span className="font-heading text-lg font-bold tracking-tight text-foreground">
         Yogbook
       </span>
     </Link>

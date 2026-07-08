@@ -12,6 +12,8 @@ export interface AdminBooking {
 
   booking_date: string;
 
+  schedule_datetime?: string;
+
   amount: number;
 
   payment_status:
@@ -23,5 +25,7 @@ export interface AdminBooking {
     | "booked"
     | "cancelled"
     | "completed";
+
+  meet_link?: string;
 
 }

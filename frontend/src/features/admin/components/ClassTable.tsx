@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Video } from "lucide-react";
 
 import {
   Card,
@@ -28,18 +28,18 @@ export function ClassTable({
   const visibleClasses = getDisplayClasses(classes);
 
   return (
-    <Card className="rounded-3xl">
-      <CardHeader>
-        <CardTitle>
+    <Card className="rounded-2xl shadow-sm">
+      <CardHeader className="border-b border-border px-6 py-5">
+        <CardTitle className="font-heading text-base font-bold">
           Classes
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="p-0">
 
         {visibleClasses.length === 0 ? (
 
-          <p className="text-muted-foreground">
+          <p className="px-6 py-8 text-sm text-muted-foreground">
 
             No classes available.
 
@@ -49,33 +49,37 @@ export function ClassTable({
 
           <div className="overflow-x-auto">
 
-            <table className="w-full">
+            <table className="w-full text-sm">
 
-              <thead className="border-b">
+              <thead className="border-b border-border bg-muted/40">
 
                 <tr>
 
-                  <th className="py-3 text-left">
+                  <th className="px-6 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Title
                   </th>
 
-                  <th className="text-left">
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Instructor
                   </th>
 
-                  <th className="text-left">
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Price
                   </th>
 
-                  <th className="text-left">
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Capacity
                   </th>
 
-                  <th className="text-left">
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Date
                   </th>
 
-                  <th className="text-center">
+                  <th className="px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+                    Meet Link
+                  </th>
+
+                  <th className="px-4 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
                     Actions
                   </th>
 
@@ -83,45 +87,43 @@ export function ClassTable({
 
               </thead>
 
-              <tbody>
+              <tbody className="divide-y divide-border">
 
                 {visibleClasses.map((item) => (
 
                   <tr
                     key={item._id}
-                    className="border-b"
+                    className="transition-colors hover:bg-muted/30"
                   >
 
-                    <td className="py-4">
+                    <td className="px-6 py-4">
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="font-medium">{item.title}</span>
                         {item.recurring && (
-                          <span className="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
-                            Recurring
-                          </span>
+                          <span className="pill-success">Recurring</span>
                         )}
                       </div>
                     </td>
 
-                    <td>
+                    <td className="px-4 py-4 text-muted-foreground">
 
                       {item.instructor_name}
 
                     </td>
 
-                    <td>
+                    <td className="px-4 py-4 font-medium">
 
                       ₹{item.price}
 
                     </td>
 
-                    <td>
+                    <td className="px-4 py-4 text-muted-foreground">
 
                       {item.capacity}
 
                     </td>
 
-                    <td>
+                    <td className="px-4 py-4 text-muted-foreground">
 
                       {new Date(
                         item.schedule_datetime
@@ -129,31 +131,51 @@ export function ClassTable({
 
                     </td>
 
-                    <td>
+                    <td className="px-4 py-4">
+
+                      {item.meet_link ? (
+                        <a
+                          href={item.meet_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/8 px-3 py-1 text-xs font-semibold text-blue-600 transition hover:bg-blue-500 hover:text-white"
+                        >
+                          <Video className="size-3.5" />
+                          Join
+                        </a>
+                      ) : (
+                        <span className="text-xs text-muted-foreground/50">—</span>
+                      )}
+
+                    </td>
+
+                    <td className="px-4 py-4">
 
                       <div className="flex justify-center gap-2">
 
                         <Button
                           size="icon"
-                          variant="outline"
+                          variant="ghost"
+                          className="h-8 w-8 rounded-xl hover:bg-primary/10 hover:text-primary"
                           onClick={() =>
                             onEdit(item)
                           }
                         >
 
-                          <Pencil className="h-4 w-4" />
+                          <Pencil className="h-3.5 w-3.5" />
 
                         </Button>
 
                         <Button
                           size="icon"
-                          variant="destructive"
+                          variant="ghost"
+                          className="h-8 w-8 rounded-xl hover:bg-destructive/10 hover:text-destructive"
                           onClick={() =>
                             onDelete(item._id)
                           }
                         >
 
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-3.5 w-3.5" />
 
                         </Button>
 

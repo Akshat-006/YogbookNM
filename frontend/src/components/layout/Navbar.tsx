@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
+import { Moon, Sun } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 
@@ -11,6 +13,28 @@ import { NavLogo } from "./NavLogo";
 
 import { LoginDialog } from "@/features/auth/components/LoginDialog";
 import { logout } from "@/lib/logout";
+
+function ThemeToggle() {
+  const { setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return <div className="h-9 w-9" />;
+  return (
+    <button
+      onClick={() =>
+        setTheme(resolvedTheme === "dark" ? "light" : "dark")
+      }
+      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      aria-label="Toggle theme"
+    >
+      {resolvedTheme === "dark" ? (
+        <Sun className="size-4" />
+      ) : (
+        <Moon className="size-4" />
+      )}
+    </button>
+  );
+}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -57,25 +81,41 @@ export function Navbar() {
     <>
       <header className="sticky top-4 z-50 px-4">
         <div
-          className={`mx-auto flex h-[72px] max-w-7xl items-center justify-between rounded-full border bg-background/80 px-6 backdrop-blur-xl transition-all duration-300 ${
-            scrolled ? "shadow-lg" : "shadow-none"
+          className={`mx-auto flex h-[68px] max-w-7xl items-center justify-between rounded-full border border-border/60 bg-background/85 px-5 backdrop-blur-xl transition-all duration-300 ${
+            scrolled
+              ? "shadow-[0_4px_24px_rgba(0,0,0,0.08)] border-border"
+              : "shadow-none"
           }`}
         >
           <NavLogo />
 
           <NavLinks />
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-2 lg:flex">
+            <ThemeToggle />
+
             {isAuthenticated ? (
               <>
-                <Button variant="ghost" className="rounded-full" onClick={() => (window.location.href = "/dashboard")}>Dashboard</Button>
-                <Button variant="ghost" className="rounded-full" onClick={handleLogout}>Logout</Button>
+                <Button
+                  variant="ghost"
+                  className="rounded-full text-sm font-medium"
+                  onClick={() => (window.location.href = "/dashboard")}
+                >
+                  Dashboard
+                </Button>
+                <Button
+                  variant="ghost"
+                  className="rounded-full text-sm font-medium text-muted-foreground"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
               </>
             ) : (
               <>
                 <Button
                   variant="ghost"
-                  className="rounded-full"
+                  className="rounded-full text-sm font-medium"
                   onClick={() => setLoginOpen(true)}
                 >
                   Login
@@ -83,17 +123,16 @@ export function Navbar() {
 
                 <Button
                   asChild
-                  className="rounded-full px-6"
+                  className="rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md"
                 >
-                  <Link href="/appointments">
-                    Book Now
-                  </Link>
+                  <Link href="/appointments">Book Now</Link>
                 </Button>
               </>
             )}
           </div>
 
-          <div className="lg:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
             <MobileMenu />
           </div>
         </div>

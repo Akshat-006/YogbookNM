@@ -7,7 +7,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -26,6 +25,7 @@ import { useCreatePayment } from "@/features/payments/hooks/useCreatePayment";
 import { useVerifyPayment } from "@/features/payments/hooks/useVerifyPayment";
 import { loadRazorpay } from "@/lib/loadRazorpay";
 import { useRouter } from "next/navigation";
+import { User, Mail, Phone, FileText, CreditCard } from "lucide-react";
 
 interface Props {
   classId: string;
@@ -123,7 +123,7 @@ export function BookClassDialog({ classId }: Props) {
         },
 
         theme: {
-          color: "#179288",
+          color: "#2D6A4F",
         },
       });
 
@@ -137,38 +137,80 @@ export function BookClassDialog({ classId }: Props) {
     }
   }
 
+  const isPending = booking.isPending || payment.isPending || verify.isPending;
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button size="lg" className="rounded-full">
+        <Button
+          size="lg"
+          className="rounded-full bg-primary px-8 font-semibold text-primary-foreground shadow-md transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-xl"
+        >
           Book This Class
         </Button>
       </DialogTrigger>
 
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Book Your Yoga Class</DialogTitle>
-        </DialogHeader>
+      <DialogContent className="overflow-hidden p-0 sm:max-w-md">
+        {/* Header strip */}
+        <div className="bg-gradient-to-br from-primary/15 via-primary/8 to-accent/8 px-8 py-7">
+          <DialogTitle className="font-heading text-2xl font-bold tracking-tight">
+            Book Your Yoga Class
+          </DialogTitle>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Fill in your details to reserve your spot.
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          <Input placeholder="Full Name" {...register("name")} />
-
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 px-8 py-7">
+          {/* Name */}
+          <div className="relative">
+            <User className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Full Name"
+              {...register("name")}
+              className="h-11 rounded-xl border-border pl-10 focus-visible:ring-primary/30"
+            />
+          </div>
           {errors.name && (
-            <p className="text-sm text-red-500">{errors.name.message}</p>
+            <p className="text-xs text-destructive">{errors.name.message}</p>
           )}
 
-          <Input placeholder="Email" {...register("email")} />
+          {/* Email */}
+          <div className="relative">
+            <Mail className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Email Address"
+              {...register("email")}
+              className="h-11 rounded-xl border-border pl-10 focus-visible:ring-primary/30"
+            />
+          </div>
 
-          <Input placeholder="Phone" {...register("phone")} />
+          {/* Phone */}
+          <div className="relative">
+            <Phone className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Phone Number"
+              {...register("phone")}
+              className="h-11 rounded-xl border-border pl-10 focus-visible:ring-primary/30"
+            />
+          </div>
 
-          <Textarea placeholder="Notes (optional)" {...register("notes")} />
+          {/* Notes */}
+          <div className="relative">
+            <FileText className="absolute left-3.5 top-3.5 size-4 text-muted-foreground" />
+            <Textarea
+              placeholder="Any special notes? (optional)"
+              {...register("notes")}
+              className="min-h-[80px] rounded-xl border-border pl-10 focus-visible:ring-primary/30"
+            />
+          </div>
 
           <Button
-            className="w-full"
-            disabled={
-              booking.isPending || payment.isPending || verify.isPending
-            }
+            type="submit"
+            className="h-12 w-full rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg disabled:opacity-70"
+            disabled={isPending}
           >
+            <CreditCard className="mr-2 size-4" />
             {booking.isPending
               ? "Creating Booking..."
               : payment.isPending

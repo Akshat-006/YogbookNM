@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -19,7 +19,7 @@ import {
 
 import { AdminClass } from "@/features/admin/types/class.types";
 
-export default function AdminClassesPage() {
+function AdminClassesContent() {
   const searchParams = useSearchParams();
   const { data = [], isLoading } = useClasses();
 
@@ -79,24 +79,26 @@ export default function AdminClassesPage() {
   }
 
   if (isLoading) {
-
-    return <p className="p-10">Loading...</p>;
-
+    return (
+      <div className="space-y-4 p-8">
+        <div className="h-10 w-48 animate-pulse rounded-xl bg-muted/60" />
+        <div className="h-64 animate-pulse rounded-2xl bg-muted/60" />
+      </div>
+    );
   }
 
   return (
 
     <div className="space-y-8 p-8">
 
-      <div className="flex items-center justify-between">
-
-        <h1 className="text-3xl font-bold">
-
-          Yoga Classes
-
-        </h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-muted-foreground">Admin</p>
+          <h1 className="font-heading mt-1 text-3xl font-bold tracking-tight">Yoga Classes</h1>
+        </div>
 
         <Button
+          className="rounded-full bg-primary px-6 font-semibold text-primary-foreground shadow-sm hover:-translate-y-0.5 hover:shadow-md transition-all"
           onClick={() =>
             setCreateOpen(true)
           }
@@ -177,5 +179,17 @@ export default function AdminClassesPage() {
     </div>
 
   );
+}
 
+export default function AdminClassesPage() {
+  return (
+    <Suspense fallback={
+      <div className="space-y-4 p-8">
+        <div className="h-10 w-48 animate-pulse rounded-xl bg-muted/60" />
+        <div className="h-64 animate-pulse rounded-2xl bg-muted/60" />
+      </div>
+    }>
+      <AdminClassesContent />
+    </Suspense>
+  );
 }

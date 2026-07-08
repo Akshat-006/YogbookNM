@@ -3,7 +3,6 @@
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 
@@ -46,56 +45,60 @@ export function UpdateAppointmentDialog({
       open={open}
       onOpenChange={onOpenChange}
     >
-      <DialogContent>
-
-        <DialogHeader>
-
-          <DialogTitle>
-
+      <DialogContent className="sm:max-w-sm overflow-hidden p-0">
+        <div className="bg-gradient-to-br from-primary/12 via-primary/6 to-accent/6 px-6 py-5">
+          <DialogTitle className="font-heading text-lg font-bold">
             Update Appointment
-
           </DialogTitle>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Change the appointment status below.
+          </p>
+        </div>
 
-        </DialogHeader>
+        <div className="space-y-5 px-6 py-6">
+          <div>
+            <label className="mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+              Status
+            </label>
+            <Select
+              value={status}
+              onValueChange={setStatus}
+            >
+              <SelectTrigger className="rounded-xl border-border focus:ring-primary/30">
 
-        <Select
-          value={status}
-          onValueChange={setStatus}
-        >
-          <SelectTrigger>
+                <SelectValue />
 
-            <SelectValue />
+              </SelectTrigger>
 
-          </SelectTrigger>
+              <SelectContent>
 
-          <SelectContent>
+                <SelectItem value="booked">
+                  Booked
+                </SelectItem>
 
-            <SelectItem value="booked">
-              Booked
-            </SelectItem>
+                <SelectItem value="completed">
+                  Completed
+                </SelectItem>
 
-            <SelectItem value="completed">
-              Completed
-            </SelectItem>
+                <SelectItem value="cancelled">
+                  Cancelled
+                </SelectItem>
 
-            <SelectItem value="cancelled">
-              Cancelled
-            </SelectItem>
+              </SelectContent>
 
-          </SelectContent>
+            </Select>
+          </div>
 
-        </Select>
-
-        <Button
-          className="w-full"
-          disabled={loading}
-          onClick={() =>
-            onSubmit(status)
-          }
-        >
-          Save
-        </Button>
-
+          <Button
+            className="h-11 w-full rounded-xl bg-primary font-semibold text-primary-foreground transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md"
+            disabled={loading}
+            onClick={() =>
+              onSubmit(status)
+            }
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
