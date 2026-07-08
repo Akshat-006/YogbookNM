@@ -17,6 +17,7 @@ import {
 } from "@/features/admin/hooks/useAppointments";
 
 import { AdminAppointment } from "@/features/admin/types/appointment.types";
+import { toast } from "sonner";
 
 function statusPill(status: string) {
   if (status === "completed") return "pill-success";
@@ -53,17 +54,27 @@ export default function AdminAppointmentsPage() {
 
   async function handleStatus(status: string) {
     if (!selectedAppointment) return;
-    await updateAppointment.mutateAsync({
-      id: selectedAppointment._id,
-      payload: { appointment_status: status },
-    });
-    setStatusOpen(false);
+    try {
+      await updateAppointment.mutateAsync({
+        id: selectedAppointment._id,
+        payload: { appointment_status: status },
+      });
+      setStatusOpen(false);
+      toast.success("Appointment status updated successfully!");
+    } catch {
+      toast.error("Failed to update appointment status.");
+    }
   }
 
   async function handleDelete() {
     if (!selectedAppointment) return;
-    await deleteAppointment.mutateAsync(selectedAppointment._id);
-    setDeleteOpen(false);
+    try {
+      await deleteAppointment.mutateAsync(selectedAppointment._id);
+      setDeleteOpen(false);
+      toast.success("Appointment deleted successfully!");
+    } catch {
+      toast.error("Failed to delete appointment.");
+    }
   }
 
   if (isLoading) {

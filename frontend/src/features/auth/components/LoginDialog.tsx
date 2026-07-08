@@ -12,6 +12,7 @@ import { Flower2, Mail, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 import {
     Dialog,
@@ -65,11 +66,12 @@ export function LoginDialog({
                 email: form.getValues("email"),
             });
             setStep(2);
+            toast.success("OTP sent to your email successfully!");
         } catch (error: unknown) {
             const message =
                 (error as any)?.response?.data?.detail ||
                 "Unable to send OTP right now. Please try again.";
-            alert(message);
+            toast.error(message);
         }
     }
 
@@ -88,6 +90,7 @@ export function LoginDialog({
             window.dispatchEvent(new Event("authChanged"));
 
             onOpenChange(false);
+            toast.success("Logged in successfully!");
 
             if (response.role === "admin") {
                 router.push("/admin");
@@ -100,7 +103,7 @@ export function LoginDialog({
             const message =
                 (error as any)?.response?.data?.detail ||
                 "OTP verification failed. Please try again.";
-            alert(message);
+            toast.error(message);
         }
     }
 

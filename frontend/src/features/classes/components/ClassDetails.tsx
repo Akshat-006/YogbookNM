@@ -2,9 +2,13 @@
 
 import { useClassById } from "../hooks/useClassById";
 import { Container } from "@/components/layout/Container";
-import { Button } from "@/components/ui/button";
 import { Calendar, Clock3, IndianRupee, UserRound, Users } from "lucide-react";
-import { BookClassDialog } from "@/features/bookings/components/BookClassDialog";
+import dynamic from "next/dynamic";
+
+const BookClassDialog = dynamic(
+  () => import("@/features/bookings/components/BookClassDialog").then((mod) => mod.BookClassDialog),
+  { ssr: false }
+);
 
 interface Props {
   id: string;

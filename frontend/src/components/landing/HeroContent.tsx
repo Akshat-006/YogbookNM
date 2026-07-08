@@ -6,6 +6,8 @@ import { ArrowRight, Sparkles, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
 
+import { useTranslations } from "next-intl";
+
 const fadeUp = (delay = 0): Pick<MotionProps, "initial" | "animate" | "transition"> => ({
   initial: { opacity: 0, y: 28 },
   animate: { opacity: 1, y: 0 },
@@ -14,12 +16,12 @@ const fadeUp = (delay = 0): Pick<MotionProps, "initial" | "animate" | "transitio
 
 
 export function HeroContent() {
+  const t = useTranslations("Hero");
   const { data: heroContent } = useCMSContentByKey("hero");
-  const title = heroContent?.title ?? "Transform Your\nMind, Body &\nInner Peace.";
-  const subtitle =
-    heroContent?.subtitle ??
-    "Join expert-led yoga classes designed to improve flexibility, strength, mindfulness, and overall wellness.";
-  const buttonText = heroContent?.button_text ?? "Start Your Journey";
+  
+  const title = heroContent?.title ?? `${t("title1")}\n${t("title2")}\n${t("title3")}`;
+  const subtitle = heroContent?.subtitle ?? t("subtitle");
+  const buttonText = heroContent?.button_text ?? t("ctaJourney");
   const buttonLink = heroContent?.button_link ?? "/classes";
 
   return (
@@ -29,7 +31,7 @@ export function HeroContent() {
         <div className="inline-flex items-center gap-2.5 rounded-full border border-primary/20 bg-primary/8 px-5 py-2.5 backdrop-blur">
           <Sparkles className="size-4 text-primary" />
           <span className="font-heading text-sm font-semibold text-primary">
-            Yogbook — A holistic approach to wellness
+            {t("badgeText")}
           </span>
         </div>
       </motion.div>
@@ -62,7 +64,7 @@ export function HeroContent() {
         <Button
           asChild
           size="lg"
-          className="h-13 rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-primary/90 hover:shadow-xl"
+          className="h-13 rounded-full bg-primary px-8 text-base font-semibold text-primary-foreground shadow-md transition-all duration-300 hover:-translate-y-1 hover:bg-primary/90 hover:shadow-xl cursor-pointer"
         >
           <a href={buttonLink}>
             {buttonText}
@@ -73,9 +75,9 @@ export function HeroContent() {
         <Button
           variant="outline"
           size="lg"
-          className="h-13 rounded-full border-border px-8 text-base font-semibold transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+          className="h-13 rounded-full border-border px-8 text-base font-semibold transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md cursor-pointer"
         >
-          Explore Programs
+          {t("ctaPrograms")}
         </Button>
       </motion.div>
 
@@ -87,9 +89,9 @@ export function HeroContent() {
         className="grid gap-3 pt-2"
       >
         {[
-          "Personalized AI Yoga Guidance",
-          "Certified Yoga Instructors",
-          "Classes, Appointments & Wellness Tracking",
+          t("bullet1"),
+          t("bullet2"),
+          t("bullet3"),
         ].map((item) => (
           <div key={item} className="flex items-center gap-3">
             <CheckCircle2 className="size-5 shrink-0 text-primary" />

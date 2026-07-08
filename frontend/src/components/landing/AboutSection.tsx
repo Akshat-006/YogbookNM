@@ -8,15 +8,16 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
 
+import { useTranslations } from "next-intl";
+
 export function AboutSection() {
+  const t = useTranslations("About");
   const { data } = useCMSContentByKey("about");
 
-  const title = data?.title ?? "About Yogbook";
-  const subtitle = data?.subtitle ?? "A mindful yoga platform for every body.";
-  const description =
-    data?.description ??
-    "Yogbook blends yoga classes, appointments, and wellness support into one beautifully simple experience for modern yogis.";
-  const buttonText = data?.button_text ?? "View Classes";
+  const title = data?.title ?? t("title");
+  const subtitle = data?.subtitle ?? t("subtitle");
+  const description = data?.description ?? t("description");
+  const buttonText = data?.button_text ?? t("learnMore");
   const buttonLink = data?.button_link ?? "/classes";
   const imageSrc = data?.image ?? "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=85&auto=format&fit=crop";
 
@@ -33,7 +34,7 @@ export function AboutSection() {
             className="space-y-7"
           >
             <span className="inline-flex rounded-full border border-primary/20 bg-primary/8 px-5 py-2 text-sm font-semibold text-primary">
-              Why Yogbook?
+              {t("badge")}
             </span>
 
             <h2 className="font-heading max-w-lg text-4xl font-bold tracking-tight sm:text-5xl lg:text-[52px]">
@@ -51,9 +52,9 @@ export function AboutSection() {
             {/* Stats row */}
             <div className="flex flex-wrap gap-8 border-t border-border pt-6">
               {[
-                { value: "10K+", label: "Active Members" },
-                { value: "500+", label: "Live Sessions" },
-                { value: "50+", label: "Expert Instructors" },
+                { value: "10K+", label: t("activeMembers") },
+                { value: "500+", label: t("liveSessions") },
+                { value: "50+", label: t("expertInstructors") },
               ].map((stat) => (
                 <div key={stat.label}>
                   <p className="font-heading text-3xl font-bold text-primary">{stat.value}</p>
@@ -64,7 +65,7 @@ export function AboutSection() {
 
             <Link
               href={buttonLink}
-              className="inline-flex items-center gap-2 text-base font-semibold text-primary transition-all hover:gap-3 hover:text-primary/80"
+              className="inline-flex items-center gap-2 text-base font-semibold text-primary transition-all hover:gap-3 hover:text-primary/80 cursor-pointer"
             >
               {buttonText}
               <ArrowRight className="size-4" />
@@ -92,8 +93,8 @@ export function AboutSection() {
             </div>
             {/* Floating accent */}
             <div className="glass absolute -bottom-5 -right-5 rounded-2xl px-5 py-4 shadow-premium">
-              <p className="text-sm font-bold">🏆 Top Rated Platform</p>
-              <p className="text-xs text-muted-foreground">Wellness India 2025</p>
+              <p className="text-sm font-bold">{t("floatingBadge")}</p>
+              <p className="text-xs text-muted-foreground">{t("floatingSubtitle")}</p>
             </div>
           </motion.div>
         </div>

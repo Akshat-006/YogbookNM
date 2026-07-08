@@ -10,8 +10,16 @@ import { Button } from "@/components/ui/button";
 import { MobileMenu } from "./MobileMenu";
 import { NavLinks } from "./NavLinks";
 import { NavLogo } from "./NavLogo";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTranslations } from "next-intl";
 
-import { LoginDialog } from "@/features/auth/components/LoginDialog";
+import dynamic from "next/dynamic";
+
+const LoginDialog = dynamic(
+  () => import("@/features/auth/components/LoginDialog").then((mod) => mod.LoginDialog),
+  { ssr: false }
+);
+
 import { logout } from "@/lib/logout";
 
 function ThemeToggle() {
@@ -24,7 +32,7 @@ function ThemeToggle() {
       onClick={() =>
         setTheme(resolvedTheme === "dark" ? "light" : "dark")
       }
-      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      className="relative flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground cursor-pointer"
       aria-label="Toggle theme"
     >
       {resolvedTheme === "dark" ? (
@@ -37,6 +45,7 @@ function ThemeToggle() {
 }
 
 export function Navbar() {
+  const t = useTranslations("Navbar");
   const [scrolled, setScrolled] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -92,6 +101,7 @@ export function Navbar() {
           <NavLinks />
 
           <div className="hidden items-center gap-2 lg:flex">
+            <LanguageSwitcher />
             <ThemeToggle />
 
             {isAuthenticated ? (
@@ -101,14 +111,14 @@ export function Navbar() {
                   className="rounded-full text-sm font-medium"
                   onClick={() => (window.location.href = "/dashboard")}
                 >
-                  Dashboard
+                  {t("dashboard")}
                 </Button>
                 <Button
                   variant="ghost"
                   className="rounded-full text-sm font-medium text-muted-foreground"
                   onClick={handleLogout}
                 >
-                  Logout
+                  {t("logout")}
                 </Button>
               </>
             ) : (
@@ -118,20 +128,21 @@ export function Navbar() {
                   className="rounded-full text-sm font-medium"
                   onClick={() => setLoginOpen(true)}
                 >
-                  Login
+                  {t("login")}
                 </Button>
 
                 <Button
                   asChild
                   className="rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md"
                 >
-                  <Link href="/appointments">Book Now</Link>
+                  <Link href="/appointments">{t("bookNow")}</Link>
                 </Button>
               </>
             )}
           </div>
 
           <div className="flex items-center gap-2 lg:hidden">
+            <LanguageSwitcher />
             <ThemeToggle />
             <MobileMenu />
           </div>

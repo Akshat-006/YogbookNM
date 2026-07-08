@@ -1,0 +1,40 @@
+{
+  "Navbar": {
+    "home": "Home",
+    "classes": "Classes",
+    "appointments": "Appointments",
+    "dashboard": "Dashboard",
+    "logout": "Logout",
+    "login": "Login",
+    "bookNow": "Book Now"
+  },
+  "Hero": {
+    "badgeText": "Yogbook — A holistic approach to wellness",
+    "title1": "Transform Your",
+    "title2": "Mind, Body &",
+    "title3": "Inner Peace.",
+    "subtitle": "Join expert-led yoga classes designed to improve flexibility, strength, mindfulness, and overall wellness.",
+    "ctaJourney": "Start Your Journey",
+    "ctaPrograms": "Explore Programs",
+    "bullet1": "Personalized AI Yoga Guidance",
+    "bullet2": "Certified Yoga Instructors",
+    "bullet3": "Classes, Appointments & Wellness Tracking"
+  },
+  "About": {
+    "badge": "Why Yogbook?",
+    "title": "About Yogbook",
+    "subtitle": "A mindful yoga platform for every body.",
+    "description": "Yogbook blends yoga classes, appointments, and wellness support into one beautifully simple experience for modern yogis.",
+    "learnMore": "View Classes",
+    "floatingBadge": "🏆 Top Rated Platform",
+    "floatingSubtitle": "Wellness India 2026",
+    "activeMembers": "Active Members",
+    "liveSessions": "Live Sessions",
+    "expertInstructors": "Expert Instructors"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error"
+  }
+}

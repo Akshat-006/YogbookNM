@@ -18,6 +18,7 @@ import {
 } from "@/features/admin/hooks/useClasses";
 
 import { AdminClass } from "@/features/admin/types/class.types";
+import { toast } from "sonner";
 
 function AdminClassesContent() {
   const searchParams = useSearchParams();
@@ -53,29 +54,38 @@ function AdminClassesContent() {
   }
 
   async function handleCreate(values: Record<string, unknown>) {
-    await createClass.mutateAsync(normalizeClassPayload(values));
-    setCreateOpen(false);
+    try {
+      await createClass.mutateAsync(normalizeClassPayload(values));
+      setCreateOpen(false);
+      toast.success("Class created successfully!");
+    } catch {
+      toast.error("Failed to create class.");
+    }
   }
 
   async function handleUpdate(values: Record<string, unknown>) {
     if (!selectedClass) return;
-
-    await updateClass.mutateAsync({
-      id: selectedClass._id,
-      payload: normalizeClassPayload(values),
-    });
-
-    setEditOpen(false);
+    try {
+      await updateClass.mutateAsync({
+        id: selectedClass._id,
+        payload: normalizeClassPayload(values),
+      });
+      setEditOpen(false);
+      toast.success("Class updated successfully!");
+    } catch {
+      toast.error("Failed to update class.");
+    }
   }
 
   async function handleDelete() {
-
     if (!selectedClass) return;
-
-    await deleteClass.mutateAsync(selectedClass._id);
-
-    setDeleteOpen(false);
-
+    try {
+      await deleteClass.mutateAsync(selectedClass._id);
+      setDeleteOpen(false);
+      toast.success("Class deleted successfully!");
+    } catch {
+      toast.error("Failed to delete class.");
+    }
   }
 
   if (isLoading) {

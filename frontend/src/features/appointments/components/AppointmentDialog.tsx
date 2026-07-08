@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -82,6 +83,7 @@ export function AppointmentDialog({
                   setStatusMessage(null);
                   await sendOTP.mutateAsync(form.getValues("email"));
                   setStep(2);
+                  toast.success("OTP sent to your email.");
                 } catch (error: unknown) {
                   setStatusMessage(
                     (error as any)?.response?.data?.detail ||
@@ -120,6 +122,7 @@ export function AppointmentDialog({
                   });
 
                   setStep(3);
+                  toast.success("OTP verified successfully!");
                 } catch (error: unknown) {
                   setStatusMessage(
                     (error as any)?.response?.data?.detail ||
@@ -168,6 +171,7 @@ export function AppointmentDialog({
                   setOtp("");
                   setStep(1);
                   onOpenChange(false);
+                  toast.success("Appointment booked successfully! Confirmation email sent.");
                 } catch {
                   setStatusMessage("Unable to book the appointment right now. Please try again.");
                 }

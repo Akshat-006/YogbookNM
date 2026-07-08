@@ -7,6 +7,7 @@ import { useCreatePayment } from "@/features/payments/hooks/useCreatePayment";
 import { useVerifyPayment } from "@/features/payments/hooks/useVerifyPayment";
 import { loadRazorpay } from "@/lib/loadRazorpay";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import {
   Dialog,
@@ -113,18 +114,17 @@ export function BookClassDialog({ classId }: Props) {
             });
 
             setOpen(false);
-
             form.reset();
-
+            toast.success("Class booked successfully!");
             router.push("/booking-success");
           } catch {
-            alert("Payment verification failed.");
+            toast.error("Payment verification failed.");
           }
         },
 
         modal: {
           ondismiss() {
-            console.log("Payment cancelled");
+            toast.warning("Payment cancelled.");
           },
         },
 
@@ -142,7 +142,7 @@ export function BookClassDialog({ classId }: Props) {
       razorpay.open();
     } catch (error) {
       console.error(error);
-      alert("Something went wrong.");
+      toast.error("Something went wrong.");
     }
   }
 

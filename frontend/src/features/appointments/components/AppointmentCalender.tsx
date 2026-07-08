@@ -10,7 +10,12 @@ import { Button } from "@/components/ui/button";
 import { Container } from "@/components/layout/Container";
 
 import { useAvailableSlots } from "../hooks/useAvailableSlots";
-import { AppointmentDialog } from "./AppointmentDialog";
+import dynamic from "next/dynamic";
+
+const AppointmentDialog = dynamic(
+  () => import("./AppointmentDialog").then((mod) => mod.AppointmentDialog),
+  { ssr: false }
+);
 
 interface SlotItem {
   time: string;

@@ -135,16 +135,18 @@ export default function AdminLayout({
       </aside>
 
       {/* ── Mobile top bar ── */}
-      <div className="fixed top-0 left-0 right-0 z-40 flex h-14 items-center justify-between border-b border-border bg-sidebar px-4 lg:hidden">
-        <Link href="/admin" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15">
-            <Flower2 className="size-4 text-primary" />
-          </div>
-          <span className="text-sm font-bold">Yogbook Admin</span>
-        </Link>
+      <div className="fixed top-0 left-0 right-0 z-40 flex h-24 flex-col justify-center border-b border-border bg-sidebar px-4 lg:hidden">
+        <div className="flex items-center justify-between h-10">
+          <Link href="/admin" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/15">
+              <Flower2 className="size-4 text-primary" />
+            </div>
+            <span className="text-sm font-bold">Yogbook Admin</span>
+          </Link>
+        </div>
 
-        {/* Mobile nav - horizontal scroll */}
-        <nav className="hidden items-center gap-1 overflow-x-auto sm:flex">
+        {/* Mobile nav - horizontal scroll & centered */}
+        <nav className="flex items-center justify-center gap-1.5 overflow-x-auto py-1 w-full">
           {sidebarLinks.map((link) => {
             const isActive =
               link.href === "/admin"
@@ -155,7 +157,7 @@ export default function AdminLayout({
                 key={link.href}
                 href={link.href}
                 className={clsx(
-                  "flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium transition",
+                  "flex shrink-0 items-center gap-1.5 rounded-lg px-2.5 py-1 text-[11px] font-medium transition",
                   isActive
                     ? "bg-primary/10 text-primary"
                     : "text-muted-foreground hover:text-primary"
@@ -170,7 +172,7 @@ export default function AdminLayout({
 
       {/* ── Main Content ── */}
       <div className="flex-1 overflow-auto">
-        <div className="pt-14 lg:pt-0">
+        <div className="pt-24 lg:pt-0">
           {children}
         </div>
       </div>

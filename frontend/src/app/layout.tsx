@@ -7,6 +7,10 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/landing/Footer";
 
+import { NextIntlClientProvider } from "next-intl";
+import { cookies } from "next/headers";
+import { Toaster } from "sonner";
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -32,23 +36,36 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
+
+  let messages;
+  try {
+    messages = (await import(`../../messages/${locale}.json`)).default;
+  } catch {
+    messages = (await import(`../../messages/en.json`)).default;
+  }
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body
         className={`${inter.variable} ${poppins.variable} font-[family-name:var(--font-inter)] antialiased`}
       >
-        <ThemeProvider>
-          <QueryProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-          </QueryProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider>
+            <QueryProvider>
+              <Toaster richColors position="top-right" />
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+            </QueryProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

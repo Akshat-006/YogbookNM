@@ -61,7 +61,7 @@ export default function AppointmentsPage() {
             href="/appointments"
             className="mt-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/8 px-5 py-2 text-sm font-semibold text-primary"
           >
-            Book a Consultation
+            Book a Appointment
           </Link>
         </div>
       ) : (
