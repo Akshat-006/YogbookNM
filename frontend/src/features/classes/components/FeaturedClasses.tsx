@@ -1,6 +1,7 @@
 "use client";
 
 import { useClasses } from "../hooks/useClasses";
+import { getDisplayClasses } from "../utils/visibleClasses";
 import { ClassCard } from "./ClassCard";
 import { Container } from "@/components/layout/Container";
 import Link from "next/link";
@@ -32,9 +33,10 @@ export function FeaturedClasses() {
     );
   }
 
-  const featured = data?.slice(0, 3);
+  const visibleClasses = getDisplayClasses(data ?? []);
+  const featured = visibleClasses.slice(0, 3);
 
-  if (!featured?.length) {
+  if (!featured.length) {
   return (
     <section className="py-24">
       <Container>

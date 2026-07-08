@@ -1,14 +1,11 @@
 import Link from "next/link";
-import { Flower2 } from "lucide-react";
+import { Flower2, Share2 } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
 
 export function Footer() {
   return (
-    <footer
-      id="contact"
-      className="border-t py-12"
-    >
+    <footer className="border-t py-12">
       <Container>
         <div className="grid gap-10 lg:grid-cols-4">
 
@@ -22,43 +19,47 @@ export function Footer() {
             </div>
 
             <p className="mt-4 text-sm text-muted-foreground">
-              Modern yoga management platform for classes,
-              appointments and wellness.
+              Modern yoga platform for classes, appointments, and wellbeing.
             </p>
           </div>
 
           <div>
-            <h3 className="font-semibold">
-              Product
-            </h3>
+            <h3 className="font-semibold">Product</h3>
 
             <div className="mt-4 flex flex-col gap-2">
-              <Link href="#">Classes</Link>
-              <Link href="#">Bookings</Link>
-              <Link href="#">Appointments</Link>
+              <Link href="/classes">Classes</Link>
+              <Link href="/booking-success">Bookings</Link>
+              <Link href="/appointments">Appointments</Link>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold">
-              Company
-            </h3>
+            <h3 className="font-semibold">Company</h3>
 
             <div className="mt-4 flex flex-col gap-2">
-              <Link href="#">About</Link>
-              <Link href="#">Contact</Link>
-              <Link href="#">Privacy</Link>
+              <Link href="#about">About</Link>
+              <Link href="#contact">Contact</Link>
+              <Link href="/privacy">Privacy</Link>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold">
-              Contact
-            </h3>
+            <h3 className="font-semibold">Connect</h3>
 
-            <div className="mt-4 space-y-2 text-muted-foreground">
+            <div className="mt-4 space-y-3 text-muted-foreground">
               <p>support@yogbook.com</p>
               <p>+91 98765 43210</p>
+              <div className="mt-4 flex items-center gap-3 text-muted-foreground">
+                <Link href="https://instagram.com/yogbook" target="_blank" aria-label="Instagram" className="transition hover:text-primary">
+                  <Share2 className="size-5" />
+                </Link>
+                <Link href="https://twitter.com/yogbook" target="_blank" aria-label="Twitter" className="transition hover:text-primary">
+                  <Share2 className="size-5" />
+                </Link>
+                <Link href="https://youtube.com/yogbook" target="_blank" aria-label="YouTube" className="transition hover:text-primary">
+                  <Share2 className="size-5" />
+                </Link>
+              </div>
             </div>
           </div>
 

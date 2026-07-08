@@ -14,6 +14,7 @@ interface Props {
 
 export function ClassCard({ yogaClass }: Props) {
   const date = new Date(yogaClass.schedule_datetime);
+  const isRecurring = Boolean(yogaClass.recurring || yogaClass.series_id);
 
   return (
     <Link href={`/classes/${yogaClass._id}`}>
@@ -30,7 +31,14 @@ export function ClassCard({ yogaClass }: Props) {
 
         <CardContent className="space-y-5 p-6">
           <div>
-            <h3 className="text-2xl font-semibold">{yogaClass.title}</h3>
+            <div className="flex flex-wrap items-center gap-2">
+              <h3 className="text-2xl font-semibold">{yogaClass.title}</h3>
+              {isRecurring && (
+                <span className="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                  Recurring
+                </span>
+              )}
+            </div>
 
             <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
               {yogaClass.description}

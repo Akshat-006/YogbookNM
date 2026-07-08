@@ -187,7 +187,7 @@ export function EditClassDialog({
               <>
 
                 <Select
-                  defaultValue="none"
+                  value={form.watch("recurring_type") ?? "none"}
                   onValueChange={(value) =>
                     form.setValue(
                       "recurring_type",

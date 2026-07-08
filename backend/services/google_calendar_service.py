@@ -1,8 +1,8 @@
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+import uuid
 
 from core.config import settings
-# import uuid
 
 from datetime import timedelta
 
@@ -23,7 +23,6 @@ def get_calendar_service():
         "v3",
         credentials=credentials
     )
-
 
 
 def create_calendar_event(
@@ -47,22 +46,21 @@ def create_calendar_event(
                     timedelta(minutes=duration)
                 ).isoformat(),
                 "timeZone": "Asia/Kolkata"
+            },
+            "conferenceData": {
+                "createRequest": {
+                    "requestId": str(uuid.uuid4()),
+                    "conferenceSolutionKey": {
+                        "type": "hangoutsMeet"
+                    }
+                }
             }
         }
-
-        # event["conferenceData"] = {
-        #     "createRequest": {
-        #         "requestId": str(uuid.uuid4()),
-        #         "conferenceSolutionKey": {
-        #             "type": "hangoutsMeet"
-        #         }
-        #     }
-        # }
         
         created_event = service.events().insert(
             calendarId=settings.GOOGLE_CALENDAR_ID,
-            body=event
-            # conferenceDataVersion=1
+            body=event,
+            conferenceDataVersion=1
         ).execute()
 
         return created_event

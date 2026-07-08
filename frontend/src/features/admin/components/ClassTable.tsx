@@ -11,6 +11,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 
+import { getDisplayClasses } from "@/features/classes/utils/visibleClasses";
 import { AdminClass } from "../types/class.types";
 
 interface Props {
@@ -24,6 +25,8 @@ export function ClassTable({
   onEdit,
   onDelete,
 }: Props) {
+  const visibleClasses = getDisplayClasses(classes);
+
   return (
     <Card className="rounded-3xl">
       <CardHeader>
@@ -34,7 +37,7 @@ export function ClassTable({
 
       <CardContent>
 
-        {classes.length === 0 ? (
+        {visibleClasses.length === 0 ? (
 
           <p className="text-muted-foreground">
 
@@ -82,7 +85,7 @@ export function ClassTable({
 
               <tbody>
 
-                {classes.map((item) => (
+                {visibleClasses.map((item) => (
 
                   <tr
                     key={item._id}
@@ -90,9 +93,14 @@ export function ClassTable({
                   >
 
                     <td className="py-4">
-
-                      {item.title}
-
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-medium">{item.title}</span>
+                        {item.recurring && (
+                          <span className="inline-flex items-center rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-emerald-700">
+                            Recurring
+                          </span>
+                        )}
+                      </div>
                     </td>
 
                     <td>

@@ -10,10 +10,12 @@ import { NavLinks } from "./NavLinks";
 import { NavLogo } from "./NavLogo";
 
 import { LoginDialog } from "@/features/auth/components/LoginDialog";
+import { logout } from "@/lib/logout";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +28,30 @@ export function Navbar() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsAuthenticated(!!localStorage.getItem("token"));
+    };
+
+    checkAuth();
+
+    const onStorage = () => checkAuth();
+    const onAuthChanged = () => checkAuth();
+
+    window.addEventListener("storage", onStorage);
+    window.addEventListener("authChanged", onAuthChanged as EventListener);
+
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      window.removeEventListener("authChanged", onAuthChanged as EventListener);
+    };
+  }, []);
+
+  function handleLogout() {
+    logout();
+    window.dispatchEvent(new Event("authChanged"));
+  }
 
   return (
     <>
@@ -40,22 +66,31 @@ export function Navbar() {
           <NavLinks />
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Button
-              variant="ghost"
-              className="rounded-full"
-              onClick={() => setLoginOpen(true)}
-            >
-              Login
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button variant="ghost" className="rounded-full" onClick={() => (window.location.href = "/dashboard")}>Dashboard</Button>
+                <Button variant="ghost" className="rounded-full" onClick={handleLogout}>Logout</Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  className="rounded-full"
+                  onClick={() => setLoginOpen(true)}
+                >
+                  Login
+                </Button>
 
-            <Button
-              asChild
-              className="rounded-full px-6"
-            >
-              <Link href="/appointments">
-                Book Now
-              </Link>
-            </Button>
+                <Button
+                  asChild
+                  className="rounded-full px-6"
+                >
+                  <Link href="/appointments">
+                    Book Now
+                  </Link>
+                </Button>
+              </>
+            )}
           </div>
 
           <div className="lg:hidden">

@@ -137,10 +137,14 @@ export function CreateClassDialog({
             {...form.register("meet_link")}
           />
 
-          <Input
-            type="datetime-local"
-            {...form.register("schedule_datetime")}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="schedule_datetime">Start date & time</Label>
+            <Input
+              id="schedule_datetime"
+              type="datetime-local"
+              {...form.register("schedule_datetime")}
+            />
+          </div>
 
           <div className="space-y-5">
 
@@ -174,11 +178,8 @@ export function CreateClassDialog({
               <>
 
                 <Select
-
-                  defaultValue="none"
-
+                  value={form.watch("recurring_type") ?? "none"}
                   onValueChange={(value) =>
-
                     form.setValue(
                       "recurring_type",
                       value as
@@ -186,9 +187,7 @@ export function CreateClassDialog({
                         | "daily"
                         | "weekly"
                     )
-
                   }
-
                 >
 
                   <SelectTrigger>
@@ -215,15 +214,16 @@ export function CreateClassDialog({
 
                 </Select>
 
-                <Input
-
-                  type="datetime-local"
-
-                  {...form.register(
-                    "recurring_until"
-                  )}
-
-                />
+                <div className="space-y-2">
+                  <Label htmlFor="recurring_until">Recurring until</Label>
+                  <Input
+                    id="recurring_until"
+                    type="datetime-local"
+                    {...form.register(
+                      "recurring_until"
+                    )}
+                  />
+                </div>
 
               </>
 

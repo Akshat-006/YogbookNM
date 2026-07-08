@@ -38,10 +38,17 @@ async def send_otp(email: str):
 
     })
 
-    await email_service.send_otp_email(
-        email,
-        otp
-    )
+    try:
+        await email_service.send_otp_email(
+            email,
+            otp
+        )
+    except Exception as e:
+        # Rollback created OTP record to avoid orphaned entries
+        await db["otp_verifications"].delete_many({"email": email})
+        # Raise HTTPException so frontend receives non-2xx and can show error
+        from fastapi import HTTPException
+        raise HTTPException(status_code=500, detail="Unable to send OTP right now")
 
     return {
         "success": True,

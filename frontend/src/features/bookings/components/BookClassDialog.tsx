@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreatePayment } from "@/features/payments/hooks/useCreatePayment";
@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+import { LoginDialog } from "@/features/auth/components/LoginDialog";
 import { bookingSchema, BookingFormData } from "../schemas/booking.schema";
 
 import { useCreateBooking } from "../hooks/useCreateBooking";
@@ -36,7 +37,19 @@ interface RazorpayResponse {
 
 export function BookClassDialog({ classId }: Props) {
   const [open, setOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsAuthenticated(!!localStorage.getItem("token"));
+    };
+
+    checkAuth();
+    window.addEventListener("authChanged", checkAuth as EventListener);
+
+    return () => window.removeEventListener("authChanged", checkAuth as EventListener);
+  }, []);
 
   // Components
   const booking = useCreateBooking();
@@ -55,6 +68,11 @@ export function BookClassDialog({ classId }: Props) {
   });
 
   async function onSubmit(values: BookingFormData) {
+    if (!isAuthenticated) {
+      setLoginOpen(true);
+      return;
+    }
+
     try {
       const bookingResponse = await booking.mutateAsync({
         class_id: classId,
@@ -166,6 +184,7 @@ export function BookClassDialog({ classId }: Props) {
           </Button>
         </form>
       </DialogContent>
+      <LoginDialog open={loginOpen} onOpenChange={setLoginOpen} />
     </Dialog>
   );
 }

@@ -128,9 +128,12 @@ export function BookClassDialog({ classId }: Props) {
       });
 
       razorpay.open();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error(error);
-      alert("Something went wrong.");
+      alert(
+        (error as any)?.response?.data?.detail ||
+          "Something went wrong. Please check your input and try again."
+      );
     }
   }
 

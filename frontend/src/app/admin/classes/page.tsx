@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 
@@ -19,14 +20,14 @@ import {
 import { AdminClass } from "@/features/admin/types/class.types";
 
 export default function AdminClassesPage() {
-
+  const searchParams = useSearchParams();
   const { data = [], isLoading } = useClasses();
 
   const createClass = useCreateClass();
   const updateClass = useUpdateClass();
   const deleteClass = useDeleteClass();
 
-  const [createOpen, setCreateOpen] = useState(false);
+  const [createOpen, setCreateOpen] = useState(searchParams?.get("create") === "1");
 
   const [editOpen, setEditOpen] = useState(false);
 
@@ -35,28 +36,36 @@ export default function AdminClassesPage() {
   const [selectedClass, setSelectedClass] =
     useState<AdminClass | null>(null);
 
-  async function handleCreate(values: any) {
+  function normalizeClassPayload(values: Record<string, unknown>) {
+    const payload = { ...values };
 
-    await createClass.mutateAsync(values);
+    if (typeof payload.schedule_datetime === "string" && payload.schedule_datetime) {
+      const parsed = new Date(payload.schedule_datetime);
+      payload.schedule_datetime = parsed.toISOString();
+    }
 
-    setCreateOpen(false);
+    if (typeof payload.recurring_until === "string" && payload.recurring_until) {
+      const parsed = new Date(payload.recurring_until);
+      payload.recurring_until = parsed.toISOString();
+    }
 
+    return payload;
   }
 
-  async function handleUpdate(values: any) {
+  async function handleCreate(values: Record<string, unknown>) {
+    await createClass.mutateAsync(normalizeClassPayload(values));
+    setCreateOpen(false);
+  }
 
+  async function handleUpdate(values: Record<string, unknown>) {
     if (!selectedClass) return;
 
     await updateClass.mutateAsync({
-
       id: selectedClass._id,
-
-      payload: values,
-
+      payload: normalizeClassPayload(values),
     });
 
     setEditOpen(false);
-
   }
 
   async function handleDelete() {

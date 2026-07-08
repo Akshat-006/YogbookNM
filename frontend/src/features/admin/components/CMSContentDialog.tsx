@@ -18,6 +18,7 @@ import { uploadCMSAsset } from "../services/cms.service";
 interface Props {
   open: boolean;
   item?: CMSContent | null;
+  defaultKey?: string;
   onOpenChange: (open: boolean) => void;
   onSubmit: (payload: Record<string, unknown>) => void;
   isPending?: boolean;
@@ -47,13 +48,16 @@ const emptyForm: CMSFormState = {
   is_active: true,
 };
 
-function toFormState(item?: CMSContent | null): CMSFormState {
+function toFormState(item?: CMSContent | null, defaultKey?: string): CMSFormState {
   if (!item) {
-    return emptyForm;
+    return {
+      ...emptyForm,
+      key: defaultKey ?? "",
+    };
   }
 
   return {
-    key: item.key ?? "",
+    key: item.key ?? defaultKey ?? "",
     title: item.title ?? "",
     subtitle: item.subtitle ?? "",
     description: item.description ?? "",
@@ -65,8 +69,8 @@ function toFormState(item?: CMSContent | null): CMSFormState {
   };
 }
 
-export function CMSContentDialog({ open, item, onOpenChange, onSubmit, isPending }: Props) {
-  const [form, setForm] = useState<CMSFormState>(emptyForm);
+export function CMSContentDialog({ open, item, defaultKey, onOpenChange, onSubmit, isPending }: Props) {
+  const [form, setForm] = useState<CMSFormState>(toFormState(item, defaultKey));
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
 
@@ -119,6 +123,7 @@ export function CMSContentDialog({ open, item, onOpenChange, onSubmit, isPending
                 onChange={(event) => updateField("key", event.target.value)}
                 placeholder="hero"
                 required
+                disabled={Boolean(item)}
               />
             </div>
 

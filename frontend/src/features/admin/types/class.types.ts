@@ -17,4 +17,5 @@ export interface AdminClass {
     | "weekly";
 
   recurring_until?: string;
+  series_id?: string | null;
 }

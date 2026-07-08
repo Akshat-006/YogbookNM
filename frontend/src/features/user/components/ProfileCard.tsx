@@ -31,14 +31,20 @@ export function ProfileCard({
           </p>
         </div>
 
-        <div className="rounded-2xl bg-primary/10 px-6 py-4">
-          <p className="text-sm text-muted-foreground">
-            Account Status
-          </p>
+        <div className="flex items-center gap-3">
+          <div className="rounded-2xl bg-primary/10 px-6 py-4">
+            <p className="text-sm text-muted-foreground">
+              Account Status
+            </p>
 
-          <p className="mt-1 font-semibold text-primary">
-            Active
-          </p>
+            <p className="mt-1 font-semibold text-primary">
+              Active
+            </p>
+          </div>
+
+          <div>
+            <a href="/dashboard/profile" className="inline-block rounded-full border px-4 py-2 text-sm font-medium hover:bg-muted">Edit Profile</a>
+          </div>
         </div>
       </CardContent>
     </Card>

@@ -9,4 +9,8 @@ export interface YogaClass {
   schedule_datetime: string;
   is_active: boolean;
   meet_link?: string;
+  recurring?: boolean;
+  recurring_type?: "none" | "daily" | "weekly";
+  recurring_until?: string;
+  series_id?: string | null;
 }

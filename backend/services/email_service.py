@@ -46,10 +46,13 @@ class EmailService:
             "payment_success.html"
         )
 
+        from core.config import settings
+
         html = render_template(
             html,
             {
                 "amount": f"₹{amount}",
+                "frontend_base_url": settings.FRONTEND_BASE_URL,
             }
         )
 
@@ -72,12 +75,15 @@ class EmailService:
             "appointment_confirmation.html"
         )
 
+        from core.config import settings
+
         html = render_template(
             html,
             {
                 "name": name,
                 "appointment_date": appointment_date,
-                "meet_link": meet_link
+                "meet_link": meet_link,
+                "frontend_base_url": settings.FRONTEND_BASE_URL,
                 }
         )
 

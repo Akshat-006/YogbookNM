@@ -82,8 +82,11 @@ export function AppointmentDialog({
                   setStatusMessage(null);
                   await sendOTP.mutateAsync(form.getValues("email"));
                   setStep(2);
-                } catch {
-                  setStatusMessage("Unable to send OTP right now. Please try again.");
+                } catch (error: unknown) {
+                  setStatusMessage(
+                    (error as any)?.response?.data?.detail ||
+                    "Unable to send OTP right now. Please try again."
+                  );
                 }
               }}
             >
@@ -117,8 +120,11 @@ export function AppointmentDialog({
                   });
 
                   setStep(3);
-                } catch {
-                  setStatusMessage("OTP verification failed. Please try again.");
+                } catch (error: unknown) {
+                  setStatusMessage(
+                    (error as any)?.response?.data?.detail ||
+                    "OTP verification failed. Please try again."
+                  );
                 }
               }}
             >

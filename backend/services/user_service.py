@@ -9,11 +9,9 @@ def is_payment_completed(status: str | None) -> bool:
     return status in {PAYMENT_PAID, "success"}
 
 
-def build_user_dashboard_payload(email: str, bookings: list[dict], appointments: list[dict], payments: list[dict]) -> dict:
+def build_user_dashboard_payload(profile: dict, bookings: list[dict], appointments: list[dict], payments: list[dict]) -> dict:
     return {
-        "profile": {
-            "email": email
-        },
+        "profile": profile,
         "statistics": {
             "total_bookings": len(bookings),
             "total_appointments": len(appointments),
@@ -52,25 +50,32 @@ async def get_user_dashboard(email: str):
     bookings = []
 
     async for booking in bookings_cursor:
-
         booking["_id"] = str(booking["_id"])
-
         bookings.append(booking)
 
     appointments = []
 
     async for appointment in appointments_cursor:
-
         appointment["_id"] = str(appointment["_id"])
-
         appointments.append(appointment)
 
     payments = []
 
     async for payment in payments_cursor:
-
         payment["_id"] = str(payment["_id"])
-
         payments.append(payment)
 
-    return build_user_dashboard_payload(email, bookings, appointments, payments)
+    profile = {
+        "email": email,
+        "name": None,
+        "phone": None
+    }
+
+    if bookings:
+        profile["name"] = bookings[0].get("name")
+        profile["phone"] = bookings[0].get("phone")
+    elif appointments:
+        profile["name"] = appointments[0].get("name")
+        profile["phone"] = appointments[0].get("phone")
+
+    return build_user_dashboard_payload(profile, bookings, appointments, payments)

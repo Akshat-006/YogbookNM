@@ -4,6 +4,8 @@ import "./globals.css";
 
 import QueryProvider from "@/providers/query-provider";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/landing/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,7 +34,11 @@ export default function RootLayout({
         className={`${inter.variable} ${poppins.variable} antialiased`}
       >
         <ThemeProvider>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

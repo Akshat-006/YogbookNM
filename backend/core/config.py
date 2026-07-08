@@ -102,6 +102,9 @@ class Settings:
     "DEFAULT_APPOINTMENT_MEET_LINK"
     )
 
+    # Frontend base url for links in emails
+    FRONTEND_BASE_URL: str = os.getenv("FRONTEND_BASE_URL", "http://127.0.0.1:3000")
+
     #Claudinary: Image
     CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME")
     CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY")

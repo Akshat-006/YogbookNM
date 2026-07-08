@@ -61,50 +61,48 @@ export function LoginDialog({
 
         if (!valid) return;
 
-        await sendOTP.mutateAsync({
-            email: form.getValues("email"),
-        });
-
-        setStep(2);
+        try {
+            await sendOTP.mutateAsync({
+                email: form.getValues("email"),
+            });
+            setStep(2);
+        } catch (error: unknown) {
+            const message =
+                (error as any)?.response?.data?.detail ||
+                "Unable to send OTP right now. Please try again.";
+            alert(message);
+        }
     }
 
     async function handleVerifyOTP() {
 
-        const response = await verifyOTP.mutateAsync({
+        try {
+            const response = await verifyOTP.mutateAsync({
+                email: form.getValues("email"),
+                otp,
+            });
 
-            email: form.getValues("email"),
+            localStorage.setItem("token", response.access_token);
+            localStorage.setItem("role", response.role);
+            localStorage.setItem("email", form.getValues("email"));
 
-            otp,
-        });
+            window.dispatchEvent(new Event("authChanged"));
 
-        localStorage.setItem(
-            "token",
-            response.access_token
-        );
+            onOpenChange(false);
 
-        localStorage.setItem(
-            "role",
-            response.role
-        );
+            if (response.role === "admin") {
+                router.push("/admin");
+            } else {
+                router.push("/dashboard");
+            }
 
-        localStorage.setItem(
-            "email",
-            form.getValues("email")
-        );
-
-        onOpenChange(false);
-
-        if (response.role === "admin") {
-
-            router.push("/admin");
-
-        } else {
-
-            router.push("/dashboard");
-
+            router.refresh();
+        } catch (error: unknown) {
+            const message =
+                (error as any)?.response?.data?.detail ||
+                "OTP verification failed. Please try again.";
+            alert(message);
         }
-
-        router.refresh();
     }
 
     return (

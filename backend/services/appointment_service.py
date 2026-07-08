@@ -4,6 +4,7 @@ from services.email_service import email_service
 from bson import ObjectId
 from fastapi import HTTPException
 
+from core.config import settings
 from core.database import get_database
 
 
@@ -11,7 +12,18 @@ APPOINTMENT_SLOT_MINUTES = 30
 
 
 def _build_meet_link(appointment_id: str) -> str:
-    return f"https://meet.google.com/lookup/{appointment_id}"
+    if settings.DEFAULT_APPOINTMENT_MEET_LINK:
+        return settings.DEFAULT_APPOINTMENT_MEET_LINK
+
+    return f"{settings.FRONTEND_BASE_URL}/dashboard"
+
+
+def _normalize_meet_link(meet_link: str | None) -> str:
+    if not meet_link:
+        return f"{settings.FRONTEND_BASE_URL}/dashboard"
+    if meet_link.startswith("http://") or meet_link.startswith("https://"):
+        return meet_link
+    return f"{settings.FRONTEND_BASE_URL}{meet_link if meet_link.startswith('/') else '/' + meet_link}"
 
 
 async def create_appointment(appointment_data):
@@ -62,15 +74,10 @@ async def create_appointment(appointment_data):
     result = await db["appointments"].insert_one(new_appointment)
     appointment_id = str(result.inserted_id)
     meet_link = appointment_data.meet_link or _build_meet_link(appointment_id)
-    appointment_datetime_label = appointment_datetime.strftime("%a, %d %b %Y at %I:%M %p")
-
-    await db["appointments"].update_one(
-        {"_id": result.inserted_id},
-        {"$set": {"meet_link": meet_link}}
-    )
+    calendar_event = None
 
     try:
-        create_calendar_event(
+        calendar_event = create_calendar_event(
             summary=f"Yoga Appointment - {appointment_data.name}",
             description=appointment_data.notes or "Yoga Appointment",
             start_datetime=appointment_datetime,
@@ -78,6 +85,23 @@ async def create_appointment(appointment_data):
         )
     except Exception as e:
         print(f"Calendar Error: {e}")
+
+    if calendar_event:
+        meet_link = (
+            calendar_event.get("hangoutLink")
+            or calendar_event.get("conferenceData", {})
+                .get("entryPoints", [{}])[0]
+                .get("uri")
+            or meet_link
+        )
+
+    meet_link = _normalize_meet_link(meet_link)
+    appointment_datetime_label = appointment_datetime.strftime("%a, %d %b %Y at %I:%M %p")
+
+    await db["appointments"].update_one(
+        {"_id": result.inserted_id},
+        {"$set": {"meet_link": meet_link}}
+    )
 
     try:
         await email_service.send_appointment_email(

@@ -28,7 +28,7 @@ export function Dashboard() {
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-8 py-10">
-      <ProfileCard user={data.user} />
+      <ProfileCard user={data.profile} />
 
       <BookingTable
         bookings={data.bookings}

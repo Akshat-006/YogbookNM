@@ -10,7 +10,7 @@ async def create_admin():
     db = get_database()
 
     existing_admin = await db.admins.find_one(
-        {"email": "admin@yogbook.com"}
+        {"email": "akshat5pjr@gmail.com"}
     )
 
     if existing_admin:
@@ -18,7 +18,7 @@ async def create_admin():
         return
 
     admin = {
-        "email": "admin@yogbook.com",
+        "email": "akshat5pjr@gmail.com",
         "password": hash_password("admin123"),
         "is_active": True
     }

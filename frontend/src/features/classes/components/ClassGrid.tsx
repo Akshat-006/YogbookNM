@@ -2,6 +2,7 @@
 
 import { Container } from "@/components/layout/Container";
 import { useClasses } from "../hooks/useClasses";
+import { getDisplayClasses } from "../utils/visibleClasses";
 import { ClassCard } from "./ClassCard";
 
 export function ClassGrid() {
@@ -26,7 +27,9 @@ export function ClassGrid() {
     );
   }
 
-  if (!data?.length) {
+  const visibleClasses = getDisplayClasses(data ?? []);
+
+  if (!visibleClasses.length) {
     return (
       <Container>
         <p>No classes available.</p>
@@ -47,7 +50,7 @@ export function ClassGrid() {
       </div>
 
       <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-        {data.map((item) => (
+        {visibleClasses.map((item) => (
           <ClassCard
             key={item._id}
             yogaClass={item}
