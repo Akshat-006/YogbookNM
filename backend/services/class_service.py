@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, UTC
 from bson import ObjectId
 from fastapi import HTTPException
 from datetime import timedelta
@@ -29,8 +29,8 @@ async def create_class(class_data):
         "price": class_data.price,
         "schedule_datetime": class_data.schedule_datetime,
         "is_active": True,
-        "created_at": datetime.utcnow(),
-        "updated_at": datetime.utcnow(),
+        "created_at": datetime.now(UTC).replace(tzinfo=None),
+        "updated_at": datetime.now(UTC).replace(tzinfo=None),
         "meet_link": class_data.meet_link
 
     }
@@ -48,7 +48,7 @@ async def get_all_classes():
     cursor = db["classes"].find(
         {
             "schedule_datetime": {
-                "$gte": datetime.utcnow()
+                "$gte": datetime.now(UTC).replace(tzinfo=None)
             },
             "is_active": True
         }
@@ -104,7 +104,7 @@ async def update_class(class_id: str, class_data):
             sd = sd.astimezone(timezone.utc).replace(tzinfo=None)
         update_data["schedule_datetime"] = sd
 
-    update_data["updated_at"] = datetime.utcnow()
+    update_data["updated_at"] = datetime.now(UTC).replace(tzinfo=None)
 
     await db["classes"].update_one(
         {"_id": ObjectId(class_id)},
@@ -142,7 +142,7 @@ async def update_class(class_id: str, class_data):
                     {
                         "$set": {
                             "schedule_datetime": new_datetime,
-                            "updated_at": datetime.utcnow(),
+                             "updated_at": datetime.now(UTC).replace(tzinfo=None),
                         }
                     },
                 )
@@ -215,8 +215,8 @@ async def generate_recurring_classes(
             "series_id": series_id,
             "schedule_datetime": current_date,
             "is_active": True,
-            "created_at": datetime.utcnow(),
-            "updated_at": datetime.utcnow()
+            "created_at": datetime.now(UTC).replace(tzinfo=None),
+            "updated_at": datetime.now(UTC).replace(tzinfo=None)
         }
 
         result = await db["classes"].insert_one(new_class)

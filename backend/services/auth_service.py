@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from fastapi import HTTPException
 
 from core.database import get_database
@@ -23,7 +23,7 @@ async def send_otp(email: str):
 
     otp = generate_otp()
 
-    expires_at = datetime.utcnow() + timedelta(
+    expires_at = datetime.now(UTC).replace(tzinfo=None) + timedelta(
         minutes=OTP_EXPIRY_MINUTES
     )
 
@@ -32,7 +32,7 @@ async def send_otp(email: str):
         "otp": otp,
         "verified": False,
         "expires_at": expires_at,
-        "created_at": datetime.utcnow()
+        "created_at": datetime.now(UTC).replace(tzinfo=None)
     })
 
     await email_service.send_otp_email(
@@ -62,7 +62,7 @@ async def verify_otp(
             detail="OTP not found"
         )
 
-    if otp_doc["expires_at"] < datetime.utcnow():
+    if otp_doc["expires_at"] < datetime.now(UTC).replace(tzinfo=None):
 
         await db["otp_codes"].delete_one({
             "_id": otp_doc["_id"]

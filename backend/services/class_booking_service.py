@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from bson import ObjectId
 from fastapi import HTTPException
 
@@ -25,7 +25,7 @@ async def create_class_booking(booking_data):
         raise HTTPException(status_code=400, detail="Class is not active")
 
     # 4. Check class time is not in past
-    if class_item["schedule_datetime"] < datetime.utcnow():
+    if class_item["schedule_datetime"] < datetime.now(UTC).replace(tzinfo=None):
         raise HTTPException(status_code=400, detail="Cannot book past class")
 
     # 5. Prevent duplicate booking by same email for same class
@@ -76,8 +76,8 @@ async def create_class_booking(booking_data):
         "meet_link": class_item.get("meet_link"),
 
         # Timestamps
-        "created_at": datetime.utcnow(),
-        "updated_at": datetime.utcnow()
+        "created_at": datetime.now(UTC).replace(tzinfo=None),
+        "updated_at": datetime.now(UTC).replace(tzinfo=None)
         }
 
     result = await db["class_bookings"].insert_one(new_booking)
@@ -150,7 +150,7 @@ async def update_class_booking(booking_id: str, booking_data):
             detail="No fields provided for update"
         )
 
-    update_data["updated_at"] = datetime.utcnow()
+    update_data["updated_at"] = datetime.now(UTC).replace(tzinfo=None)
 
     if not update_data:
         raise HTTPException(status_code=400, detail="No fields provided for update")

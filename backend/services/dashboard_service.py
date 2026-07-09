@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, UTC
 from typing import Any
 
 from core.database import get_database
@@ -115,7 +115,7 @@ async def get_dashboard_stats():
     cursor = db["classes"].find({
 
         "schedule_datetime": {
-            "$gte": datetime.utcnow()
+            "$gte": datetime.now(UTC).replace(tzinfo=None)
         },
 
         "is_active": True
@@ -144,7 +144,7 @@ async def get_dashboard_stats():
     cursor = db["appointments"].find({
 
         "appointment_datetime": {
-            "$gte": datetime.utcnow()
+            "$gte": datetime.now(UTC).replace(tzinfo=None)
         },
 
         "appointment_status": "booked"

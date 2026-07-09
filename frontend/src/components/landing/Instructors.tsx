@@ -77,12 +77,12 @@ export function Instructors() {
                 </div>
 
                 {/* Hover CTA overlay */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {/* <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                   <button className="flex items-center gap-2 rounded-full bg-white/95 px-5 py-2.5 text-sm font-semibold text-foreground shadow-lg backdrop-blur transition-transform group-hover:scale-105">
                     View Profile
                     <ArrowUpRight className="size-4" />
                   </button>
-                </div>
+                </div> */}
               </div>
 
               {/* Info */}

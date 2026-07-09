@@ -1,5 +1,5 @@
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 from core.database import get_database
 from services.email_service import email_service
@@ -16,7 +16,7 @@ async def send_otp(email: str):
 
     otp = generate_otp()
 
-    expires_at = datetime.utcnow() + timedelta(
+    expires_at = datetime.now(UTC).replace(tzinfo=None) + timedelta(
         minutes=OTP_EXPIRY_MINUTES
     )
 
@@ -34,7 +34,7 @@ async def send_otp(email: str):
 
         "expires_at": expires_at,
 
-        "created_at": datetime.utcnow()
+        "created_at": datetime.now(UTC).replace(tzinfo=None)
 
     })
 
@@ -69,7 +69,7 @@ async def verify_otp(email: str, otp: str):
             "message": "OTP not found"
         }
 
-    if record["expires_at"] < datetime.utcnow():
+    if record["expires_at"] < datetime.now(UTC).replace(tzinfo=None):
         return {
             "success": False,
             "message": "OTP expired"

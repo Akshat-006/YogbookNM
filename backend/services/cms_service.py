@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from bson import ObjectId
 from fastapi import HTTPException
 
@@ -25,9 +25,9 @@ async def create_cms(data):
 
         **data.model_dump(),
 
-        "created_at": datetime.utcnow(),
+        "created_at": datetime.now(UTC).replace(tzinfo=None),
 
-        "updated_at": datetime.utcnow()
+        "updated_at": datetime.now(UTC).replace(tzinfo=None)
 
     }
 
@@ -124,7 +124,7 @@ async def update_cms(
             detail="Nothing to update"
         )
 
-    update["updated_at"] = datetime.utcnow()
+    update["updated_at"] = datetime.now(UTC).replace(tzinfo=None)
 
     await db["cms"].update_one(
         {

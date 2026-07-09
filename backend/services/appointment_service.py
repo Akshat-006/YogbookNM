@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from services.google_calendar_service import create_calendar_event
 from services.email_service import email_service
 from bson import ObjectId
@@ -32,7 +32,7 @@ async def create_appointment(appointment_data):
     appointment_datetime = appointment_data.appointment_datetime
 
     # 1. Past datetime not allowed
-    if appointment_datetime < datetime.utcnow():
+    if appointment_datetime < datetime.now(UTC).replace(tzinfo=None):
         raise HTTPException(
             status_code=400,
             detail="Cannot book appointment in the past"
@@ -68,7 +68,7 @@ async def create_appointment(appointment_data):
         "payment_status": "pending",
         "appointment_status": "booked",
         "meet_link": appointment_data.meet_link,
-        "created_at": datetime.utcnow()
+        "created_at": datetime.now(UTC).replace(tzinfo=None)
     }
 
     result = await db["appointments"].insert_one(new_appointment)
@@ -245,7 +245,7 @@ async def get_available_slots(selected_date: str):
 
     current = start_of_day
 
-    now = datetime.utcnow()
+    now = datetime.now(UTC).replace(tzinfo=None)
 
     while current < end_of_day:
 

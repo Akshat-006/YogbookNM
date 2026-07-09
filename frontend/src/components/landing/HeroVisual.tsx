@@ -22,8 +22,8 @@ export function HeroVisual() {
         <Image
           src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&q=85&auto=format&fit=crop"
           alt="Woman doing yoga in a serene studio"
-          width={480}
-          height={620}
+          width={500}
+          height={500}
           priority
           className="h-auto w-full object-cover"
         />
@@ -50,7 +50,7 @@ export function HeroVisual() {
       </motion.div>
 
       {/* Rating — right */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
@@ -63,10 +63,10 @@ export function HeroVisual() {
             <p className="text-xs text-muted-foreground">Trusted Community</p>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Members — bottom left */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.6 }}
@@ -79,10 +79,10 @@ export function HeroVisual() {
             <p className="text-xs text-muted-foreground">Active Members</p>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
 
       {/* Sessions — bottom right */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.9, duration: 0.6 }}
@@ -95,7 +95,7 @@ export function HeroVisual() {
             <p className="text-xs text-muted-foreground">Live Classes</p>
           </div>
         </div>
-      </motion.div>
+      </motion.div> */}
 
     </div>
   );

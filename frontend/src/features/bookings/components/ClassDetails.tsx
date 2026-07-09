@@ -1,6 +1,6 @@
 "use client";
 
-import { useClassById } from "../hooks/useClassById";
+import { useClassById } from "../../bookings/hooks/useClassById";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
 import {
