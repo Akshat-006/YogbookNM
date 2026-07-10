@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { instructors } from "@/constants/instructors";
 
-// High-quality Unsplash yoga instructor portraits
+// yoga instructor portraits
 const instructorImages = [
   "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=500&q=85&auto=format&fit=crop",
   "https://images.unsplash.com/photo-1591228127791-8e2eaef098d3?w=500&q=85&auto=format&fit=crop",
