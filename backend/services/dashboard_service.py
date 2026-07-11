@@ -3,7 +3,7 @@ from datetime import datetime, UTC
 from typing import Any
 
 from core.database import get_database
-from utils.constants import PAYMENT_PAID, PAYMENT_PENDING
+from utils.constants import PAYMENT_PAID, PAYMENT_PENDING, PAYMENT_FAILED
 
 
 def build_monthly_revenue_breakdown(payments: list[dict[str, Any]]) -> list[dict[str, Any]]:

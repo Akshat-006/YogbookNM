@@ -5,6 +5,7 @@ import { ArrowLeft, CalendarDays, Video } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
 import { useDashboard } from "@/features/dashboard/hooks/useDashboard";
+import { formatDateTime } from "@/lib/formatTime";
 
 function statusPill(status: string) {
   if (status === "completed") return "pill-success";
@@ -80,7 +81,7 @@ export default function AppointmentsPage() {
                   <div className="mt-1.5 flex items-center gap-1.5 text-xs text-muted-foreground">
                     <CalendarDays className="size-3.5 text-blue-500" />
                     {appointment.appointment_datetime
-                      ? new Date(appointment.appointment_datetime).toLocaleString("en-IN")
+                      ? formatDateTime(appointment.appointment_datetime)
                       : "Timing pending"}
                   </div>
                 </div>

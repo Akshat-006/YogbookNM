@@ -1,5 +1,7 @@
 "use client";
 
+import { formatDateTime } from "@/lib/formatTime";
+
 import {
   Card,
   CardContent,
@@ -76,9 +78,7 @@ export function PaymentTable({
                     </td>
 
                     <td>
-                      {new Date(
-                        payment.payment_date
-                      ).toLocaleString("en-IN")}
+                      {formatDateTime(payment.payment_date)}
                     </td>
                   </tr>
                 ))}

@@ -5,6 +5,7 @@ import { ArrowLeft, CreditCard, CheckCircle2, Clock, XCircle } from "lucide-reac
 
 import { Container } from "@/components/layout/Container";
 import { useDashboard } from "@/features/dashboard/hooks/useDashboard";
+import { formatDateTime } from "@/lib/formatTime";
 
 function paymentPill(status: string) {
   if (status === "paid") return "pill-success";
@@ -79,7 +80,7 @@ export default function PaymentsPage() {
                   <h2 className="font-heading text-lg font-bold">₹{payment.amount ?? 0}</h2>
                   <p className="text-xs text-muted-foreground">
                     {payment.created_at
-                      ? new Date(payment.created_at).toLocaleString("en-IN")
+                      ? formatDateTime(payment.created_at)
                       : "Date unavailable"}
                   </p>
                 </div>

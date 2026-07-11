@@ -33,6 +33,7 @@ type CMSFormState = {
   icon: string;
   button_text: string;
   button_link: string;
+  order: string;
   is_active: boolean;
 };
 
@@ -45,6 +46,7 @@ const emptyForm: CMSFormState = {
   icon: "",
   button_text: "",
   button_link: "",
+  order: "",
   is_active: true,
 };
 
@@ -65,6 +67,7 @@ function toFormState(item?: CMSContent | null, defaultKey?: string): CMSFormStat
     icon: item.icon ?? "",
     button_text: item.button_text ?? "",
     button_link: item.button_link ?? "",
+    order: item.order !== undefined && item.order !== null ? String(item.order) : "",
     is_active: Boolean(item.is_active),
   };
 }
@@ -110,11 +113,12 @@ export function CMSContentDialog({ open, item, defaultKey, onOpenChange, onSubmi
             event.preventDefault();
             onSubmit({
               ...form,
+              order: form.order === "" ? null : Number(form.order),
               is_active: Boolean(form.is_active),
             });
           }}
         >
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-4 md:grid-cols-3">
             <div className="space-y-2">
               <Label htmlFor="key">Key</Label>
               <Input
@@ -134,6 +138,17 @@ export function CMSContentDialog({ open, item, defaultKey, onOpenChange, onSubmi
                 value={form.title as string}
                 onChange={(event) => updateField("title", event.target.value)}
                 placeholder="Amazing wellbeing"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="order">Order (Optional)</Label>
+              <Input
+                id="order"
+                type="number"
+                value={form.order}
+                onChange={(event) => updateField("order", event.target.value)}
+                placeholder="0"
               />
             </div>
           </div>

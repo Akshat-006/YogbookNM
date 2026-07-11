@@ -1,5 +1,7 @@
 "use client";
 
+import { formatDateTime } from "@/lib/formatTime";
+
 import {
   Card,
   CardContent,
@@ -64,9 +66,7 @@ export function BookingTable({
                     </td>
 
                     <td>
-                      {new Date(
-                        booking.schedule_datetime
-                      ).toLocaleString("en-IN")}
+                      {formatDateTime(booking.schedule_datetime)}
                     </td>
 
                     <td>

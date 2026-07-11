@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 
 import { YogaClass } from "../types/class.types";
 import { Button } from "@/components/ui/button";
+import { formatDateTime } from "@/lib/formatTime";
 
 // Curated Unsplash yoga class images
 const yogaImages = [
@@ -22,7 +23,6 @@ interface Props {
 }
 
 export function ClassCard({ yogaClass, index = 0 }: Props) {
-  const date = new Date(yogaClass.schedule_datetime);
   const isRecurring = Boolean(yogaClass.recurring || yogaClass.series_id);
   const imageSrc = yogaImages[index % yogaImages.length];
 
@@ -45,7 +45,7 @@ export function ClassCard({ yogaClass, index = 0 }: Props) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
 
           {/* Floating price badge */}
-          <div className="absolute right-4 top-4 flex items-center gap-0.5 rounded-full bg-white/95 px-3 py-1.5 text-sm font-bold text-foreground shadow backdrop-blur">
+          <div className="absolute right-4 top-4 flex items-center gap-0.5 rounded-full bg-primary/95 px-3 py-1.5 text-sm font-bold text-white shadow backdrop-blur">
             <IndianRupee className="size-3.5" />
             {yogaClass.price}
           </div>
@@ -73,16 +73,7 @@ export function ClassCard({ yogaClass, index = 0 }: Props) {
             <div className="flex items-center gap-2.5 text-xs text-muted-foreground">
               <Calendar className="size-3.5 shrink-0 text-primary" />
               <span>
-                {date.toLocaleDateString("en-IN", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-                {" · "}
-                {date.toLocaleTimeString("en-IN", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+                {formatDateTime(yogaClass.schedule_datetime)}
               </span>
             </div>
 

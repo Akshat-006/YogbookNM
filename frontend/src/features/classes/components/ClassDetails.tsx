@@ -4,6 +4,7 @@ import { useClassById } from "../hooks/useClassById";
 import { Container } from "@/components/layout/Container";
 import { Calendar, Clock3, IndianRupee, UserRound, Users } from "lucide-react";
 import dynamic from "next/dynamic";
+import { formatDateTime } from "@/lib/formatTime";
 
 const BookClassDialog = dynamic(
   () => import("@/features/bookings/components/BookClassDialog").then((mod) => mod.BookClassDialog),
@@ -54,7 +55,7 @@ export function ClassDetails({ id }: Props) {
 
               <div className="flex items-center gap-3">
                 <Calendar size={18} />
-                {new Date(data.schedule_datetime).toLocaleString()}
+                {formatDateTime(data.schedule_datetime)}
               </div>
 
               <div className="flex items-center gap-3 text-2xl font-bold">

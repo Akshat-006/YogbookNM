@@ -6,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { formatDateTime } from "@/lib/formatTime";
 
 interface Appointment {
   _id: string;
@@ -54,9 +55,7 @@ export function RecentAppointments({
                   </h3>
 
                   <p className="mt-0.5 text-xs text-muted-foreground">
-                    {new Date(
-                      appointment.appointment_datetime
-                    ).toLocaleString("en-IN")}
+                    {formatDateTime(appointment.appointment_datetime)}
                   </p>
                 </div>
 

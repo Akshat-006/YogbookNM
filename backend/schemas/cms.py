@@ -20,6 +20,8 @@ class CMSCreate(BaseModel):
 
     button_link: Optional[str] = None
 
+    order: Optional[int] = None
+
     is_active: bool = True
 
 
@@ -38,5 +40,7 @@ class CMSUpdate(BaseModel):
     button_text: Optional[str] = None
 
     button_link: Optional[str] = None
+
+    order: Optional[int] = None
 
     is_active: Optional[bool] = None

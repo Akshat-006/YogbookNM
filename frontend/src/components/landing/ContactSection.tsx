@@ -22,7 +22,7 @@ export function ContactSection() {
     {
       icon: MapPin,
       label: "Visit Us",
-      value: "123 Yogbook Lane, Wellness City",
+      value: "Jaipur, Rajasthan",
     },
     {
       icon: Phone,
@@ -106,12 +106,12 @@ export function ContactSection() {
               );
             })}
 
-            {/* Map placeholder */}
+            {/* Map placeholder
             <div className="mt-2 overflow-hidden rounded-2xl border border-border bg-muted/40 px-6 py-5">
               <p className="text-sm font-medium text-muted-foreground">
-                📍 Open in Maps — Wellness City, India
+                lin
               </p>
-            </div>
+            </div> */}
           </motion.div>
         </div>
       </Container>

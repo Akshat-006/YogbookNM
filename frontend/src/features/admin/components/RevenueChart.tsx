@@ -42,7 +42,7 @@ export function RevenueChart({
               Total Revenue
             </p>
             <h2 className="font-heading mt-2 text-4xl font-bold tracking-tight">
-              ₹{Number(revenue).toLocaleString("en-IN")}
+              ₹{(Number(revenue) || 0).toLocaleString("en-IN")}
             </h2>
           </div>
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/15">

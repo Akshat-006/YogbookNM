@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatDateTime } from "@/lib/formatTime";
 
 import {
   Card,
@@ -58,9 +59,7 @@ export function AppointmentTable({
                     className="border-b"
                   >
                     <td className="py-4">
-                      {new Date(
-                        appointment.appointment_datetime
-                      ).toLocaleString("en-IN")}
+                      {formatDateTime(appointment.appointment_datetime)}
                     </td>
 
                     <td>

@@ -8,5 +8,6 @@ export interface CMSContent {
   icon?: string | null;
   button_text?: string | null;
   button_link?: string | null;
+  order?: number | null;
   is_active?: boolean;
 }

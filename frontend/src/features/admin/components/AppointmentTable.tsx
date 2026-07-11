@@ -19,6 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 import { AdminAppointment } from "../types/appointment.types";
+import { formatDateTime } from "@/lib/formatTime";
 
 interface Props {
   appointments: AdminAppointment[];
@@ -64,9 +65,7 @@ export function AppointmentTable({
       header: "Date",
       cell: ({ row }) => (
         <span className="text-muted-foreground">
-          {new Date(
-            row.original.appointment_datetime
-          ).toLocaleString()}
+          {formatDateTime(row.original.appointment_datetime)}
         </span>
       ),
     },

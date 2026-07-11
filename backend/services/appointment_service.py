@@ -238,7 +238,7 @@ async def get_available_slots(selected_date: str):
 
     async for appointment in cursor:
         booked_slots.append(
-            appointment["appointment_datetime"].strftime("%H:%M")
+            appointment["appointment_datetime"].strftime("%I:%M %p")
         )
 
     slots = []
@@ -256,7 +256,7 @@ async def get_available_slots(selected_date: str):
             current += timedelta(minutes=30)
             continue
 
-        slot = current.strftime("%H:%M")
+        slot = current.strftime("%I:%M %p")
 
         slots.append({
             "time": slot,

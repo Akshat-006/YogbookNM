@@ -1,15 +1,11 @@
 "use client";
 
 import { StatsCards } from "./StatsCards";
-import { RecentBookings } from "./RecentBookings";
-import { RecentAppointments } from "./RecentAppoinntments";
 import { RevenueChart } from "./RevenueChart";
-
 import { useAdminDashboard } from "../hooks/useAdminDashboard";
 
 export function AdminDashboard() {
-  const { data, isLoading, isError } =
-    useAdminDashboard();
+  const { data, isLoading, isError } = useAdminDashboard();
 
   if (isLoading) {
     return (
@@ -22,10 +18,7 @@ export function AdminDashboard() {
             />
           ))}
         </div>
-        <div className="grid gap-6 lg:grid-cols-2">
-          <div className="h-64 animate-pulse rounded-2xl bg-muted/60" />
-          <div className="h-64 animate-pulse rounded-2xl bg-muted/60" />
-        </div>
+        <div className="h-64 animate-pulse rounded-2xl bg-muted/60" />
       </div>
     );
   }
@@ -34,36 +27,23 @@ export function AdminDashboard() {
     return (
       <div className="rounded-2xl border border-destructive/20 bg-destructive/5 py-12 text-center">
         <p className="text-sm font-medium text-destructive">
-          Failed to load dashboard.
+          Failed to load dashboard analytics.
         </p>
       </div>
     );
   }
 
+  const stats = data.stats;
+  const monthlyRevenue = data.monthly_revenue ?? {};
+
   return (
     <div className="space-y-8">
 
-      <StatsCards stats={data} />
-
-      <div className="grid gap-6 lg:grid-cols-2">
-
-        <RecentBookings
-          bookings={
-            data.recent_bookings ?? []
-          }
-        />
-
-        <RecentAppointments
-          appointments={
-            data.recent_appointments ?? []
-          }
-        />
-
-      </div>
+      <StatsCards stats={stats} />
 
       <RevenueChart
-        revenue={data.total_revenue}
-        monthlyRevenue={data.monthly_revenue}
+        revenue={stats?.total_revenue ?? 0}
+        monthlyRevenue={monthlyRevenue}
       />
 
     </div>

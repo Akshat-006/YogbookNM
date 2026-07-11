@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Video, Calendar, User } from "lucide-react";
 import { ClassBooking } from "../types/dashboard.types";
+import { formatDateTime } from "@/lib/formatTime";
 
 interface Props {
     classes: ClassBooking[];
@@ -75,11 +76,7 @@ export function UpcomingClasses({
                           </span>
                           <span className="flex items-center gap-1.5">
                             <Calendar className="size-3.5 text-primary" />
-                            {new Date(
-
-                                item.schedule_datetime
-
-                            ).toLocaleString()}
+                            {formatDateTime(item.schedule_datetime)}
                           </span>
                         </div>
 

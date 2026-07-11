@@ -50,7 +50,7 @@ export function AboutSection() {
             </p>
 
             {/* Stats row */}
-            <div className="flex flex-wrap gap-8 border-t border-border pt-6">
+            {/* <div className="flex flex-wrap gap-8 border-t border-border pt-6">
               {[
                 { value: "10K+", label: t("activeMembers") },
                 { value: "500+", label: t("liveSessions") },
@@ -61,7 +61,7 @@ export function AboutSection() {
                   <p className="mt-0.5 text-sm text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
-            </div>
+            </div> */}
 
             <Link
               href={buttonLink}

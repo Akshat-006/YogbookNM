@@ -10,16 +10,10 @@ import {
   BookMarked,
 } from "lucide-react";
 import { motion } from "framer-motion";
+import { DashboardStatsData } from "../types/admin.types";
 
 interface Props {
-  stats: {
-    total_classes: number;
-    total_users: number;
-    total_bookings: number;
-    total_appointments: number;
-    total_payments: number;
-    total_revenue: number;
-  };
+  stats: DashboardStatsData;
 }
 
 const cardConfig = [
@@ -82,9 +76,10 @@ export function StatsCards({
       {cardConfig.map((card, i) => {
         const Icon = card.icon;
         const raw = stats[card.key];
+        const safeNum = Number(raw) || 0;
         const value = card.prefix
-          ? `${card.prefix}${Number(raw).toLocaleString()}`
-          : raw;
+          ? `${card.prefix}${safeNum.toLocaleString("en-IN")}`
+          : safeNum;
 
         return (
           <motion.div

@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpenCheck, Calendar, User } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
 import { useDashboard } from "@/features/dashboard/hooks/useDashboard";
+import { formatDateTime } from "@/lib/formatTime";
 
 function statusPill(status: string) {
   if (status === "booked") return "pill-info";
@@ -93,7 +94,7 @@ export default function BookingsPage() {
                       <span className="flex items-center gap-1.5">
                         <Calendar className="size-3.5 text-primary" />
                         {booking.schedule_datetime
-                          ? new Date(booking.schedule_datetime).toLocaleString("en-IN")
+                          ? formatDateTime(booking.schedule_datetime)
                           : "Schedule pending"}
                       </span>
                     </div>

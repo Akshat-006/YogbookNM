@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 
 import { getDisplayClasses } from "@/features/classes/utils/visibleClasses";
 import { AdminClass } from "../types/class.types";
+import { formatDateTime } from "@/lib/formatTime";
 
 interface Props {
   classes: AdminClass[];
@@ -125,9 +126,7 @@ export function ClassTable({
 
                     <td className="px-4 py-4 text-muted-foreground">
 
-                      {new Date(
-                        item.schedule_datetime
-                      ).toLocaleDateString("en-IN")}
+                      {formatDateTime(item.schedule_datetime)}
 
                     </td>
 

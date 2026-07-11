@@ -37,17 +37,61 @@ export default function AdminCMSPage() {
       description: "Contact CTA content and button for the homepage.",
       icon: LayoutTemplate,
     },
+    // Benefits
     {
-      key: "experts",
-      title: "Experts section",
-      description: "Showcase your certified instructors and wellness experts.",
+      key: "benefit_1",
+      title: "Benefit 1",
+      description: "Title, description & icon (e.g. Brain, Heart, Moon, Activity, Sparkles, Leaf).",
+      icon: HeartHandshake,
+    },
+    {
+      key: "benefit_2",
+      title: "Benefit 2",
+      description: "Title, description & icon name for the second benefit card.",
+      icon: HeartHandshake,
+    },
+    {
+      key: "benefit_3",
+      title: "Benefit 3",
+      description: "Title, description & icon name for the third benefit card.",
+      icon: HeartHandshake,
+    },
+    {
+      key: "benefit_4",
+      title: "Benefit 4",
+      description: "Title, description & icon name for the fourth benefit card.",
+      icon: HeartHandshake,
+    },
+    {
+      key: "benefit_5",
+      title: "Benefit 5",
+      description: "Title, description & icon name for the fifth benefit card.",
+      icon: HeartHandshake,
+    },
+    {
+      key: "benefit_6",
+      title: "Benefit 6",
+      description: "Title, description & icon name for the sixth benefit card.",
+      icon: HeartHandshake,
+    },
+    // Experts
+    {
+      key: "expert_1",
+      title: "Expert 1",
+      description: "Name (title), specialization (subtitle), bio (description), profile image.",
       icon: Users,
     },
     {
-      key: "benefits",
-      title: "Benefits section",
-      description: "Highlight the main benefits of yoga practice for visitors.",
-      icon: HeartHandshake,
+      key: "expert_2",
+      title: "Expert 2",
+      description: "Name (title), specialization (subtitle), bio (description), profile image.",
+      icon: Users,
+    },
+    {
+      key: "expert_3",
+      title: "Expert 3",
+      description: "Name (title), specialization (subtitle), bio (description), profile image.",
+      icon: Users,
     },
   ];
 

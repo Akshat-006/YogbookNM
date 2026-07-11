@@ -1,35 +1,34 @@
+"use client";
+
+import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { HeroContent } from "./HeroContent";
-import { HeroVisual } from "./HeroVisual";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden py-28 lg:py-36 xl:py-44">
-      {/* Warm gradient base */}
-      <div className="absolute inset-0 -z-10 hero-gradient" />
-
-      {/* Decorative orbs */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-[-10%] top-[-5%] h-[600px] w-[600px] rounded-full bg-primary/8 blur-[120px]" />
-        <div className="absolute right-[-15%] top-[10%] h-[500px] w-[500px] rounded-full bg-accent/10 blur-[100px]" />
-        <div className="absolute bottom-[-10%] left-[35%] h-[400px] w-[400px] rounded-full bg-secondary/15 blur-[130px]" />
-      </div>
-
-      {/* Dotted texture overlay */}
-      <div
-        className="absolute inset-0 -z-10 opacity-[0.025]"
-        style={{
-          backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Background Image */}
+      <Image
+        src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=2000&q=90&auto=format&fit=crop"
+        alt="Yoga Background"
+        fill
+        priority
+        className="object-cover"
       />
 
-      <Container>
-        <div className="grid items-center gap-16 lg:grid-cols-2 xl:gap-24">
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+
+      {/* Optional Green Glow */}
+      <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-primary/20 blur-[180px]" />
+      <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[180px]" />
+
+      {/* Content */}
+      <div className="relative z-10 flex min-h-screen items-center justify-center">
+        <Container>
           <HeroContent />
-          <HeroVisual />
-        </div>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

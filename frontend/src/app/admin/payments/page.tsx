@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Container } from "@/components/layout/Container";
 import { getAllPayments, getPaymentAnalytics } from "@/features/payments/services/payment.service";
+import { formatDateTime } from "@/lib/formatTime";
 
 type PaymentRecord = {
   _id: string;
@@ -90,7 +91,7 @@ export default function AdminPaymentsPage() {
                   <p className="text-sm text-muted-foreground">{payment.status ?? "Pending"}</p>
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  ₹{payment.amount ?? 0} • {payment.created_at ? new Date(payment.created_at).toLocaleString() : "Date unavailable"}
+                  ₹{payment.amount ?? 0} • {payment.created_at ? formatDateTime(payment.created_at) : "Date unavailable"}
                 </div>
               </div>
             ))

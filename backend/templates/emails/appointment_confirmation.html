@@ -1,94 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<style>
-  body {
-    margin: 0;
-    font-family: Inter, Arial, sans-serif;
-    background: #f3f5f9;
-    color: #111827;
-  }
-  .wrapper {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 24px;
-  }
-  .card {
-    background: #ffffff;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 20px 60px rgba(17, 24, 39, 0.08);
-  }
-  .hero {
-    background: linear-gradient(135deg, #6366f1, #14b8a6);
-    color: white;
-    padding: 32px 28px;
-  }
-  .hero h1 {
-    margin: 0;
-    font-size: 28px;
-  }
-  .content {
-    padding: 28px;
-    line-height: 1.7;
-  }
-  .details {
-    margin-top: 24px;
-    border-top: 1px solid #e5e7eb;
-    padding-top: 24px;
-  }
-  .details dt {
-    font-weight: 700;
-    margin-top: 16px;
-  }
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 28px;
-    padding: 14px 24px;
-    border-radius: 14px;
-    background: #14b8a6;
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-  }
-  .footer {
-    margin-top: 32px;
-    padding: 22px 28px;
-    background: #f8fafc;
-    color: #475569;
-    font-size: 13px;
-    line-height: 1.6;
-  }
-</style>
+  <meta charset='utf-8'>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7f4;
+      color: #1f2937
+    }
+
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 24px
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .08)
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #2D6A4F, #40916C);
+      color: #fff;
+      padding: 36px 30px;
+      text-align: center
+    }
+
+    .content {
+      padding: 30px;
+      line-height: 1.7
+    }
+
+    .info {
+      background: #f8fbf9;
+      border: 1px solid #dceee4;
+      border-radius: 14px;
+      padding: 16px;
+      margin: 18px 0
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 24px;
+      background: #2D6A4F;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: bold;
+      margin-top: 20px
+    }
+
+    .footer {
+      background: #edf6f1;
+      padding: 20px;
+      text-align: center;
+      color: #64748b;
+      font-size: 13px
+    }
+  </style>
 </head>
+
 <body>
-  <div class="wrapper">
-    <div class="card">
-      <div class="hero">
+  <div class='wrapper'>
+    <div class='card'>
+      <div class='hero'>
         <h1>Appointment Confirmed</h1>
-        <p>Your session is booked and the calendar invite is ready.</p>
+        <p>Your yoga session is successfully booked.</p>
       </div>
-      <div class="content">
-        <p>Hello <strong>{{name}}</strong>,</p>
-        <p>Your yoga appointment has been confirmed. We look forward to seeing you.</p>
-        <div class="details">
-          <dl>
-            <dt>Date & Time</dt>
-            <dd>{{appointment_date}}</dd>
-          </dl>
-        </div>
-        <a href="{{meet_link}}" target="_blank" rel="noopener noreferrer" class="button">Join Appointment</a>
-        <a href="{{frontend_base_url}}/dashboard" target="_blank" rel="noopener noreferrer" class="button" style="margin-left:12px;background:#6366f1">View Dashboard</a>
-        <p style="margin-top:18px;font-size:14px;color:#475569;line-height:1.6;">If the button does not work, use this meeting link: <a href="{{meet_link}}" target="_blank" rel="noopener noreferrer">Open Meeting</a>.</p>
+      <div class='content'>
+        <p>Hello <b>{{name}}</b>,</p>
+        <div class='info'><b>Date:</b> {{appointment_date}}<br><b>Time:</b> {{appointment_time_12h}}<br><b>Timezone:</b>
+          {{timezone}}</div><a class='btn' href='{{meet_link}}'>Join Appointment</a> <a class='btn'
+          href='{{frontend_base_url}}/dashboard'>Dashboard</a>
       </div>
-    </div>
-    <div class="footer">
-      Thank you for choosing <strong>Yogbook</strong>. We’re here to help you stay balanced.
+      <div class='footer'>© 2026 Yogbook • Stay Balanced • support@yogbook.com</div>
     </div>
   </div>
 </body>
+
 </html>

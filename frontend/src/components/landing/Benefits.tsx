@@ -2,7 +2,19 @@
 
 import { motion, type Variants } from "framer-motion";
 import { Container } from "@/components/layout/Container";
-import { benefits } from "@/constants/benefits";
+import { benefits as staticBenefits } from "@/constants/benefits";
+import { useQuery } from "@tanstack/react-query";
+import { getCMSContentByKey } from "@/features/admin/services/cms.service";
+import { getIcon } from "@/lib/iconMap";
+
+const BENEFIT_KEYS = [
+  "benefit_1",
+  "benefit_2",
+  "benefit_3",
+  "benefit_4",
+  "benefit_5",
+  "benefit_6",
+] as const;
 
 const containerVariants: Variants = {
   hidden: {},
@@ -20,7 +32,57 @@ const cardVariants: Variants = {
   },
 };
 
+/**
+ * Fetches all benefit CMS entries in parallel.
+ * Returns an array of CMS items (some may be null if not created yet).
+ */
+function useBenefitsCMS() {
+  const queries = BENEFIT_KEYS.map((key) =>
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    useQuery({
+      queryKey: ["cms-content", key],
+      queryFn: () => getCMSContentByKey(key),
+      retry: false,
+      staleTime: 1000 * 60 * 5, // cache for 5 minutes
+    })
+  );
+
+  const isLoading = queries.some((q) => q.isLoading);
+  const items = queries.map((q) => q.data ?? null);
+  // CMS is "active" if at least one entry exists in the DB
+  const hasCMSData = items.some((item) => item !== null);
+
+  return { isLoading, items, hasCMSData };
+}
+
 export function Benefits() {
+  const { isLoading, items, hasCMSData } = useBenefitsCMS();
+
+  // Determine what to render: CMS data (if available) or static fallback
+  const displayItems = hasCMSData
+    ? items.map((item, index) => {
+        if (!item) {
+          // Use static fallback for any empty slot
+          const fallback = staticBenefits[index];
+          if (!fallback) return null;
+          return {
+            title: fallback.title,
+            description: fallback.description,
+            Icon: fallback.icon,
+          };
+        }
+        return {
+          title: item.title ?? `Benefit ${index + 1}`,
+          description: item.description ?? "",
+          Icon: getIcon(item.icon),
+        };
+      }).filter(Boolean)
+    : staticBenefits.map((b) => ({
+        title: b.title,
+        description: b.description,
+        Icon: b.icon,
+      }));
+
   return (
     <section className="relative py-28 overflow-hidden">
       {/* Background */}
@@ -52,43 +114,54 @@ export function Benefits() {
         </motion.div>
 
         {/* Cards grid */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
-        >
-          {benefits.map((benefit) => {
-            const Icon = benefit.icon;
+        {isLoading ? (
+          <div className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div
+                key={i}
+                className="h-52 animate-pulse rounded-[28px] bg-muted/60"
+              />
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mt-16 grid gap-6 md:grid-cols-2 xl:grid-cols-3"
+          >
+            {displayItems.map((benefit) => {
+              if (!benefit) return null;
+              const Icon = benefit.Icon;
+              return (
+                <motion.div
+                  key={benefit.title}
+                  variants={cardVariants}
+                  whileHover={{ y: -6, scale: 1.01 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                  className="group rounded-[28px] border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-premium"
+                >
+                  {/* Icon */}
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 ring-1 ring-primary/10 transition-all group-hover:from-primary/25 group-hover:to-primary/10">
+                    <Icon className="size-6 text-primary" />
+                  </div>
 
-            return (
-              <motion.div
-                key={benefit.title}
-                variants={cardVariants}
-                whileHover={{ y: -6, scale: 1.01 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                className="group rounded-[28px] border border-border bg-card p-8 shadow-sm transition-shadow hover:shadow-premium"
-              >
-                {/* Icon */}
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary/15 to-primary/5 ring-1 ring-primary/10 transition-all group-hover:from-primary/25 group-hover:to-primary/10">
-                  <Icon className="size-6 text-primary" />
-                </div>
+                  <h3 className="font-heading mt-7 text-xl font-bold">
+                    {benefit.title}
+                  </h3>
 
-                <h3 className="font-heading mt-7 text-xl font-bold">
-                  {benefit.title}
-                </h3>
+                  <p className="mt-3 text-sm leading-[1.8] text-muted-foreground">
+                    {benefit.description}
+                  </p>
 
-                <p className="mt-3 text-sm leading-[1.8] text-muted-foreground">
-                  {benefit.description}
-                </p>
-
-                {/* Bottom accent line */}
-                <div className="mt-6 h-0.5 w-10 rounded-full bg-primary/30 transition-all group-hover:w-16 group-hover:bg-primary/60" />
-              </motion.div>
-            );
-          })}
-        </motion.div>
+                  {/* Bottom accent line */}
+                  <div className="mt-6 h-0.5 w-10 rounded-full bg-primary/30 transition-all group-hover:w-16 group-hover:bg-primary/60" />
+                </motion.div>
+              );
+            })}
+          </motion.div>
+        )}
       </Container>
     </section>
   );

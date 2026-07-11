@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Moon,
   Sun,
+  HelpCircle,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import clsx from "clsx";
@@ -42,6 +43,11 @@ const sidebarLinks = [
     label: "Website CMS",
     href: "/admin/cms",
     icon: LayoutTemplate,
+  },
+  {
+    label: "FAQ CMS",
+    href: "/admin/cms/faq",
+    icon: HelpCircle,
   },
 ];
 
