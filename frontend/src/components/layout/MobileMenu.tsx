@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Menu, X, Home, Calendar, BookOpen, LayoutDashboard, LogIn, LogOut } from "lucide-react";
+import { Menu, Home, Calendar, BookOpen, LayoutDashboard, LogIn, LogOut } from "lucide-react";
 
 import {
   Sheet,

@@ -1,42 +1,27 @@
+# ==========================
 # Environment
+# ==========================
+
 .env
+.env.*
+!.env.example
 
-tests/
+# ==========================
+# Python
+# ==========================
 
-# Python cache
 __pycache__/
 *.py[cod]
 *.pyo
-
-# Virtual Environment
+.pytest_cache/
 venv/
 
-# IDE
-.vscode/
-.idea/
+# ==========================
+# Node.js
+# ==========================
 
-# Logs
-*.log
-
-# Pytest
-.pytest_cache/
-
-# Credentials
-backend/credentials/
-credentials/
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Personal
-/Note
-
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
-/.pnp
+node_modules/
+.pnp
 .pnp.*
 .yarn/*
 !.yarn/patches
@@ -44,34 +29,68 @@ Thumbs.db
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
+# ==========================
+# Next.js
+# ==========================
 
-# next.js
-/.next/
-/out/
+.next/
+out/
+build/
+coverage/
 
-# production
-/build
+# ==========================
+# TypeScript
+# ==========================
 
-# misc
-.DS_Store
-*.pem
+*.tsbuildinfo
+next-env.d.ts
 
-# debug
+# ==========================
+# Logs
+# ==========================
+
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# ==========================
+# IDE
+# ==========================
 
-# vercel
+.vscode/
+.idea/
+
+# ==========================
+# OS
+# ==========================
+
+.DS_Store
+Thumbs.db
+
+# ==========================
+# Vercel
+# ==========================
+
 .vercel
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# ==========================
+# Credentials
+# ==========================
 
+backend/credentials/
+credentials/
 
+# ==========================
+# Tests
+# ==========================
+
+tests/
+
+# ==========================
+# Misc
+# ==========================
+
+*.pem
+Note/
