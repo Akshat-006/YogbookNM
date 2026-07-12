@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import { Flower2 } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
+import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
 
 // Real social icons as inline SVGs (no extra package needed)
 function InstagramIcon() {
@@ -37,6 +40,13 @@ function FacebookIcon() {
 }
 
 export function Footer() {
+  const { data: footerContent } = useCMSContentByKey("footer");
+
+  const brandTitle = footerContent?.title ?? "Yogbook";
+  const brandDescription =
+    footerContent?.description ??
+    "Modern yoga platform for classes, appointments, and holistic wellbeing. Designed for every body.";
+
   return (
     <footer className="border-t border-border bg-card">
       <Container>
@@ -49,13 +59,12 @@ export function Footer() {
                 <Flower2 className="size-4" />
               </div>
               <span className="font-heading text-lg font-bold tracking-tight">
-                Yogbook
+                {brandTitle}
               </span>
             </div>
 
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Modern yoga platform for classes, appointments, and holistic wellbeing.
-              Designed for every body.
+              {brandDescription}
             </p>
 
             {/* Social icons */}

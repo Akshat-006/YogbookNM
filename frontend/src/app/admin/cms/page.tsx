@@ -37,6 +37,18 @@ export default function AdminCMSPage() {
       description: "Contact CTA content and button for the homepage.",
       icon: LayoutTemplate,
     },
+    {
+      key: "cta",
+      title: "CTA section",
+      description: "Call to action banner content (headline, description, button text & link).",
+      icon: Sparkles,
+    },
+    {
+      key: "footer",
+      title: "Footer section",
+      description: "Footer brand title and description content.",
+      icon: LayoutTemplate,
+    },
     // Benefits
     {
       key: "benefit_1",

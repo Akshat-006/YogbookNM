@@ -110,6 +110,7 @@
 
 import { motion, type MotionProps } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
@@ -171,11 +172,14 @@ export function HeroContent() {
         </Button>
 
         <Button
+          asChild
           variant="secondary"
           size="lg"
           className="h-14 rounded-full bg-white/15 px-9 text-base font-semibold text-white backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-white/25 cursor-pointer"
         >
-          {t("ctaPrograms")}
+          <Link href="/classes">
+            {t("ctaPrograms")}
+          </Link>
         </Button>
       </motion.div>
     </div>

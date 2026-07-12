@@ -19,7 +19,7 @@ export function AboutSection() {
   const description = data?.description ?? t("description");
   const buttonText = data?.button_text ?? t("learnMore");
   const buttonLink = data?.button_link ?? "/classes";
-  const imageSrc = data?.image ?? "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=85&auto=format&fit=crop";
+  const imageSrc = data?.image || "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=800&q=85&auto=format&fit=crop";
 
   return (
     <section id="about" className="py-28 section-alt">

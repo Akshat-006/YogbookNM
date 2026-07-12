@@ -3,13 +3,18 @@
 import Image from "next/image";
 import { Container } from "@/components/layout/Container";
 import { HeroContent } from "./HeroContent";
+import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
+import heroBg from "@/assets/images/hero/hero-yoga.webp";
 
 export function Hero() {
+  const { data: heroContent } = useCMSContentByKey("hero");
+  const bgImage = heroContent?.image || heroBg;
+
   return (
     <section className="relative min-h-screen overflow-hidden">
       {/* Background Image */}
       <Image
-        src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=2000&q=90&auto=format&fit=crop"
+        src={bgImage}
         alt="Yoga Background"
         fill
         priority

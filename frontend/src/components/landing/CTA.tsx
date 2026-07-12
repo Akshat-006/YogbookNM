@@ -5,8 +5,18 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/button";
+import { useCMSContentByKey } from "@/features/admin/hooks/useCMS";
 
 export function CTA() {
+  const { data: ctaContent } = useCMSContentByKey("cta");
+
+  const title = ctaContent?.title ?? "Begin Your Yoga Journey Today";
+  const description =
+    ctaContent?.description ??
+    "Discover personalized yoga programs, connect with expert instructors and take the first step toward a healthier lifestyle.";
+  const buttonText = ctaContent?.button_text ?? "Get Started";
+  const buttonLink = ctaContent?.button_link ?? "/classes";
+
   return (
     <section className="py-24">
       <Container>
@@ -36,12 +46,11 @@ export function CTA() {
             </span>
 
             <h2 className="font-heading mx-auto mt-8 max-w-3xl text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-              Begin Your Yoga Journey Today
+              {title}
             </h2>
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-white/80">
-              Discover personalized yoga programs, connect with expert instructors
-              and take the first step toward a healthier lifestyle.
+              {description}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
@@ -50,8 +59,8 @@ export function CTA() {
                 size="lg"
                 className="h-13 rounded-full bg-white px-10 text-base font-bold text-primary shadow-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/90 hover:shadow-2xl"
               >
-                <Link href="/classes">
-                  Get Started
+                <Link href={buttonLink}>
+                  {buttonText}
                   <ArrowRight className="ml-2 size-4" />
                 </Link>
               </Button>

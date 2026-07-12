@@ -5,17 +5,36 @@ import { motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 
 import { Container } from "@/components/layout/Container";
-import { instructors as staticInstructors } from "@/constants/instructors";
 import { getCMSContentByKey } from "@/features/admin/services/cms.service";
+import instructor1 from "@/assets/images/instructors/instructor-1.webp";
+import instructor2 from "@/assets/images/instructors/instructor-2.webp";
 
-const EXPERT_KEYS = ["expert_1", "expert_2", "expert_3"] as const;
+const staticInstructors = [
+  {
+    name: "Praveen Kumar Jain",
+    specialization: "Hatha & Meditation",
+    experience: "8+ Years Experience",
+  },
+  {
+    name: "Praveen Kumar Jain",
+    specialization: "Vinyasa Flow",
+    experience: "6+ Years Experience",
+  },
+  {
+    name: "Praveen Kumar Jain",
+    specialization: "Power Yoga",
+    experience: "10+ Years Experience",
+  },
+];
 
-// Curated fallback images
+// Curated fallback images using local assets and Unsplash
 const fallbackImages = [
-  "https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=500&q=85&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1591228127791-8e2eaef098d3?w=500&q=85&auto=format&fit=crop",
+  instructor1,
+  instructor2,
   "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=500&q=85&auto=format&fit=crop",
 ];
+
+const EXPERT_KEYS = ["expert_1", "expert_2", "expert_3"] as const;
 
 function useExpertsCMS() {
   const queries = EXPERT_KEYS.map((key) =>
@@ -48,7 +67,7 @@ export function Instructors() {
                 name: fallback.name,
                 specialization: fallback.specialization,
                 experience: fallback.experience,
-                image: fallbackImages[index] ?? fallback.image,
+                image: fallbackImages[index] ?? "",
               }
             : null;
         }
@@ -56,14 +75,14 @@ export function Instructors() {
           name: item.title ?? fallback?.name ?? "Instructor",
           specialization: item.subtitle ?? fallback?.specialization ?? "Yoga",
           experience: item.description ?? fallback?.experience ?? "",
-          image: item.image ?? fallbackImages[index] ?? "",
+          image: item.image || fallbackImages[index] || "",
         };
       }).filter(Boolean)
     : staticInstructors.map((instructor, index) => ({
         name: instructor.name,
         specialization: instructor.specialization,
         experience: instructor.experience,
-        image: fallbackImages[index] ?? instructor.image,
+        image: fallbackImages[index] ?? "",
       }));
 
   return (
