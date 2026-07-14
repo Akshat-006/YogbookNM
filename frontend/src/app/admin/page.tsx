@@ -27,7 +27,7 @@ const quickActions = [
   },
   {
     title: "Appointments",
-    description: "Open the calendar view to review scheduled appointments and update status.",
+    description: "Calendar view to review scheduled appointments and update status.",
     href: "/admin/appointments",
     icon: CalendarDays,
     primaryAction: "View calendar",

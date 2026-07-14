@@ -1,220 +1,258 @@
 # Yogbook — Yoga Studio Management Platform
 
-A full-stack yoga studio platform with class bookings, appointment scheduling, Razorpay payments, admin dashboard, and CMS.
+A full-stack yoga studio platform featuring dynamic class bookings, appointment scheduling, Razorpay payment integration, a comprehensive Admin Dashboard, and a complete Content Management System (CMS).
 
 ---
 
-## Features
+## 🌿 Features
 
-**Public**
-- Landing page with hero, about, benefits, instructors, and contact sections
-- Browse and enroll in upcoming yoga classes
-- Book free 30-minute one-on-one appointments
-- AI yoga assistant for personalized recommendations
+### 🌐 Public Frontend
+* **Responsive Landing Page:** Includes Hero, About, Benefits, Instructors, and Contact sections.
+* **Class Catalog:** Browse upcoming classes, details, schedules, and active bookings.
+* **One-on-One Consultations:** Book a free 30-minute private appointment.
+* **AI Yoga Assistant:** Get instant practice recommendations based on experience, age, and goals.
 
-**Users**
-- Passwordless OTP login (no passwords)
-- Dashboard with booking, appointment, and payment history
-- Profile management
+### 👤 User Portal
+* **Passwordless OTP Login:** Secure login via email OTP validation (no passwords to manage).
+* **My Bookings:** View class booking details, schedule statuses, and join meeting links.
+* **My Appointments:** Track scheduled consults and Google Calendar invites.
+* **Transaction History:** Access past invoices, amounts, and payment statuses.
 
-**Admin**
-- Dashboard with revenue stats and analytics
-- Full CRUD for classes (with recurring daily/weekly support)
-- Appointment calendar management
-- CMS to edit website content without touching code
-- Payment management and monthly revenue breakdown
-- Cloudinary image uploads
+### 👑 Admin Workspace
+* **Revenue Analytics:** Interactive charts for tracking monthly revenue and operations metrics.
+* **Class Management (CRUD):** Manage the public catalog with support for daily, weekly, or custom recurring classes.
+* **Appointment Manager:** View calendar bookings, schedules, and consult requests.
+* **CMS Content Manager:** Instantly update landing page text, icons, CTAs, and FAQs without touching code.
+* **Image Asset Uploader:** Integrated with Cloudinary for handling media uploads dynamically.
 
-**Backend**
-- JWT auth for admins, OTP-based auth for users
-- Razorpay payment order creation, verification, and webhook
-- Branded HTML emails (OTP, booking, appointment, payment)
-- Google Calendar integration for appointment events
-
----
-
-## Tech Stack
-
-| Layer | Technologies |
-|---|---|
-| Frontend | Next.js 15, React 19, TypeScript, Tailwind CSS, Shadcn UI |
-| State & Forms | TanStack Query, React Hook Form, Zod |
-| Backend | FastAPI, Python, Uvicorn |
-| Database | MongoDB Atlas (Motor async driver) |
-| Payments | Razorpay |
-| Email | SMTP via aiosmtplib |
-| Storage | Cloudinary |
-| Calendar | Google Calendar API |
+### ⚙️ Core Backend
+* **Robust Auth:** JWT authentication for administrator sessions and OTP verification for users.
+* **Payments Integration:** Razorpay order creation, client checkout signature verification, and webhook safety.
+* **Automated Emails:** Custom-styled transactional HTML emails for OTP codes, bookings, consults, and invoice confirmations.
+* **Google Calendar API:** Automated event scheduling with Google Meet links for consultations.
 
 ---
 
-## Project Structure
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Frontend Framework** | Next.js 15 (App Router) | Server-Side Rendering (SSR) & routing |
+| **UI Library** | React 19 / Tailwind CSS | UI components & styling |
+| **Component Kit** | Shadcn UI / Radix UI | Pre-built primitives & animations |
+| **State Management** | TanStack React Query (v5) | Server state management & caching |
+| **Forms & Validation** | React Hook Form & Zod | Client-side form handling and validation |
+| **Backend Framework** | FastAPI (Python) | High-performance asynchronous API |
+| **Async Web Server** | Uvicorn | ASGI server implementation |
+| **Database** | MongoDB Atlas (Motor driver) | Asynchronous NoSQL database storage |
+| **Payment Gateway** | Razorpay SDK | Payment checkout and webhook support |
+| **Email Gateway** | aiosmtplib (SMTP) | Async transactional email dispatcher |
+| **Storage CDN** | Cloudinary API | Media storage and asset delivery |
+| **Integration API** | Google Calendar API | Meeting scheduling and calendar events |
+
+---
+
+## 🏛️ Architecture
+
+The project adheres to a clean separation of concerns:
 
 ```
-YogbookNM/
-├── backend/
-│   ├── app/main.py          # FastAPI entry point
-│   ├── api/v1/routers/      # API route handlers
-│   ├── services/            # Business logic
-│   ├── schemas/             # Pydantic models
-│   ├── core/                # Config, database, security
-│   ├── utils/               # Helpers (email, constants, datetime)
-│   └── templates/           # HTML email templates
-│
-└── frontend/
-    └── src/
-        ├── app/             # Next.js App Router pages
-        ├── features/        # Feature-based modules (auth, classes, bookings, etc.)
-        ├── components/      # Shared UI components
-        ├── providers/       # React Query, Theme providers
-        └── services/        # Axios API client
+[ Frontend (Next.js Client) ]
+       │
+       ▼ (Axios Client / React Query)
+[ REST API Gateway (/api/v1) ]
+       │
+       ▼
+[ FastAPI App (Backend) ]
+       ├── Routers      → Handle request parsing & HTTP responses
+       ├── Services     → Core business logic & external integrations
+       ├── Schemas      → Pydantic validation & Serialization
+       └── Core         → Config loading, Auth, Security, Database
+             │
+             ├── [ MongoDB Atlas ]
+             ├── [ Razorpay API ]
+             ├── [ Gmail SMTP ]
+             ├── [ Cloudinary CDN ]
+             └── [ Google Calendar API ]
 ```
+
+* **Backend Rule:** Routers only dispatch actions; they do not contain database operations or business logic. All DB operations are isolated inside Services.
+* **Frontend Rule:** Components call hooks, hooks call services, and services trigger Axios requests. Components never call API endpoints directly.
 
 ---
 
-## Setup
+## 📦 Installation & Setup
 
 ### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- MongoDB Atlas account
-- Razorpay account
-- Gmail SMTP credentials (or any SMTP provider)
+* **Python 3.10+**
+* **Node.js 18+** & **npm**
+* **MongoDB Atlas** database connection string
+* **Razorpay** merchant account credentials
+* **Google Cloud Console** service account JSON key (for Google Calendar integration)
+
+### Step 1: Clone and Configure Backend
+1. Navigate to the backend directory:
+   ```bash
+   cd backend
+   ```
+2. Set up a Python virtual environment:
+   ```bash
+   python -m venv venv
+   # Activate on Windows:
+   venv\Scripts\activate
+   # Activate on macOS/Linux:
+   source venv/bin/activate
+   ```
+3. Install the dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. Copy the environment variables template and configure it:
+   ```bash
+   cp .env.example .env
+   # Edit .env with your database access, keys, and SMTP server
+   ```
+5. Initialize the admin user:
+   ```bash
+   python create_admin.py
+   ```
+6. Start the API server:
+   ```bash
+   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+   * The backend will run at `http://localhost:8000`.
+
+### Step 2: Configure and Run Frontend
+1. Navigate to the frontend directory:
+   ```bash
+   cd ../frontend
+   ```
+2. Install npm modules:
+   ```bash
+   npm install
+   ```
+3. Set environment variable:
+   Create a `.env.local` file inside the `frontend` folder and add:
+   ```env
+   NEXT_PUBLIC_API_URL=http://localhost:8000
+   ```
+4. Run the Next.js development server:
+   ```bash
+   npm run dev
+   ```
+   * The frontend client will run at `http://localhost:3000`.
 
 ---
 
-### Backend
+## 🐳 Docker Deployment
 
-```bash
-# 1. Create virtual environment
-python -m venv venv
-venv\Scripts\activate        # Windows
-source venv/bin/activate     # macOS/Linux
+The application is fully containerized using Docker and Docker Compose. This starts both the FastAPI backend and Next.js frontend services simultaneously.
 
-# 2. Install dependencies
-pip install -r requirements.txt
+### Running with Docker Compose
+1. Ensure your `backend/.env` file is properly configured.
+2. In the project root directory, run the following commands:
+   ```bash
+   # Build the images and start the services in detached mode
+   docker-compose up --build -d
+   ```
+3. Verify that both containers are active:
+   ```bash
+   docker-compose ps
+   ```
+4. Check the application logs:
+   ```bash
+   docker-compose logs -f
+   ```
+5. Shut down the deployment:
+   ```bash
+   docker-compose down
+   ```
 
-# 3. Configure environment
-cd backend
-cp .env.example .env
-# Fill in values in .env
-
-# 4. Create first admin account
-python create_admin.py
-
-# 5. Start the server
-uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-```
-
-API runs at `http://localhost:8000`  
-Swagger docs at `http://localhost:8000/api/v1/openapi.json`
-
----
-
-### Frontend
-
-```bash
-cd frontend
-
-# 1. Install dependencies
-npm install
-
-# 2. Set environment variable
-# Create .env.local and add:
-# NEXT_PUBLIC_API_URL=http://localhost:8000
-
-# 3. Start dev server
-npm run dev
-```
-
-App runs at `http://localhost:3000`
+| Container Service | Host Port | Mapping URL |
+| :--- | :--- | :--- |
+| **Backend API** | `8000` | `http://localhost:8000` |
+| **Frontend Client** | `3000` | `http://localhost:3000` |
 
 ---
 
-## Environment Variables
+## 🔑 Environment Variables
 
-Copy `backend/.env.example` to `backend/.env` and fill in:
+Copy `backend/.env.example` to `backend/.env` and update the values:
 
 ```env
-MONGODB_URL=mongodb+srv://...
-MONGODB_DB=yogbook
+# Database Settings
+MONGODB_URL=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/?appName=yoga
+MONGODB_DB=Yogbook
 
-SECRET_KEY=your-secret-key
+# JWT Secret Key
+SECRET_KEY=your_access_token_secret_key_here
 
+# SMTP Email Configuration
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
-SMTP_EMAIL=you@gmail.com
-SMTP_PASSWORD=your-app-password
-SMTP_FROM=Yogbook <you@gmail.com>
+SMTP_EMAIL=your_email@gmail.com
+SMTP_PASSWORD=your_gmail_app_password
+SMTP_FROM=Yogbook <your_email@gmail.com>
 
-RAZORPAY_KEY_ID=rzp_test_xxx
-RAZORPAY_KEY_SECRET=your-secret
-RAZORPAY_WEBHOOK_SECRET=
+# Razorpay Settings
+RAZORPAY_KEY_ID=rzp_test_xxxxxxxxx
+RAZORPAY_KEY_SECRET=xxxxxxxxxxxxxxxxxxx
+RAZORPAY_WEBHOOK_SECRET=your_optional_webhook_secret
 
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-
+# Google Service Account (Calendar API Integration)
 GOOGLE_SERVICE_ACCOUNT=credentials/google-service-account.json
 GOOGLE_CALENDAR_ID=primary
-DEFAULT_APPOINTMENT_MEET_LINK=https://meet.google.com/your-link
+DEFAULT_APPOINTMENT_MEET_LINK=https://meet.google.com/abc-defg-hij
 
-BACKEND_CORS_ORIGINS=http://localhost:3000
+# CORS & Base URL configuration
+BACKEND_CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 FRONTEND_BASE_URL=http://localhost:3000
+
+# Cloudinary Storage
+CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
+CLOUDINARY_API_KEY=your_cloudinary_api_key
+CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 ```
 
 ---
 
-## API Overview
+## 📚 API Documentation
 
-All endpoints are under `/api/v1`.
+FastAPI auto-generates documentation endpoints under `/docs` and `/redoc`. When the backend server is running locally, access these URLs to review and test endpoints:
 
-| Area | Endpoints |
-|---|---|
-| Admin Auth | `POST /admin/login`, `GET /admin/me` |
-| User Auth (OTP) | `POST /otp/send`, `POST /otp/verify`, `GET /auth/me` |
-| Classes | `GET /classes`, `POST /classes`, `PUT /classes/{id}`, `DELETE /classes/{id}` |
-| Bookings | `POST /bookings`, `GET /bookings/my`, `GET /bookings` |
-| Appointments | `POST /appointments`, `GET /appointments/slots`, `GET /appointments/calendar` |
-| Payments | `POST /payments/create`, `POST /payments/verify`, `GET /payments/analytics` |
-| Dashboard | `GET /dashboard/admin`, `GET /dashboard/user` |
-| CMS | `GET /cms`, `PUT /cms/{section}` |
-| Upload | `POST /upload/image` |
+* **Interactive Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs) (Allows direct execution of API requests)
+* **ReDoc Documentation:** [http://localhost:8000/redoc](http://localhost:8000/redoc) (Clean, structured technical layout)
+* **Raw OpenAPI Specification:** [http://localhost:8000/api/v1/openapi.json](http://localhost:8000/api/v1/openapi.json)
 
 ---
 
-## Architecture
+## 📸 Screenshots
 
-```
-Frontend (Next.js)
-    └── React Query + Axios
-          └── REST API calls
-                └── FastAPI Backend
-                      ├── Routers      → handle HTTP
-                      ├── Services     → business logic
-                      ├── Schemas      → validation (Pydantic)
-                      └── Core         → config, db, security
-                            └── MongoDB Atlas
-                            └── Razorpay / Email / Cloudinary / Google Calendar
-```
-
-**Key rules:**
-- Routers call services; services call the database
-- No business logic inside routers
-- Frontend: components → hooks → services → API (no direct API calls from components)
-
+| **Landing Page** |
+| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
+| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
+| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
+| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
+| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
 ---
 
-## Payment Flow
+| **Admin Panel** |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
 
-```
-Book Class → Create Razorpay Order → Razorpay Checkout Modal
-→ Verify Signature → Mark Paid → Send Confirmation Email
-```
+---
+| **Interactive AI Assistant** |
+| ![AI Recommendations](https://via.placeholder.com/800x450.png?text=AI+Yoga+Assistant+Preview) | 
+---
 
-## Appointment Flow
 
-```
-Pick Date → Select Slot → Fill Form → Submit
-→ Google Calendar Event Created → Confirmation Email with Meet Link
-```
+| **User Panel** |
+| ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
+| ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
+| ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
+| ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
+
+
+
