@@ -52,9 +52,35 @@ A full-stack yoga studio platform featuring dynamic class bookings, appointment 
 
 ---
 
-## 🏛️ Architecture
+## 🏛️ Folder Structure
 
-The project adheres to a clean separation of concerns:
+```
+YogbookNM/
+├── backend/
+│   ├── app/main.py          # FastAPI entry point
+│   ├── api/v1/routers/      # API route handlers
+│   ├── services/            # Business logic
+│   ├── schemas/             # Pydantic models
+│   ├── core/                # Config, database, security
+│   ├── utils/               # Helpers (email, constants, datetime)
+│   └── templates/           # HTML email templates
+│
+└── frontend/
+    └── src/
+        ├── app/             # Next.js App Router pages
+        ├── features/        # Feature-based modules (auth, classes, bookings, etc.)
+        ├── components/      # Shared UI components
+        ├── providers/       # React Query, Theme providers
+        ├── services/        # Axios API client
+        └── assets/          # Image Assets
+```
+
+* **Backend Rule:** Routers only dispatch actions; they do not contain database operations or business logic. All DB operations are isolated inside Services.
+* **Frontend Rule:** Components call hooks, hooks call services, and services trigger Axios requests. Components never call API endpoints directly.
+
+---
+
+## Project Architecture
 
 ```
 [ Frontend (Next.js Client) ]
@@ -72,14 +98,9 @@ The project adheres to a clean separation of concerns:
              ├── [ MongoDB Atlas ]
              ├── [ Razorpay API ]
              ├── [ Gmail SMTP ]
-             ├── [ Cloudinary CDN ]
-             └── [ Google Calendar API ]
+             └── [ Cloudinary CDN ]
+
 ```
-
-* **Backend Rule:** Routers only dispatch actions; they do not contain database operations or business logic. All DB operations are isolated inside Services.
-* **Frontend Rule:** Components call hooks, hooks call services, and services trigger Axios requests. Components never call API endpoints directly.
-
----
 
 ## 📦 Installation & Setup
 
@@ -226,33 +247,34 @@ FastAPI auto-generates documentation endpoints under `/docs` and `/redoc`. When 
 
 ---
 
-## 📸 Screenshots
+<!-- ## 📸 Screenshots
 
 | **Landing Page** |
-| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
-| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
-| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
-| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
-| ![Landing Page Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Landing+Page+Preview) |
 ---
+
+| ![Landing Page Preview](frontend/src/assets/scr/Screenshot%202026-07-13%20193709.png) |
 
 | **Admin Panel** |
-| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
-| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
-| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
-| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
-
 ---
+
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+| ![Admin Panel Preview](https://via.placeholder.com/800x450.png?text=Yogbook+Admin+Dashboard+Preview) |
+---
+
 | **Interactive AI Assistant** |
-| ![AI Recommendations](https://via.placeholder.com/800x450.png?text=AI+Yoga+Assistant+Preview) | 
+| ![AI Recommendations](frontend/src/assets/scr/Screenshot%202026-07-13%20193741.png) | 
 ---
 
 
 | **User Panel** |
+---
+
 | ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
 | ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
 | ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
 | ![User Bookings History](https://via.placeholder.com/800x450.png?text=User+Dashboard+Bookings+Preview) |
 
 
-
+ -->
